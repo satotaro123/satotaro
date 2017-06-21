@@ -310,9 +310,13 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array(
 $result = curl_exec($ch);
 curl_close($ch);
 
-//function setLastConversationData($userId, $lastConversationData) {
+function setLastConversationData($lastConversationData) {
 	$conversationId = $lastConversationData['conversation_id'];
 	$dialogNode = $lastConversationData['dialog_node'];
+
+	$fp = fopen("php.txt", "w");
+	fwrite($fp, $conversationId,$dialogNode);
+	fclose($fp);
 
 
 function makeOptions(){
