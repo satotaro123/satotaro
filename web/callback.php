@@ -314,9 +314,7 @@ function setLastConversationData($userId, $lastConversationData) {
 	$conversationId = $lastConversationData['conversation_id'];
 	$dialogNode = $lastConversationData['dialog_node'];
 }
-function getLastConversationData($userId) {
-		return $userId;
-}
+
 function makeOptions(){
 	global $username, $password, $data;
 	return array(
