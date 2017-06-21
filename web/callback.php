@@ -189,9 +189,9 @@ $jsonString = callWatson();
 $json = json_decode($jsonString, true);
 
 $conversation_id = $json["context"]["conversation_id"];
-$dialogNode = $json["context"]["system"]["dialog_stack"][0]["dialog_node"];
-$conversationData = array('conversation_id' => $conversationId, 'dialog_node' => $dialogNode);
-setLastConversationData($event->getUserId(), $conversationData);
+//$dialogNode = $json["context"]["system"]["dialog_stack"][0]["dialog_node"];
+//$conversationData = array('conversation_id' => $conversationId, 'dialog_node' => $dialogNode);
+//setLastConversationData($event->getUserId(), $conversationData);
 
 $userArray[$userID]["cid"] = $conversation_id;
 $userArray[$userID]["time"] = date('Y/m/d H:i:s');
@@ -310,10 +310,10 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array(
 $result = curl_exec($ch);
 curl_close($ch);
 
-function setLastConversationData($userId, $lastConversationData) {
+//function setLastConversationData($userId, $lastConversationData) {
 	$conversationId = $lastConversationData['conversation_id'];
 	$dialogNode = $lastConversationData['dialog_node'];
-}
+
 
 function makeOptions(){
 	global $username, $password, $data;
