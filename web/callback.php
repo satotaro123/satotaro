@@ -1,5 +1,5 @@
 <?php
-
+//error_log($jsonString);
 $accessToken = getenv('LINE_CHANNEL_ACCESS_TOKEN');
 
 
