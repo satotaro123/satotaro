@@ -317,10 +317,6 @@ function setLastConversationData($lastConversationData) {
 	$conversationId = $lastConversationData['conversation_id'];
 	$dialogNode = $lastConversationData['dialog_node'];
 
-	$fp = fopen("php.txt", "w");
-	fwrite($fp, $conversationId,$dialogNode);
-	fclose($fp);
-
 
 function makeOptions(){
 	global $username, $password, $data;
