@@ -1,5 +1,6 @@
 <?php
-error_log("開始します");
+
+error_log($line);
 $accessToken = getenv('LINE_CHANNEL_ACCESS_TOKEN');
 
 
