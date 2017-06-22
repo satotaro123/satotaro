@@ -197,7 +197,7 @@ $userArray[$userID]["cid"] = $conversation_id;
 $userArray[$userID]["time"] = date('Y/m/d H:i:s');
 
 
-$lastConversationData = getLastConversationData($event->getUserId());
+
 $data["context"] = array("conversation_id" => $conversation_id,
       "system" => array("dialog_stack" => array(array("dialog_node" => "root")),
       "dialog_turn_counter" => 1,
