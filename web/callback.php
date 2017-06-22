@@ -302,7 +302,7 @@ $response_format_text = [
 ];
 
 $fp = fopen("php.txt", "a");
-fwrite($fp, "ファイルへの追記サンプル");
+fwrite($fp, "ファイルへの追記サンプル。");
 fclose($fp);
 
 lineSend:
