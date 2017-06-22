@@ -1,6 +1,6 @@
 <?php
 
-error_log("開始します。");
+error_log($line);
 $accessToken = getenv('LINE_CHANNEL_ACCESS_TOKEN');
 
 
@@ -57,7 +57,7 @@ if($eventType == "follow"){
 
 $fp = fopen("https://" . $_SERVER['SERVER_NAME'] ."/php.txt", "r");
 while ($line = fgets($fp)) {
-	echo "$line<br />";
+	 echo "$line<br />";
 }
 fclose($fp);
 
