@@ -301,8 +301,8 @@ $response_format_text = [
     "text" => $mes
 ];
 
-$fp = fopen("https://" . $_SERVER['SERVER_NAME'] ."/php.txt", "a");
-fwrite($fp, "ファイルへの追記サンプル");
+$fp = fopen("https://" . $_SERVER['SERVER_NAME'] ."/php.txt", "w");
+fwrite($fp, "ファイルへ書き込みサンプル");
 fclose($fp);
 
 lineSend:
