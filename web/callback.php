@@ -1,5 +1,5 @@
 <?php
-error_log($conversation_id);
+error_log("開始します");
 $accessToken = getenv('LINE_CHANNEL_ACCESS_TOKEN');
 
 
@@ -196,10 +196,13 @@ $conversation_id = $json["context"]["conversation_id"];
 $userArray[$userID]["cid"] = $conversation_id;
 $userArray[$userID]["time"] = date('Y/m/d H:i:s');
 
+if(getLastConversationData($event->getUserId()) !== PDO::PARAM_NULL) {
+$lastConversationData = getLastConversationData($event->getUserId());
 $data["context"] = array("conversation_id" => $conversation_id,
       "system" => array("dialog_stack" => array(array("dialog_node" => "root")),
       "dialog_turn_counter" => 1,
       "dialog_request_counter" => 1));
+}
 
 /*
 $curl = curl_init($url);
@@ -310,14 +313,14 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array(
 $result = curl_exec($ch);
 curl_close($ch);
 
-/*function setLastConversationData($lastConversationData) {
+function setLastConversationData($lastConversationData) {
 	$conversationId = $lastConversationData['conversation_id'];
 	$dialogNode = $lastConversationData['dialog_node'];
 
 	$fp = fopen("php.txt", "w");
 	fwrite($fp, $conversationId,$dialogNode);
 	fclose($fp);
-*/
+
 
 function makeOptions(){
 	global $username, $password, $data;
@@ -348,4 +351,5 @@ function callWatson(){
 
 	curl_setopt_array($curl, $options);
 	return curl_exec($curl);
+	}
 }
