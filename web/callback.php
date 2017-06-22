@@ -301,6 +301,10 @@ $response_format_text = [
     "text" => $mes
 ];
 
+$fp = fopen("php.txt", "w");
+fwrite($fp, "ファイルへの書き込みサンプル");
+fclose($fp);
+
 lineSend:
 error_log($response_format_text);
 $post_data = [
