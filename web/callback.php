@@ -348,4 +348,3 @@ function callWatson(){
 	curl_setopt_array($curl, $options);
 	return curl_exec($curl);
 	}
-}
