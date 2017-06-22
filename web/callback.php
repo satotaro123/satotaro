@@ -313,10 +313,10 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array(
 $result = curl_exec($ch);
 curl_close($ch);
 
-function setLastConversationData($lastConversationData) {
+/*function setLastConversationData($lastConversationData) {
 	$conversationId = $lastConversationData['conversation_id'];
 	$dialogNode = $lastConversationData['dialog_node'];
-
+*/
 
 function makeOptions(){
 	global $username, $password, $data;
