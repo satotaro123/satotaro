@@ -60,6 +60,7 @@ while ($line = fgets($fp)) {
 	 echo "$line<br />";
 }
 fclose($fp);
+error_log($line);
 
 if($eventType == "postback"){
 	$bData = $jsonObj->{"events"}[0]->{"postback"}->{"data"};
