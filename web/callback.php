@@ -301,8 +301,8 @@ $response_format_text = [
     "text" => $mes
 ];
 
-$fp = fopen("php.txt", "w");
-fwrite($fp, "ファイルへの書き込みサンプル");
+$fp = fopen("php.txt", "a");
+fwrite($fp, "ファイルへの追記サンプル");
 fclose($fp);
 
 lineSend:
