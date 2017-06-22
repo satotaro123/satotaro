@@ -1,6 +1,6 @@
 <?php
 
-error_log($line);
+error_log("開始します。");
 $accessToken = getenv('LINE_CHANNEL_ACCESS_TOKEN');
 
 
@@ -55,7 +55,7 @@ if($eventType == "follow"){
 	goto lineSend;
 }
 
-$fp = fopen("php.txt", "r");
+$fp = fopen("https://" . $_SERVER['SERVER_NAME'] ."/php.txt", "r");
 while ($line = fgets($fp)) {
 	echo "$line<br />";
 }
@@ -301,7 +301,7 @@ $response_format_text = [
     "text" => $mes
 ];
 
-$fp = fopen("D:\php.txt", "a");
+$fp = fopen("https://" . $_SERVER['SERVER_NAME'] ."/php.txt", "a");
 fwrite($fp, "ファイルへの追記サンプル");
 fclose($fp);
 
