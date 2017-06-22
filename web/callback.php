@@ -196,13 +196,13 @@ $conversation_id = $json["context"]["conversation_id"];
 $userArray[$userID]["cid"] = $conversation_id;
 $userArray[$userID]["time"] = date('Y/m/d H:i:s');
 
-if(getLastConversationData($event->getUserId()) !== PDO::PARAM_NULL) {
+
 $lastConversationData = getLastConversationData($event->getUserId());
 $data["context"] = array("conversation_id" => $conversation_id,
       "system" => array("dialog_stack" => array(array("dialog_node" => "root")),
       "dialog_turn_counter" => 1,
       "dialog_request_counter" => 1));
-}
+
 
 /*
 $curl = curl_init($url);
