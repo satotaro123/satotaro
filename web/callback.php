@@ -59,8 +59,9 @@ $fp = fopen("https://" . $_SERVER['SERVER_NAME'] ."/php.txt", "r");
 while ($line = fgets($fp)) {
 	 echo "$line<br />";
 }
-fclose($fp);
 error_log($line);
+fclose($fp);
+
 
 if($eventType == "postback"){
 	$bData = $jsonObj->{"events"}[0]->{"postback"}->{"data"};
