@@ -54,6 +54,12 @@ if($eventType == "follow"){
 	goto lineSend;
 }
 
+$fp = fopen("php.txt", "r");
+while ($line = fgets($fp)) {
+	echo "$line<br />";
+}
+fclose($fp);
+
 if($eventType == "postback"){
 	$bData = $jsonObj->{"events"}[0]->{"postback"}->{"data"};
 	if($bData== 'action=qaline') {
