@@ -234,28 +234,26 @@ $data ["context"] = array (
 				"dialog_request_counter" => 1
 		)
 );
+  $curl_init($url);
+  $options = array(
+  CURLOPT_HTTPHEADER => array(
+  'Content-Type: application/json',
+  ),
+  CURLOPT_USERPWD => $username . ':' . $password,
+  CURLOPT_POST => true,
+  CURLOPT_POSTFIELDS => json_encode($data),
+  CURLOPT_RETURNTRANSFER => true,
+  );
 
-/*
- * $curl = curl_init($url);
- * $options = array(
- * CURLOPT_HTTPHEADER => array(
- * 'Content-Type: application/json',
- * ),
- * CURLOPT_USERPWD => $username . ':' . $password,
- * CURLOPT_POST => true,
- * CURLOPT_POSTFIELDS => json_encode($data),
- * CURLOPT_RETURNTRANSFER => true,
- * );
- *
- * curl_setopt_array($curl, $options);
- * $jsonString = curl_exec($curl);
- */
+  curl_setopt_array($curl, $options);
+  $jsonString = curl_exec($curl);
+
 $jsonString = callWatson ();
 // error_log($jsonString);
 $json = json_decode ( $jsonString, true );
 
 $mes = $json ["output"] ["text"] [0];
-// $mes = $json["output"];
+$mes = $json["output"];
 
 if ($mes == "usrChoise_1") {
 	$response_format_text = [
@@ -431,9 +429,8 @@ function getLastConversatiponData($userId){
 class dbConnection{
 	//インスタンス
 	protected static $db;
-	//コンストラクタ
-	private function_construct(){
-
+	//コンストラタ
+		private function_construct(){
 	try {
 		// 環境変数からデータベースへの接続情報を取得し
 		$url = parse_url ( getenv ( 'DATABASE_URL' ) );
