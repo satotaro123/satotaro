@@ -1,4 +1,10 @@
 <?php
+//テーブル名を定義
+define ( 'TABLE_NAME_BOTLOG', 'botlog' );
+
+ //パラメータ
+ $data = array('input'=>array("text"=>$event->getText()));
+
 error_log ( $line );
 $accessToken = getenv ( 'LINE_CHANNEL_ACCESS_TOKEN' );
 
@@ -53,12 +59,12 @@ if ($eventType == "follow") {
 	goto lineSend;
 }
 
-$fp = fopen ( "https://" . $_SERVER ['SERVER_NAME'] . "/php.txt", "r" );
+/*$fp = fopen ( "https://" . $_SERVER ['SERVER_NAME'] . "/php.txt", "r" );
 while ( $line = fgets ( $fp ) ) {
 	echo "$line<br />";
 	error_log ( $line );
 }
-fclose ( $fp );
+fclose ( $fp );*/
 
 if ($eventType == "postback") {
 	$bData = $jsonObj->{"events"} [0]->{"postback"}->{"data"};
@@ -166,40 +172,52 @@ $url = "https://gateway.watsonplatform.net/conversation/api/v1/workspaces/" . $w
 $username = "fe038c2b-1a1b-41fe-8a10-3cda71c90203";
 $password = "HsJnOFDeFLIU";
 
-// $data = array("text" => $text);
+ $data = array("text" => $text);
 $data = array (
 		'input' => array (
 				"text" => $text
 		)
 );
-/*
- * $data["context"] = array("conversation_id" => "",
- * "system" => array("dialog_stack" => array(array("dialog_node" => "")),
- * "dialog_turn_counter" => 1,
- * "dialog_request_counter" => 1));
- *
- * $curl = curl_init($url);
- *
- * $options = array(
- * CURLOPT_HTTPHEADER => array(
- * 'Content-Type: application/json',
- * ),
- * CURLOPT_USERPWD => $username . ':' . $password,
- * CURLOPT_POST => true,
- * CURLOPT_POSTFIELDS => json_encode($data),
- * CURLOPT_RETURNTRANSFER => true,
- * );
- *
- * curl_setopt_array($curl, $options);
- * $jsonString = curl_exec($curl);
- */
+
+  $data["context"] = array("conversation_id" => "",
+  "system" => array("dialog_stack" => array(array("dialog_node" => "")),
+  "dialog_turn_counter" => 1,
+  "dialog_request_counter" => 1));
+
+  $curl = curl_init($url);
+
+  $options = array(
+  CURLOPT_HTTPHEADER => array(
+  'Content-Type: application/json',
+  ),
+  CURLOPT_USERPWD => $username . ':' . $password,
+  CURLOPT_POST => true,
+  CURLOPT_POSTFIELDS => json_encode($data),
+  CURLOPT_RETURNTRANSFER => true,
+  );
+
+  curl_setopt_array($curl, $options);
+  $jsonString = curl_exec($curl);
+
 $jsonString = callWatson ();
 $json = json_decode ( $jsonString, true );
 
+// 会話データを取得
 $conversation_id = $json ["context"] ["conversation_id"];
-// $dialogNode = $json["context"]["system"]["dialog_stack"][0]["dialog_node"];
-// $conversationData = array('conversation_id' => $conversationId, 'dialog_node' => $dialogNode);
-// setLastConversationData($event->getUserId(), $conversationData);
+$dialogNode = $json ["context"] ["system"] ["dialog_stack"] [0] ["dialog_node"];
+
+// データベースに保存
+$conversationData = array (
+		'conversation_id' => $conversationId,
+		'dialog_node' => $dialogNode
+);
+$setLastConversationData ( $event->getUserId (), $conversationData );
+
+// conversationからの返答を取得
+$outputText = $json ['output'] ['text'] [count ( $json ['output'] ['text'] ) - 1];
+
+// ユーザーに返信
+replyTextMessage ( $bot, $event->getReplyToken (), $outputText );
 
 $userArray [$userID] ["cid"] = $conversation_id;
 $userArray [$userID] ["time"] = date ( 'Y/m/d H:i:s' );
@@ -332,11 +350,35 @@ curl_setopt ( $ch, CURLOPT_HTTPHEADER, array (
 $result = curl_exec ( $ch );
 curl_close ( $ch );
 
-/*
- * function setLastConversationData($lastConversationData) {
- * $conversationId = $lastConversationData['conversation_id'];
- * $dialogNode = $lastConversationData['dialog_node'];
- */
+// 会話データをデータベースに保存
+function setLastConversationData($userId, $lastConversationData) {
+	$conversationId = $lastConversationData ['conversation_id'];
+	$dialogNode = $lastConversationData ['dialog_node'];
+
+	if (getLastConversationData ( $userId ) === PDO::PARAM_NULL) {
+		$dbh = dbConnection::getConnection ();
+		$sql = 'insert into' . TABLE_NAME_BOTLOG . '(conversation_id,
+						dialog_node,userid) values(?,?,
+						pgp_sym_encrypt(?,\'' . getenv ( 'DB_ENCRYPT_PASS' ) . '\'))';
+		$sth = $dbh->prepare ( $sql );
+		$sth->execute ( array (
+				$conversationId,
+				$dialogNode,
+				$userId
+		) );
+	} else {
+		$dbh = dbConnection::getConnection ();
+		$sql = 'update' . TABLE_NAME_BOTLOG . 'set conversation_id =
+						?,dialog_node = ? where ? =
+						pgp_sym_decrypt(userid,\'' . getenv ( 'DB_ENCRYPT_PASS' ) . '\')';
+		$sth = $dbh->prepare ( $sql );
+		$sth->execute ( array (
+				$conversationId,
+				dialogNode,
+				$userId
+		) );
+	}
+}
 function makeOptions() {
 	global $username, $password, $data;
 	return array (
@@ -366,3 +408,55 @@ function callWatson() {
 	curl_setopt_array ( $curl, $options );
 	return curl_exec ( $curl );
 }
+
+//データベースから会話データを取得
+function getLastConversatiponData($userId){
+	$dbh = dbConnection::getConnection();
+	$sql ='select conversation_id,dialog_node from'.
+								TABLE_NAME_BOTLOG . 'where ? =
+								pgp_sym_decrypt(userid,\''.getenv(
+								'DB_ENCRYPT_PASS').'\')';
+	$sth = $dbh->prepare($sql);
+	$sth->execute(array($userId));
+	if(!($row = $sth->fetch())){
+		return PDO::PARAM_NULL;
+	}else{
+		return array ('conversation_id' => $row['conversation_id'],
+										'dialog_node' =>$row['dialog_node']);
+
+	}
+}
+
+//データベースへの接続を管理するクラス
+class dbConnection{
+	//インスタンス
+	protected static $db;
+	//コンストラクタ
+	private function_construct(){
+
+	try {
+		// 環境変数からデータベースへの接続情報を取得し
+		$url = parse_url ( getenv ( 'DATABASE_URL' ) );
+		// データソース
+		$dsn = sprintf ( 'pgsql:host=%s;dbname=%s', $url ['host'], substr ( $url ['path'], 1 ) );
+		// 接続を確立
+		self::$db = new PDO ( $dsn, $url ['user'], $url ['path'] );
+		// エラー時例外を投げるように設定
+		self::$db->setAttribute ( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+	} catch ( PDOException $e ) {
+		echo 'Connection Error:' . $e->getMessage ();
+	}
+}
+
+	//シングルトン。存在しない場合のみインスタンス化
+	public static function getConnection(){
+		if(!self::$db){
+			new dbConnection();
+		}
+		return self::$db;
+	}
+}
+
+?>
+
+
