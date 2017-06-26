@@ -327,13 +327,15 @@ $result_flag = pg_query($sql);
 
 
 $result = pg_query('SELECT userid, contents FROM botlog');
-
-error_log($userID);
-error_log($text);
-error_log($mes);
+if ($result==null) {
+	error_log(リザルトに入っていません);
+}else{
+	error_log(リザルトに値が入っています);
+}
 error_log($result);
 
 pg_close($conn);
+//データベースの切断
 
 $ch = curl_init ( "https://api.line.me/v2/bot/message/reply" );
 curl_setopt ( $ch, CURLOPT_POST, true );
