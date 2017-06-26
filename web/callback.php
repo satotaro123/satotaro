@@ -3,7 +3,17 @@
 define ( 'TABLE_NAME_BOTLOG', 'botlog' );
 
  //パラメータ
- $data = array('input'=>array("text"=>$event->getText()));
+$data = array('input'=>array("text"=>$event->getText()));
+
+//前回までの会話のデータがデータベースに保存されていれば
+ if(getLastconversationData($event->getUserId()) !==PDO::PARAM_NULL){
+ 	$lastConversationData = getLastConversationData($event->getUserId());
+	//前回までを会話のデータをパラメータに追加
+ 	$data["context"] = array("conversation_id" =>$lastConversationData["conversation_id"],
+ 			"system" => array("dialog_stack"=>array(array("dialog_node"=>$lastConversationData["dialog_node"])),
+ 			"dialog_turn_counter"=>1,
+ 			"dialog_request_counter"=>1));
+ }
 
 error_log ( $line );
 $accessToken = getenv ( 'LINE_CHANNEL_ACCESS_TOKEN' );
@@ -19,7 +29,7 @@ $text = $jsonObj->{"events"} [0]->{"message"}->{"text"};
 // ReplyToken取得
 $replyToken = $jsonObj->{"events"} [0]->{"replyToken"};
 // ユーザーID取得
-$userID = $jsonObj->{"events"} [0]->{"source"}->{"userId"};
+$userId = $jsonObj->{"events"} [0]->{"source"}->{"userId"};
 
 error_log ( $eventType );
 if ($eventType == "follow") {
@@ -209,8 +219,7 @@ $dialogNode = $json ["context"] ["system"] ["dialog_stack"] [0] ["dialog_node"];
 // データベースに保存
 $conversationData = array (
 		'conversation_id' => $conversationId,
-		'dialog_node' => $dialogNode
-);
+		'dialog_node' => $dialogNode);
 $setLastConversationData ( $event->getUserId (), $conversationData );
 
 // conversationからの返答を取得
@@ -373,8 +382,7 @@ function setLastConversationData($userId, $lastConversationData) {
 		$sth->execute ( array (
 				$conversationId,
 				dialogNode,
-				$userId
-		) );
+				$userId));
 	}
 }
 function makeOptions() {
@@ -430,7 +438,7 @@ class dbConnection{
 	//インスタンス
 	protected static $db;
 	//コンストラタ
-		private function_construct(){
+		private function_construct() {
 	try {
 		// 環境変数からデータベースへの接続情報を取得し
 		$url = parse_url ( getenv ( 'DATABASE_URL' ) );
