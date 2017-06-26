@@ -301,9 +301,9 @@ $response_format_text = [
 ];
 
 error_log($userId);
-error_log($json_string);
 error_log($text);
-$sql = "INSERT INTO botlog (USERID, CONTENTS, RETURN) VALUES ($userId, $json_string, $text)";
+error_log($json);
+$sql = "INSERT INTO botlog (USERID, CONTENTS, RETURN) VALUES ($userId, $text,$json )";
 
 pg_close($link);
 
