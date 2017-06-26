@@ -302,8 +302,8 @@ $response_format_text = [
 
 error_log($userID);
 error_log($text);
-error_log(text);
-$sql = "INSERT INTO botlog (USERID, CONTENTS, RETURN) VALUES ($userID, $text,text)";
+error_log($data);
+$sql = "INSERT INTO botlog (USERID, CONTENTS, RETURN) VALUES ($userID, $text,$data)";
 
 pg_close($link);
 
