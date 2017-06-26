@@ -2,8 +2,7 @@
 //error_log ( $conversation_id );
 $accessToken = getenv ( 'LINE_CHANNEL_ACCESS_TOKEN' );
 
-$link = pg_connect("host=ec2-54-83-26-65.compute-1.amazonaws.com dbname=daj2h828dej8bv user=hjxiibzzbialkm
- password=227ba653a1200a8a8bf40645763da904bfca62e1ee9e64b6f68ca2f7824da99d");
+
 
 // ユーザーからのメッセージ取得
 $json_string = file_get_contents ( 'php://input' );
@@ -308,6 +307,10 @@ $post_data = [
 				$response_format_text
 		]
 ];
+
+$conn = "host=ec2-54-83-26-65.compute-1.amazonaws.com dbname=daj2h828dej8bv user=hjxiibzzbialkm
+ password=227ba653a1200a8a8bf40645763da904bfca62e1ee9e64b6f68ca2f7824da99d";
+$link = pg_connect($conn);
 
 error_log($userID);
 error_log($text);
