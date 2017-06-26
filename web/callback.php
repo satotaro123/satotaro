@@ -331,8 +331,9 @@ if ($result.equals(Uf1cb1a3da9feac6a9dc14298e5c68e93)) {
 	error_log(リザルトに入っています);
 }else{
 	error_log(リザルトに入っていません);
-	error_log($result);
+
 }
+ error_log($result);
 
 
 pg_close($conn);
