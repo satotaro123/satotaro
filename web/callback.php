@@ -327,13 +327,13 @@ $result_flag = pg_query($sql);
 
 
 $result = pg_query('SELECT contents  FROM botlog');
-/*if ($result = 'Uf1cb1a3da9feac6a9dc14298e5c68e93') {
+if ($result = '確定申告の用紙が欲しい') {
 	error_log(リザルトに入っています);
 }else{
 	error_log(リザルトに入っていません);
 
 }
- */
+
 error_log($result);
 
 
