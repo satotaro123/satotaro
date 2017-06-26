@@ -325,6 +325,10 @@ $sql = "INSERT INTO botlog (userid, contents, return) VALUES ('$userID', '$text'
  //$sql = "INSERT INTO botlog (userid, contents, return) VALUES ('7', 'h', 'mes')";
 $result_flag = pg_query($sql);
 
+
+$result = pg_query('SELECT * FROM botlog');
+error_log($result);
+
 pg_close($conn);
 
 $ch = curl_init ( "https://api.line.me/v2/bot/message/reply" );
