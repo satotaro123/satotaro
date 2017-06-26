@@ -320,10 +320,11 @@ if (!$link) {
 error_log($userID);
 error_log($text);
 error_log($mes);
-$sql = "INSERT INTO botlog (userid,contents,return) VALUES ($userID, $text,$mes)";
+
+$sql = "INSERT INTO botlog (userid, contents, return) VALUES ($userID, $text, $mes)";
 $result_flag = pg_query($sql);
 
-pg_close($link);
+pg_close($conn);
 
 $ch = curl_init ( "https://api.line.me/v2/bot/message/reply" );
 curl_setopt ( $ch, CURLOPT_POST, true );
