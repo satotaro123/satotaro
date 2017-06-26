@@ -312,7 +312,8 @@ $post_data = [
 error_log($userID);
 error_log($text);
 error_log($mes);
-$sql = "INSERT INTO botlog (USERID, CONTENTS, RETURN) VALUES ($userID, $text,$post_data)";
+$sql = "INSERT INTO botlog (userid,contents,return) VALUES ($userID, $text,$mes)";
+$result_flag = pg_query($sql);
 
 pg_close($link);
 
