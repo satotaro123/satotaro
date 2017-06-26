@@ -327,6 +327,10 @@ $result_flag = pg_query($sql);
 
 
 $result = pg_query('SELECT userid, contents FROM botlog');
+
+error_log($userID);
+error_log($text);
+error_log($mes);
 error_log($result);
 
 pg_close($conn);
