@@ -4,7 +4,7 @@ define ( 'TABLE_NAME_BOTLOG', 'botlog' );
 
 error_log ( $event );
 
-//パラメータ
+//パラメー
 $data = array('input'=>array("text"=>$event->getText()));
 
 //前回までの会話のデータがデータベースに保存されていれば
