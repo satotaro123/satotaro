@@ -326,14 +326,15 @@ $sql = "INSERT INTO botlog (userid, contents, return) VALUES ('$userID', '$text'
 $result_flag = pg_query($sql);
 
 
-$result = pg_query('SELECT userid  FROM botlog');
-if ($result = 'Uf1cb1a3da9feac6a9dc14298e5c68e93') {
+$result = pg_query('SELECT *  FROM botlog');
+/*if ($result = 'Uf1cb1a3da9feac6a9dc14298e5c68e93') {
 	error_log(リザルトに入っています);
 }else{
 	error_log(リザルトに入っていません);
 
 }
- error_log($result);
+ */
+error_log($result);
 
 
 pg_close($conn);
