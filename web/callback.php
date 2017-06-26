@@ -331,8 +331,9 @@ if ($result==null) {
 	error_log(リザルトに入っていません);
 }else{
 	error_log(リザルトに値が入っています);
+	error_log($result);
 }
-error_log($result);
+
 
 pg_close($conn);
 //データベースの切断
