@@ -300,13 +300,6 @@ $response_format_text = [
 		"text" => $mes
 ];
 
-error_log($userID);
-error_log($text);
-error_log($data);
-$sql = "INSERT INTO botlog (USERID, CONTENTS, RETURN) VALUES ($userID, $text,$data)";
-
-pg_close($link);
-
 lineSend:
 error_log ( $response_format_text );
 $post_data = [
@@ -315,6 +308,13 @@ $post_data = [
 				$response_format_text
 		]
 ];
+
+error_log($userID);
+error_log($text);
+error_log($post_data);
+$sql = "INSERT INTO botlog (USERID, CONTENTS, RETURN) VALUES ($userID, $text,$post_data)";
+
+pg_close($link);
 
 $ch = curl_init ( "https://api.line.me/v2/bot/message/reply" );
 curl_setopt ( $ch, CURLOPT_POST, true );
