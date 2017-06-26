@@ -326,7 +326,7 @@ $sql = "INSERT INTO botlog (userid, contents, return) VALUES ('$userID', '$text'
 $result_flag = pg_query($sql);
 
 
-$result = pg_query('SELECT *  FROM botlog');
+$result = pg_query('SELECT userid  FROM botlog');
 if ($result==null) {
 	error_log(リザルトに入っていません);
 }else{
