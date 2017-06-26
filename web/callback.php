@@ -334,8 +334,8 @@ if ($result = '確定申告の用紙が欲しい') {
 
 }
 
-error_log($result);
-
+error_log($result)[0];
+error_log($result)[1];
 
 pg_close($conn);
 //データベースの切断
