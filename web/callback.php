@@ -1,7 +1,7 @@
 <?php
-//テーブル名を定義
+/*/テーブル名を定義
 define ( 'TABLE_NAME_BOTLOG', 'botlog' );
-
+*/
 
 
 error_log ( $line );
