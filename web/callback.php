@@ -1,9 +1,9 @@
 <?php
+error_log ( $conversation_id );
+$accessToken = getenv ( 'LINE_CHANNEL_ACCESS_TOKEN' );
 
 $link = pg_connect("host=ec2-54-83-26-65.compute-1.amazonaws.com dbname=daj2h828dej8bv user=hjxiibzzbialkm
  password=227ba653a1200a8a8bf40645763da904bfca62e1ee9e64b6f68ca2f7824da99d");
-
-$accessToken = getenv ( 'LINE_CHANNEL_ACCESS_TOKEN' );
 
 // ユーザーからのメッセージ取得
 $json_string = file_get_contents ( 'php://input' );
@@ -16,8 +16,7 @@ $text = $jsonObj->{"events"} [0]->{"message"}->{"text"};
 // ReplyToken取得
 $replyToken = $jsonObj->{"events"} [0]->{"replyToken"};
 // ユーザーID取得
-$userId = $jsonObj->{"events"} [0]->{"source"}->{"userId"};
-
+$userID = $jsonObj->{"events"} [0]->{"source"}->{"userId"};
 
 error_log ( $eventType );
 if ($eventType == "follow") {
@@ -56,15 +55,6 @@ if ($eventType == "follow") {
 	];
 	goto lineSend;
 }
-
-/*$fp = fopen ( "https://" . $_SERVER ['SERVER_NAME'] . "/php.txt", "r" );
-while ( $line = fgets ( $fp ) ) {
-	echo "$line<br />";
-	error_log ( $line );
-}
-fclose ( $fp );*/
-
-
 
 if ($eventType == "postback") {
 	$bData = $jsonObj->{"events"} [0]->{"postback"}->{"data"};
@@ -163,49 +153,49 @@ if ($type != "text") {
 }
 
 $classfier = "12d0fcx34-nlc-410";
-$workspace_id = "07465486-684f-4618-b5e6-fa7362b20e6c";
+$workspace_id = "766caa32-cd4c-4103-bb83-5719c9996ecc";
 
 // $url = "https://gateway.watson-j.jp/natural-language-classifier/api/v1/classifiers/".$classfier."/classify?text=".$text;
 // $url = "https://gateway.watson-j.jp/natural-language-classifier/api/v1/classifiers/".$classfier."/classify";
 $url = "https://gateway.watsonplatform.net/conversation/api/v1/workspaces/" . $workspace_id . "/message?version=2017-04-21";
 
-$username = "fe038c2b-1a1b-41fe-8a10-3cda71c90203";
-$password = "HsJnOFDeFLIU";
+$username = "e6ab6b4a-5e21-4649-9286-c6e20c60abc4";
+$password = "TyPTVSgRHbp5";
 
- $data = array("text" => $text);
+// $data = array("text" => $text);
 $data = array (
 		'input' => array (
 				"text" => $text
 		)
 );
-
-  $data["context"] = array("conversation_id" => "",
-  "system" => array("dialog_stack" => array(array("dialog_node" => "")),
-  "dialog_turn_counter" => 1,
-  "dialog_request_counter" => 1));
-
-  $curl = curl_init($url);
-
-  $options = array(
-  CURLOPT_HTTPHEADER => array(
-  'Content-Type: application/json',
-  ),
-  CURLOPT_USERPWD => $username . ':' . $password,
-  CURLOPT_POST => true,
-  CURLOPT_POSTFIELDS => json_encode($data),
-  CURLOPT_RETURNTRANSFER => true,
-  );
-
-  curl_setopt_array($curl, $options);
-  $jsonString = curl_exec($curl);
-
+/*
+ * $data["context"] = array("conversation_id" => "",
+ * "system" => array("dialog_stack" => array(array("dialog_node" => "")),
+ * "dialog_turn_counter" => 1,
+ * "dialog_request_counter" => 1));
+ *
+ * $curl = curl_init($url);
+ *
+ * $options = array(
+ * CURLOPT_HTTPHEADER => array(
+ * 'Content-Type: application/json',
+ * ),
+ * CURLOPT_USERPWD => $username . ':' . $password,
+ * CURLOPT_POST => true,
+ * CURLOPT_POSTFIELDS => json_encode($data),
+ * CURLOPT_RETURNTRANSFER => true,
+ * );
+ *
+ * curl_setopt_array($curl, $options);
+ * $jsonString = curl_exec($curl);
+ */
 $jsonString = callWatson ();
 $json = json_decode ( $jsonString, true );
 
-
-
+$conversation_id = $json ["context"] ["conversation_id"];
 $userArray [$userID] ["cid"] = $conversation_id;
 $userArray [$userID] ["time"] = date ( 'Y/m/d H:i:s' );
+//$lastConversationData [];
 
 $data ["context"] = array (
 		"conversation_id" => $conversation_id,
@@ -219,26 +209,28 @@ $data ["context"] = array (
 				"dialog_request_counter" => 1
 		)
 );
-  $curl_init($url);
-  $options = array(
-  CURLOPT_HTTPHEADER => array(
-  'Content-Type: application/json',
-  ),
-  CURLOPT_USERPWD => $username . ':' . $password,
-  CURLOPT_POST => true,
-  CURLOPT_POSTFIELDS => json_encode($data),
-  CURLOPT_RETURNTRANSFER => true,
-  );
 
-  curl_setopt_array($curl, $options);
-  $jsonString = curl_exec($curl);
-
+/*
+ * $curl = curl_init($url);
+ * $options = array(
+ * CURLOPT_HTTPHEADER => array(
+ * 'Content-Type: application/json',
+ * ),
+ * CURLOPT_USERPWD => $username . ':' . $password,
+ * CURLOPT_POST => true,
+ * CURLOPT_POSTFIELDS => json_encode($data),
+ * CURLOPT_RETURNTRANSFER => true,
+ * );
+ *
+ * curl_setopt_array($curl, $options);
+ * $jsonString = curl_exec($curl);
+ */
 $jsonString = callWatson ();
 // error_log($jsonString);
 $json = json_decode ( $jsonString, true );
 
 $mes = $json ["output"] ["text"] [0];
-$mes = $json["output"];
+// $mes = $json["output"];
 
 if ($mes == "usrChoise_1") {
 	$response_format_text = [
@@ -308,20 +300,11 @@ $response_format_text = [
 		"text" => $mes
 ];
 
-error_log($userId);
-error_log($json_string);
-error_log($text);
-
 $sql = "INSERT INTO botlog (USERID, CONTENTS, RETURN) VALUES ($userId, $json_string, $text)";
 
 pg_close($link);
 
-/*
-$fp = fopen ( "https://" . $_SERVER ['SERVER_NAME'] . "/php.txt", "w" );
-fwrite ( $fp, "ファイルへ書き込みサンプル" );
-fclose ( $fp );
-*/
-lineSend;
+lineSend:
 error_log ( $response_format_text );
 $post_data = [
 		"replyToken" => $replyToken,
@@ -341,9 +324,6 @@ curl_setopt ( $ch, CURLOPT_HTTPHEADER, array (
 ) );
 $result = curl_exec ( $ch );
 curl_close ( $ch );
-
-
-
 function makeOptions() {
 	global $username, $password, $data;
 	return array (
@@ -356,6 +336,24 @@ function makeOptions() {
 			CURLOPT_RETURNTRANSFER => true
 	);
 }
+
+curl_setopt_array ( $curl, $options );
+$jsonString = curl_exec ( $curl );
+$json = json_decode ( $jsonString, true );
+
+$conversationId = $json ["context"] ["conversation_id"];
+$dialogNode = $json ["context"] ["system"] ["dialog_stack"] [0] ["dialog_node"];
+
+$conversationData = array (
+		'conversation_id' => $conversationId,
+		'dialog_node' => $dialogNode
+);
+setLastConversationData ( $event->getUserId (), $conversationData );
+
+$outputText = $json ['output'] ['text'] [count ( $json ['output'] ['text'] ) - 1];
+
+replyTextMessage ( $bot, $event->getReplyToken (), $outputText );
+
 function callWatson() {
 	global $curl, $url, $username, $password, $data, $options;
 	$curl = curl_init ( $url );
@@ -373,6 +371,3 @@ function callWatson() {
 	curl_setopt_array ( $curl, $options );
 	return curl_exec ( $curl );
 }
-
-
-
