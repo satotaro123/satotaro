@@ -440,7 +440,7 @@ function getLastConversatiponData($userId){
 class dbConnection{
 	//インスタンス
 	protected static $db;
-	//コンストラタ
+	/*コンストラタ
 		private function_construct() {
 	try {
 		// 環境変数からデータベースへの接続情報を取得し
@@ -455,7 +455,7 @@ class dbConnection{
 		echo 'Connection Error:' . $e->getMessage ();
 	}
 }
-
+*/
 	//シングルトン。存在しない場合のみインスタンス化
 	public static function getConnection(){
 		if(!self::$db){
