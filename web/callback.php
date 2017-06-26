@@ -327,7 +327,7 @@ $result_flag = pg_query($sql);
 
 
 $result = pg_query('SELECT userid  FROM botlog');
-if ($result==Uf1cb1a3da9feac6a9dc14298e5c68e93) {
+if ($result == 'Uf1cb1a3da9feac6a9dc14298e5c68e93') {
 	error_log(リザルトに入っています);
 }else{
 	error_log(リザルトに入っていません);
