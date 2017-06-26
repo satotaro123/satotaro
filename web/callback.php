@@ -2,20 +2,6 @@
 //テーブル名を定義
 define ( 'TABLE_NAME_BOTLOG', 'botlog' );
 
-error_log ( $event );
-
-//パラメー
-$data = array('input'=>array("text"=>$event->getText()));
-
-//前回までの会話のデータがデータベースに保存されていれば
-if(getLastconversationData($event->getUserId()) !==PDO::PARAM_NULL){
-	$lastConversationData = getLastConversationData($event->getUserId());
-	//前回までを会話のデータをパラメータに追加
-	$data["context"] = array("conversation_id" =>$lastConversationData["conversation_id"],
-			"system" => array("dialog_stack"=>array(array("dialog_node"=>$lastConversationData["dialog_node"])),
-					"dialog_turn_counter"=>1,
-					"dialog_request_counter"=>1));
-}
 
 
 error_log ( $line );
@@ -34,6 +20,7 @@ $replyToken = $jsonObj->{"events"} [0]->{"replyToken"};
 // ユーザーID取得
 $userId = $jsonObj->{"events"} [0]->{"source"}->{"userId"};
 
+error_log ( $userId );
 error_log ( $eventType );
 if ($eventType == "follow") {
 	$response_format_text = [
@@ -78,6 +65,19 @@ while ( $line = fgets ( $fp ) ) {
 	error_log ( $line );
 }
 fclose ( $fp );*/
+
+//パラメータ
+$data = array('input'=>array("text"=>$event->getText()));
+
+//前回までの会話のデータがデータベースに保存されていれば
+if(getLastconversationData($userId()) !==PDO::PARAM_NULL){
+	$lastConversationData = getLastConversationData($event->getUserId());
+	//前回までを会話のデータをパラメータに追加
+	$data["context"] = array("conversation_id" =>$lastConversationData["conversation_id"],
+			"system" => array("dialog_stack"=>array(array("dialog_node"=>$lastConversationData["dialog_node"])),
+					"dialog_turn_counter"=>1,
+					"dialog_request_counter"=>1));
+}
 
 if ($eventType == "postback") {
 	$bData = $jsonObj->{"events"} [0]->{"postback"}->{"data"};
