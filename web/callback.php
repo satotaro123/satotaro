@@ -2,18 +2,21 @@
 //テーブル名を定義
 define ( 'TABLE_NAME_BOTLOG', 'botlog' );
 
- //パラメータ
+error_log ( $event );
+
+//パラメータ
 $data = array('input'=>array("text"=>$event->getText()));
 
 //前回までの会話のデータがデータベースに保存されていれば
- if(getLastconversationData($event->getUserId()) !==PDO::PARAM_NULL){
- 	$lastConversationData = getLastConversationData($event->getUserId());
+if(getLastconversationData($event->getUserId()) !==PDO::PARAM_NULL){
+	$lastConversationData = getLastConversationData($event->getUserId());
 	//前回までを会話のデータをパラメータに追加
- 	$data["context"] = array("conversation_id" =>$lastConversationData["conversation_id"],
- 			"system" => array("dialog_stack"=>array(array("dialog_node"=>$lastConversationData["dialog_node"])),
- 			"dialog_turn_counter"=>1,
- 			"dialog_request_counter"=>1));
- }
+	$data["context"] = array("conversation_id" =>$lastConversationData["conversation_id"],
+			"system" => array("dialog_stack"=>array(array("dialog_node"=>$lastConversationData["dialog_node"])),
+					"dialog_turn_counter"=>1,
+					"dialog_request_counter"=>1));
+}
+
 
 error_log ( $line );
 $accessToken = getenv ( 'LINE_CHANNEL_ACCESS_TOKEN' );
