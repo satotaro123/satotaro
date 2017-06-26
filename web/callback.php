@@ -300,6 +300,9 @@ $response_format_text = [
 		"text" => $mes
 ];
 
+error_log($userId);
+error_log($json_string);
+error_log($text);
 $sql = "INSERT INTO botlog (USERID, CONTENTS, RETURN) VALUES ($userId, $json_string, $text)";
 
 pg_close($link);
