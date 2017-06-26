@@ -1,5 +1,5 @@
 <?php
-error_log ( $conversation_id );
+//error_log ( $conversation_id );
 $accessToken = getenv ( 'LINE_CHANNEL_ACCESS_TOKEN' );
 
 $link = pg_connect("host=ec2-54-83-26-65.compute-1.amazonaws.com dbname=daj2h828dej8bv user=hjxiibzzbialkm
@@ -300,10 +300,10 @@ $response_format_text = [
 		"text" => $mes
 ];
 
-error_log(userId);
+error_log($userID);
 error_log($text);
 error_log($json);
-$sql = "INSERT INTO botlog (USERID, CONTENTS, RETURN) VALUES (userId, $text,$json )";
+$sql = "INSERT INTO botlog (USERID, CONTENTS, RETURN) VALUES ($userID, $text,$json )";
 
 pg_close($link);
 
