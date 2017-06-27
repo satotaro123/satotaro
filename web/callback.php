@@ -340,12 +340,9 @@ if (!$result) {
 //cvsdataテーブルでのデータ変更
 	$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId','$dialogNode')";
 	$result_flag = pg_query($sql);
-if(1==1){
-	error_log($conversationId);
-	error_log($dialogNode);
-}
-	/*
-	$sql = sprintf("UPDATE cvsdata SET userid = '$userID' , conversationid = '$conversationId', dnode = '$dialogNode'"
+
+
+	/*$sql = sprintf("UPDATE cvsdata SET userid = '$userID' , conversationid = '$conversationId', dnode = '$dialogNode'"
 			, pg_escape_string($userID, $conversationId, $dialogNode));
 
 	$result_flag = pg_query($sql);
