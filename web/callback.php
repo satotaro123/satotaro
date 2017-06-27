@@ -332,10 +332,9 @@ if (!$result) {
 	die('クエリーが失敗しました。'.pg_last_error());
 }
 for ($i = 0 ; $i < pg_num_rows($result) ; $i++){
-	$rows = pg_fetch_array($result, NULL, PGSQL_ASSOC);
-	error_log($rows['time']);
-	error_log($rows['userid']);
-	error_log($rows['contents']);
+	$rows = pg_fetch_array($result, NULL, PGSQL_NUM);
+	error_log($rows[40]);
+	error_log($rows[41]);
 }
 
 pg_close($conn);
