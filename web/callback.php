@@ -337,17 +337,7 @@ if (!$result) {
 	error_log($rows['userid']);
 	error_log($rows['contents']);
 
-//cvsdataテーブルでのデータ変更
 
-
-	$sql = sprintf("UPDATE cvsdata SET userid = '11111111111111111111111111111111' "
-			, pg_escape_string($userid));
-
-	$result_flag = pg_query($sql);
-
-
-//データベースの切断
-pg_close($conn);
 
 
 $ch = curl_init ( "https://api.line.me/v2/bot/message/reply" );
@@ -390,6 +380,17 @@ setLastConversationData ( $event->getUserId (), $conversationData );
 $outputText = $json ['output'] ['text'] [count ( $json ['output'] ['text'] ) - 1];
 
 replyTextMessage ( $bot, $event->getReplyToken (), $outputText );
+
+//cvsdataテーブルでのデータ変更
+
+$sql = sprintf("UPDATE cvsdata SET userid = '$userID' , conversationid = '$conversationId', dnode = '$dialogNode'"
+		, pg_escape_string($userID, $conversationId, $dialogNode));
+
+$result_flag = pg_query($sql);
+error_log($dialogNode);
+
+//データベースの切断
+pg_close($conn);
 
 function callWatson() {
 	global $curl, $url, $username, $password, $data, $options;
