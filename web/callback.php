@@ -213,13 +213,13 @@ if (!$result) {
 	die('クエリーが失敗しました。'.pg_last_error());
 }
 $rows = pg_fetch_array($result, NULL, PGSQL_ASSOC);
-error_log($rows[0]);
+error_log($rows[dnode]);
 
 //データベースの切断
 pg_close($conn);
 
 $data ["context"] = array ("conversation_id" => $conversation_id,"system" => array (
-		"dialog_stack" => array (array ("dialog_node" =>$rows[0])),
+		"dialog_stack" => array (array ("dialog_node" =>$rows[dnode])),
 				"dialog_turn_counter" => 1,
 				"dialog_request_counter" => 1));
 
