@@ -210,6 +210,7 @@ if (!$link) {
 //cvsdata テーブルからのデータの取得
 $dNode_result = pg_query('SELECT dnode FROM cvsdata');
 
+$dNode_result = "root";
 //データベースの切断
 pg_close($conn);
 
