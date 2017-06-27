@@ -206,7 +206,7 @@ if (!$link) {
 	error_log(接続に成功);
 }
 
-//cvsdataテーブルからのデータの取得
+//cvsdataテーブルからデータの取得
 $result = pg_query('SELECT dnode FROM cvsdata');
 
 if (!$result) {
