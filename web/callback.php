@@ -387,6 +387,12 @@ $json = json_decode ( $jsonString, true );
 $conversationId = $json ["context"] ["conversation_id"];
 $dialogNode = $json ["context"] ["system"] ["dialog_stack"] [0] ["dialog_node"];
 
+$conversationData = array (
+		'conversation_id' => $conversationId,
+		'dialog_node' => $dialogNode
+);
+setLastConversationData ( $event->getUserId (), $conversationData );
+
 //データベースへの接続
 $conn = "host=ec2-54-83-26-65.compute-1.amazonaws.com dbname=daj2h828dej8bv user=hjxiibzzbialkm
  password=227ba653a1200a8a8bf40645763da904bfca62e1ee9e64b6f68ca2f7824da99d";
@@ -408,11 +414,6 @@ $result_flag = pg_query($sql);
 //データベースの切断
 pg_close($conn);
 
-$conversationData = array (
-		'conversation_id' => $conversationId,
-		'dialog_node' => $dialogNode
-);
-setLastConversationData ( $event->getUserId (), $conversationData );
 
 $outputText = $json ['output'] ['text'] [count ( $json ['output'] ['text'] ) - 1];
 
