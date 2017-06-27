@@ -206,11 +206,12 @@ if (!$link) {
 	error_log(接続に成功);
 }
 
-$dialogNode = pg_query('SELECT dnode FROM cvsdata');
-
-if(1==1){
-error_log($dialogNode);
+$result = pg_query('SELECT dnode FROM cvsdata');
+if (!$result) {
+	die('クエリーが失敗しました。'.pg_last_error());
 }
+$rows = pg_fetch_array($result, NULL, PGSQL_ASSOC);
+
 
 //データベースの切断
 pg_close($conn);
@@ -220,7 +221,7 @@ $data ["context"] = array (
 		"system" => array (
 				"dialog_stack" => array (
 						array (
-								"dialog_node" => "root"
+								"dialog_node" => "$result"
 						)
 				),
 				"dialog_turn_counter" => 1,
