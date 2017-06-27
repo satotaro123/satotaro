@@ -327,8 +327,10 @@ $result_flag = pg_query($sql);
 
 
 $result = pg_query('SELECT userid  FROM botlog');
-if ($result = '確定申告の用紙が欲しい') {
+if ( $text = '確定申告の用紙が欲しい' ) {
 	error_log(リザルトに入っています);
+	error_log($result);
+
 }else{
 	error_log(リザルト入っていません);
 
