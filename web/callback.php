@@ -219,7 +219,7 @@ error_log($rows);
 pg_close($conn);
 
 $data ["context"] = array ("conversation_id" => $conversation_id,"system" => array (
-				"dialog_stack" => array (array ("dialog_node" =>"$rows")),
+				"dialog_stack" => array (array ("dialog_node" =>$rows)),
 				"dialog_turn_counter" => 1,
 				"dialog_request_counter" => 1));
 
