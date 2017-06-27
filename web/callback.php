@@ -321,12 +321,12 @@ error_log($userID);
 error_log($text);
 error_log($mes);
 
-$sql = "INSERT INTO botlog (userid return) VALUES ('$userID', '$text', '$mes')";
+$sql = "INSERT INTO botlog (userid, contents, return) VALUES ('$userID', '$text', '$mes')";
  //$sql = "INSERT INTO botlog (userid, contents, return) VALUES ('7', 'h', 'mes')";
 $result_flag = pg_query($sql);
 
 
-$result = pg_query('SELECT userid,contents FROM botlog');
+$result = pg_query('SELECT userid  FROM botlog');
 if ($result = '確定申告の用紙が欲しい') {
 	error_log(リザルトに入っています);
 }else{
