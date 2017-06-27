@@ -338,7 +338,7 @@ if (!$result) {
 	error_log($rows['contents']);
 
 //cvsdataテーブルでのデータ変更
-	$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId', '$dialogNode')";
+	$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '6', '7')";
 	$result_flag = pg_query($sql);
 
 	/*
