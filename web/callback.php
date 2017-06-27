@@ -326,7 +326,7 @@ $sql = "INSERT INTO botlog (userid, contents, return) VALUES ('$userID', '$text'
 $result_flag = pg_query($sql);
 
 //データの取得
-$result = pg_query('SELECT time, userid, contents FROM botlog LIMIT 1');
+$result = pg_query('SELECT time, userid, contents FROM botlog ORDER BY no DESC LIMIT 1');
 
 if (!$result) {
 	die('クエリーが失敗しました。'.pg_last_error());
