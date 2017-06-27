@@ -196,7 +196,7 @@ $userArray [$userID] ["cid"] = $conversation_id;
 $userArray [$userID] ["time"] = date ( 'Y/m/d H:i:s' );
 //$lastConversationData [];
 
-//データベースへの接続
+/*データベースへの接続
 $conn = "host=ec2-54-83-26-65.compute-1.amazonaws.com dbname=daj2h828dej8bv user=hjxiibzzbialkm
  password=227ba653a1200a8a8bf40645763da904bfca62e1ee9e64b6f68ca2f7824da99d";
 $link = pg_connect($conn);
@@ -206,25 +206,17 @@ if (!$link) {
 	error_log(接続に成功);
 }
 
-//botlog テーブルからのデータの取得
+//cvsdata テーブルからのデータの取得
 $result = pg_query('SELECT dnode FROM cvsdata ORDER BY no DESC LIMIT 1');
 
-if (!$result) {
-	die('クエリーが失敗しました。'.pg_last_error());
-}
-$rows = pg_fetch_array($result, NULL, PGSQL_ASSOC);
-error_log($rows['dnode']);
-error_log($result);
-
-//データベースの切断
-pg_close($conn);
+*/
 
 $data ["context"] = array (
 		"conversation_id" => $conversation_id,
 		"system" => array (
 				"dialog_stack" => array (
 						array (
-								"dialog_node" => $result
+								"dialog_node" =>"root"
 						)
 				),
 				"dialog_turn_counter" => 1,
