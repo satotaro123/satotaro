@@ -206,12 +206,14 @@ if (!$link) {
 	error_log(接続に成功);
 }
 
-$result = pg_query('SELECT dnode FROM cvsdata');
+//botlog テーブルからのデータの取得
+$result = pg_query('SELECT dnode FROM cvsdata ORDER BY no DESC LIMIT 1');
+
 if (!$result) {
 	die('クエリーが失敗しました。'.pg_last_error());
 }
 $rows = pg_fetch_array($result, NULL, PGSQL_ASSOC);
-
+error_log($rows['dnode']);
 error_log($result);
 
 //データベースの切断
