@@ -208,7 +208,9 @@ if (!$link) {
 
 $dialogNode = pg_query('SELECT dnode FROM cvsdata');
 
+if(1==1){
 error_log($dialogNode);
+}
 
 //データベースの切断
 pg_close($conn);
