@@ -212,6 +212,7 @@ if (!$result) {
 }
 $rows = pg_fetch_array($result, NULL, PGSQL_ASSOC);
 
+error_log($result);
 
 //データベースの切断
 pg_close($conn);
@@ -228,6 +229,8 @@ $data ["context"] = array (
 				"dialog_request_counter" => 1
 		)
 );
+
+error_log($result);
 
 /*
  * $curl = curl_init($url);
