@@ -152,7 +152,7 @@ if ($type != "text") {
 }
 
 $classfier = "12d0fcx34-nlc-410";
-$workspace_id = "766caa32-cd4c-4103-bb83-5719c9996ecc";
+$workspace_id = "07465486-684f-4618-b5e6-fa7362b20e6c";
 
 // $url = "https://gateway.watson-j.jp/natural-language-classifier/api/v1/classifiers/".$classfier."/classify?text=".$text;
 // $url = "https://gateway.watson-j.jp/natural-language-classifier/api/v1/classifiers/".$classfier."/classify";
