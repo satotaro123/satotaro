@@ -308,6 +308,7 @@ $post_data = [
 		]
 ];
 
+//データベースへの接続
 $conn = "host=ec2-54-83-26-65.compute-1.amazonaws.com dbname=daj2h828dej8bv user=hjxiibzzbialkm
  password=227ba653a1200a8a8bf40645763da904bfca62e1ee9e64b6f68ca2f7824da99d";
 $link = pg_connect($conn);
@@ -321,34 +322,29 @@ error_log($userID);
 error_log($text);
 error_log($mes);
 
-//データの登録
+//botlog テーブルへのデータ登録
 $sql = "INSERT INTO botlog (userid, contents, return) VALUES ('$userID', '$text', '$mes')";
 $result_flag = pg_query($sql);
 
-//データの取得
+//botlog テーブルからのデータの取得
 $result = pg_query('SELECT time, userid, contents FROM botlog ORDER BY no DESC LIMIT 1');
 
 if (!$result) {
 	die('クエリーが失敗しました。'.pg_last_error());
 }
-
-  //for ($i = 0 ; $i < pg_num_rows($result) ; $i++){
-
 	$rows = pg_fetch_array($result, NULL, PGSQL_ASSOC);
 	error_log($rows['time']);
 	error_log($rows['userid']);
 	error_log($rows['contents']);
-//}
 
-/*
-if ($no){
-	$rows = pg_fetch_array($result, NULL, PGSQL_ASSOC);
-	error_log($rows['time']);
-	error_log($rows['userid']);
-	error_log($rows['contents']);
-*/
-pg_close($conn);
+//cvsdataテーブルでのデータ変更
+	$sql = sprintf("UPDATE cvsdata SET userid = $userID , conversationid = $conversationId, dnode = $dialogNode");
+			//, pg_escape_string($name), $id);
+	$result_flag = pg_query($sql);
+
 //データベースの切断
+pg_close($conn);
+
 
 $ch = curl_init ( "https://api.line.me/v2/bot/message/reply" );
 curl_setopt ( $ch, CURLOPT_POST, true );
