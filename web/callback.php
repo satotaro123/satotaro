@@ -208,14 +208,14 @@ if (!$link) {
 
 
 //cvsdata テーブルからのデータの取得
-$dNode_result = pg_query('SELECT dnode FROM cvsdata');
+$result = pg_query('SELECT dnode FROM cvsdata');
+$rows = pg_fetch_array($result, NULL, PGSQL_ASSOC);
 
-$dNode_result = "root";
 //データベースの切断
 pg_close($conn);
 
 $data ["context"] = array ("conversation_id" => $conversation_id,"system" => array (
-				"dialog_stack" => array (array ("dialog_node" =>"$dNode_result")),
+				"dialog_stack" => array (array ("dialog_node" =>"$result")),
 				"dialog_turn_counter" => 1,
 				"dialog_request_counter" => 1));
 
