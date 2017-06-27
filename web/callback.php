@@ -371,23 +371,6 @@ $json = json_decode ( $jsonString, true );
 
 $conversationId = $json ["context"] ["conversation_id"];
 $dialogNode = $json ["context"] ["system"] ["dialog_stack"] [0] ["dialog_node"];
-//tesuto
-error_log($conversationId);
-error_log($dialogNode);
-
-
-
-
-
-$conversationData = array (
-		'conversation_id' => $conversationId,
-		'dialog_node' => $dialogNode
-);
-setLastConversationData ( $event->getUserId (), $conversationData );
-
-$outputText = $json ['output'] ['text'] [count ( $json ['output'] ['text'] ) - 1];
-
-replyTextMessage ( $bot, $event->getReplyToken (), $outputText );
 
 //データベースへの接続
 $conn = "host=ec2-54-83-26-65.compute-1.amazonaws.com dbname=daj2h828dej8bv user=hjxiibzzbialkm
@@ -405,10 +388,20 @@ $sql = sprintf("UPDATE cvsdata SET userid = '$userID' , conversationid = '$conve
 		, pg_escape_string($userID, $conversationId, $dialogNode));
 
 $result_flag = pg_query($sql);
-error_log($dialogNode);
+
 
 //データベースの切断
 pg_close($conn);
+
+$conversationData = array (
+		'conversation_id' => $conversationId,
+		'dialog_node' => $dialogNode
+);
+setLastConversationData ( $event->getUserId (), $conversationData );
+
+$outputText = $json ['output'] ['text'] [count ( $json ['output'] ['text'] ) - 1];
+
+replyTextMessage ( $bot, $event->getReplyToken (), $outputText );
 
 function callWatson() {
 	global $curl, $url, $username, $password, $data, $options;
