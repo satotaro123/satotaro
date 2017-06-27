@@ -221,7 +221,7 @@ $data ["context"] = array (
 		"system" => array (
 				"dialog_stack" => array (
 						array (
-								"dialog_node" => "$result"
+								"dialog_node" => $result
 						)
 				),
 				"dialog_turn_counter" => 1,
