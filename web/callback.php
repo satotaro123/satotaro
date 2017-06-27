@@ -338,8 +338,9 @@ if (!$result) {
 	error_log($rows['contents']);
 
 //cvsdataテーブルでのデータ変更
-	$sql = "UPDATE cvsdata SET userid = $userID , conversationid = $conversationId, dnode = $dialogNode";
-			//, pg_escape_string($name), $id);
+	$sql = sprintf("UPDATE cvsdata SET userid = '$userID' , conversationid = '$conversationId', dnode = '$dialogNode'"
+			, pg_escape_string($userID, $conversationId, $dialogNode));
+
 	$result_flag = pg_query($sql);
 	error_log($dialogNode);
 
