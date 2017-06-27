@@ -206,17 +206,18 @@ if (!$link) {
 	error_log(接続に成功);
 }
 
+
 //cvsdata テーブルからのデータの取得
-$dNode_result = pg_query('SELECT dnode FROM cvsdata ORDER BY no DESC LIMIT 1');
+$dNode_result = pg_query('SELECT dnode FROM cvsdata');
 
-
+//データベースの切断
+pg_close($conn);
 
 $data ["context"] = array ("conversation_id" => $conversation_id,"system" => array (
 				"dialog_stack" => array (array ("dialog_node" =>"$dNode_result")),
 				"dialog_turn_counter" => 1,
 				"dialog_request_counter" => 1));
 
-error_log($result);
 
 /*
  * $curl = curl_init($url);
