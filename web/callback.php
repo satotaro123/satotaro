@@ -323,8 +323,8 @@ error_log($text);
 error_log($mes);
 
 //botlog テーブルへのデータ登録
-//$sql = "INSERT INTO botlog (userid, contents, return) VALUES ('$userID', '$text', '$mes')";
-//$result_flag = pg_query($sql);
+$sql = "INSERT INTO botlog (userid, contents, return) VALUES ('$userID', '$text', '$mes')";
+$result_flag = pg_query($sql);
 
 //botlog テーブルからのデータの取得
 $result = pg_query('SELECT time, userid, contents FROM botlog ORDER BY no DESC LIMIT 1');
@@ -338,7 +338,7 @@ if (!$result) {
 	error_log($rows['contents']);
 
 //cvsdataテーブルでのデータ変更
-	$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '6', '7')";
+	$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', 'a','b' )";
 	$result_flag = pg_query($sql);
 
 	/*
