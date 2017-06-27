@@ -326,7 +326,7 @@ $sql = "INSERT INTO botlog (userid, contents, return) VALUES ('$userID', '$text'
 $result_flag = pg_query($sql);
 
 
-$result = pg_query('SELECT userid FROM botlog');
+$result = pg_query('SELECT userid,contents FROM botlog');
 if ($result = '確定申告の用紙が欲しい') {
 	error_log(リザルトに入っています);
 }else{
