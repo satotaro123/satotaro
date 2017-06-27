@@ -326,7 +326,7 @@ $sql = "INSERT INTO botlog (userid, contents, return) VALUES ('$userID', '$text'
 $result_flag = pg_query($sql);
 
 
-$result = pg_query('SELECT userid,contents FROM botlog');
+$result = pg_query('SELECT userid FROM botlog');
 if ($result = '確定申告の用紙が欲しい') {
 	error_log(リザルトに入っています);
 }else{
@@ -334,8 +334,8 @@ if ($result = '確定申告の用紙が欲しい') {
 
 }
 
-error_log($result[0]);
-error_log($result[1]);
+error_log($result);
+
 
 pg_close($conn);
 //データベースの切断
