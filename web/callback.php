@@ -329,7 +329,8 @@ $result_flag = pg_query($sql);
 //$result = pg_query('SELECT userid  FROM botlog');
 
 $sql = "SELECT * FROM botlog";
-if ( $text = '確定申告の用紙が欲しい' ) {
+$result_flag = pg_query($sql);
+/*if ( $text = '確定申告の用紙が欲しい' ) {
 	error_log(リザルトに入っています);
 	error_log($result);
 
@@ -339,7 +340,7 @@ if ( $text = '確定申告の用紙が欲しい' ) {
 }
 
 error_log($result);
-
+*/
 
 pg_close($conn);
 //データベースの切断
