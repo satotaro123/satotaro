@@ -321,7 +321,7 @@ error_log($userID);
 error_log($text);
 error_log($mes);
 
-$sql = "INSERT INTO botlog (userid, contents, return) VALUES ('$userID', '$text', '$mes')";
+$sql = "INSERT INTO botlog (userid return) VALUES ('$userID', '$text', '$mes')";
  //$sql = "INSERT INTO botlog (userid, contents, return) VALUES ('7', 'h', 'mes')";
 $result_flag = pg_query($sql);
 
