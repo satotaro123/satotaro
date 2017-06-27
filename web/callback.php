@@ -158,8 +158,8 @@ $workspace_id = "07465486-684f-4618-b5e6-fa7362b20e6c";
 // $url = "https://gateway.watson-j.jp/natural-language-classifier/api/v1/classifiers/".$classfier."/classify";
 $url = "https://gateway.watsonplatform.net/conversation/api/v1/workspaces/" . $workspace_id . "/message?version=2017-04-21";
 
-$username = "e6ab6b4a-5e21-4649-9286-c6e20c60abc4";
-$password = "TyPTVSgRHbp5";
+$username = "fe038c2b-1a1b-41fe-8a10-3cda71c90203";
+$password = "HsJnOFDeFLIU";
 
 // $data = array("text" => $text);
 $data = array (
