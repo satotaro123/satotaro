@@ -371,6 +371,13 @@ $json = json_decode ( $jsonString, true );
 
 $conversationId = $json ["context"] ["conversation_id"];
 $dialogNode = $json ["context"] ["system"] ["dialog_stack"] [0] ["dialog_node"];
+//tesuto
+error_log($conversationId);
+error_log($dialogNode);
+
+
+
+
 
 $conversationData = array (
 		'conversation_id' => $conversationId,
