@@ -323,8 +323,8 @@ error_log($text);
 error_log($mes);
 
 //botlog テーブルへのデータ登録
-$sql = "INSERT INTO botlog (userid, contents, return) VALUES ('$userID', '$text', '$mes')";
-$result_flag = pg_query($sql);
+//$sql = "INSERT INTO botlog (userid, contents, return) VALUES ('$userID', '$text', '$mes')";
+//$result_flag = pg_query($sql);
 
 //botlog テーブルからのデータの取得
 $result = pg_query('SELECT time, userid, contents FROM botlog ORDER BY no DESC LIMIT 1');
