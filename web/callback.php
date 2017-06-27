@@ -196,7 +196,7 @@ $userArray [$userID] ["cid"] = $conversation_id;
 $userArray [$userID] ["time"] = date ( 'Y/m/d H:i:s' );
 //$lastConversationData [];
 
-//データベースへの接続
+/*データベースへの接続
 $conn = "host=ec2-54-83-26-65.compute-1.amazonaws.com dbname=daj2h828dej8bv user=hjxiibzzbialkm
  password=227ba653a1200a8a8bf40645763da904bfca62e1ee9e64b6f68ca2f7824da99d";
 $link = pg_connect($conn);
@@ -210,13 +210,13 @@ $node = pg_query('SELECT dnode FROM cvsdata');
 
 //データベースの切断
 pg_close($conn);
-
+*/
 $data ["context"] = array (
 		"conversation_id" => $conversation_id,
 		"system" => array (
 				"dialog_stack" => array (
 						array (
-								"dialog_node" => "$node"
+								"dialog_node" => "root"
 						)
 				),
 				"dialog_turn_counter" => 1,
