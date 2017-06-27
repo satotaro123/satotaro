@@ -337,7 +337,8 @@ if (!$result) {
 	error_log($rows['userid']);
 	error_log($rows['contents']);
 
-
+//データベースの切断
+	pg_close($conn);
 
 
 $ch = curl_init ( "https://api.line.me/v2/bot/message/reply" );
@@ -380,6 +381,16 @@ setLastConversationData ( $event->getUserId (), $conversationData );
 $outputText = $json ['output'] ['text'] [count ( $json ['output'] ['text'] ) - 1];
 
 replyTextMessage ( $bot, $event->getReplyToken (), $outputText );
+
+//データベースへの接続
+$conn = "host=ec2-54-83-26-65.compute-1.amazonaws.com dbname=daj2h828dej8bv user=hjxiibzzbialkm
+ password=227ba653a1200a8a8bf40645763da904bfca62e1ee9e64b6f68ca2f7824da99d";
+$link = pg_connect($conn);
+if (!$link) {
+	error_log(接続に失敗);
+}else{
+	error_log(接続に成功);
+}
 
 //cvsdataテーブルでのデータ変更
 
