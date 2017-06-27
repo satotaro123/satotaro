@@ -338,16 +338,14 @@ if (!$result) {
 	error_log($rows['contents']);
 
 //cvsdataテーブルでのデータ変更
-	$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId','$dialogNode')";
-	$result_flag = pg_query($sql);
 
 
-	/*$sql = sprintf("UPDATE cvsdata SET userid = '$userID' , conversationid = '$conversationId', dnode = '$dialogNode'"
-			, pg_escape_string($userID, $conversationId, $dialogNode));
+	$sql = sprintf("UPDATE cvsdata SET userid = '11111111111111111111111111111111' "
+			, pg_escape_string($userid));
 
 	$result_flag = pg_query($sql);
-	error_log($dialogNode);
-*/
+
+
 //データベースの切断
 pg_close($conn);
 
