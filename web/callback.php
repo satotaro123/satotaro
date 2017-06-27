@@ -208,6 +208,8 @@ if (!$link) {
 
 $dialogNode = pg_query('SELECT dnode FROM cvsdata');
 
+error_log($dialogNode);
+
 //データベースの切断
 pg_close($conn);
 
@@ -216,7 +218,7 @@ $data ["context"] = array (
 		"system" => array (
 				"dialog_stack" => array (
 						array (
-								"dialog_node" => "$dialogNode"
+								"dialog_node" => "root"
 						)
 				),
 				"dialog_turn_counter" => 1,
