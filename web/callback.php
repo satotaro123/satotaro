@@ -333,8 +333,8 @@ if (!$result) {
 }
 for ($i = 0 ; $i < pg_num_rows($result) ; $i++){
 	$rows = pg_fetch_array($result, 34, PGSQL_ASSOC);
-	print($rows['userid']);
-	print($rows['contents']);
+	error_log($rows['userid']);
+	error_log($rows['contents']);
 }
 
 pg_close($conn);
