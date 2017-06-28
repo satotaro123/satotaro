@@ -402,7 +402,7 @@ if (!$link) {
 $result = pg_query('SELECT conversationid,dnode FROM cvsdata WHERE userid =$userID');
 $rows = pg_fetch_array($result, NULL, PGSQL_ASSOC);
 
-if(!$result){
+if($result=null){
 	$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId', '$dialogNode')";
 	$result_flag = pg_query($sql);
 }else{
