@@ -404,7 +404,7 @@ $sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '
 $result_flag = pg_query($sql);
 
 
-$result = pg_query('SELECT userid FROM cvsdata');
+/*$result = pg_query('SELECT userid FROM cvsdata');
 if (!$result) {
 	die('クエリーが失敗しました。'.pg_last_error());
 }
@@ -417,7 +417,7 @@ $sql = sprintf("UPDATE cvsdata SET  conversationid = '$conversationId', dnode = 
 
 $result_flag = pg_query($sql);
 
-
+*/
 //データベースの切断
 pg_close($conn);
 
