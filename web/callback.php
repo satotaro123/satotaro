@@ -398,22 +398,10 @@ if (!$link) {
 	error_log(接続に成功);
 }
 
-
 //cvsdataテーブルでのデータ変更
-/*$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId', '$dialogNode')";
-$result_flag = pg_query($sql);
-*/
 
-$result = pg_query('SELECT userid FROM cvsdata');
-if (!$result) {
-	die('クエリーが失敗しました。'.pg_last_error());
-}
-$rows = pg_fetch_array($result, NULL, PGSQL_ASSOC);
-
-if($userID ==$rows[userid]){
-$sql = sprintf("UPDATE cvsdata SET  conversationid = '$conversationId', dnode = '$dialogNode'"
-		, pg_escape_string($conversationId, $dialogNode));
-}
+$sql = sprintf("UPDATE cvsdata SET userid = '$userID' , conversationid = '$conversationId', dnode = '$dialogNode'"
+		, pg_escape_string($userID, $conversationId, $dialogNode));
 
 $result_flag = pg_query($sql);
 
