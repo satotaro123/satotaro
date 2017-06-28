@@ -401,8 +401,10 @@ if (!$link) {
 //cvsdataテーブルでのデータ変更
 $result = pg_query('SELECT conversationid,dnode FROM cvsdata WHERE userid =$userID');
 $rows = pg_fetch_array($result, NULL, PGSQL_ASSOC);
+$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId', '$dialogNode')";
+$result_flag = pg_query($sql);
 
-if($result=null){
+/*if($result=null){
 	$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId', '$dialogNode')";
 	$result_flag = pg_query($sql);
 }else{
@@ -411,7 +413,7 @@ if($result=null){
 
 	$result_flag = pg_query($sql);
 }
-
+*/
 //データベースの切断
 pg_close($conn);
 
