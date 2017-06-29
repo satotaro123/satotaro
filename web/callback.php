@@ -404,13 +404,14 @@ if (!$result) {
 	die('クエリーが失敗しました。'.pg_last_error());
 }
 $rows = pg_fetch_array($result, NULL, PGSQL_ASSOC);
+error_log($rows[dnode]);
 //$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId', 'dialogNode')";
 //$result_flag = pg_query($sql);
 
 if($rows[conversationid] =null){
 	$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId', '$dialogNode')";
 	$result_flag = pg_query($sql);
-	error_log($dialogNode);
+
 }else{
 	$sql = sprintf("UPDATE cvsdata SET  conversationid = '$conversationId', dnode = '$dialogNode'"
 			, pg_escape_string($conversationId, $dialogNode));
