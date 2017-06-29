@@ -205,23 +205,23 @@ if (! $link) {
 }
 
 // cvsdataテーブルからデータの取得
-$result = pg_query ( 'SELECT dnode FROM cvsdata' );
+$result = pg_query ('SELECT dnode FROM cvsdata');
 
 if (! $result) {
 	die ( 'クエリーが失敗しました。' . pg_last_error () );
 }
 $rows = pg_fetch_array ( $result, NULL, PGSQL_ASSOC );
-error_log ( $rows [dnode] );
+error_log ($rows[dnode]);
 
 // データベースの切断
-pg_close ( $conn );
+pg_close ($conn);
 
 $data ["context"] = array (
 		"conversation_id" => $conversation_id,
 		"system" => array (
 				"dialog_stack" => array (
 						array (
-								"dialog_node" => $rows [dnode]
+								"dialog_node" => $rows[dnode]
 						)
 				),
 				"dialog_turn_counter" => 1,
