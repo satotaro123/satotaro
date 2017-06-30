@@ -373,6 +373,28 @@ curl_setopt ( $ch, CURLOPT_HTTPHEADER, array (
 $result = curl_exec ( $ch );
 curl_close ( $ch );
 
+
+
+function makeOptions() {
+	global $username, $password, $data;
+	return array (
+			CURLOPT_HTTPHEADER => array (
+					'Content-Type: application/json'
+			),
+			CURLOPT_USERPWD => $username . ':' . $password,
+			CURLOPT_POST => true,
+			CURLOPT_POSTFIELDS => json_encode ( $data ),
+			CURLOPT_RETURNTRANSFER => true
+	);
+}
+
+curl_setopt_array ( $curl, $options );
+$jsonString = curl_exec ( $curl );
+$json = json_decode ( $jsonString, true );
+
+$conversationId = $json ["context"] ["conversation_id"];
+$dialogNode = $json ["context"] ["system"] ["dialog_stack"] [0] ["dialog_node"];
+
 // データベースへの接続
 $conn = "host=ec2-54-83-26-65.compute-1.amazonaws.com dbname=daj2h828dej8bv user=hjxiibzzbialkm
  password=227ba653a1200a8a8bf40645763da904bfca62e1ee9e64b6f68ca2f7824da99d";
@@ -407,28 +429,6 @@ pg_close ( $conn );
  *
  * replyTextMessage ( $bot, $event->getReplyToken (), $outputText );
  */
-
-function makeOptions() {
-	global $username, $password, $data;
-	return array (
-			CURLOPT_HTTPHEADER => array (
-					'Content-Type: application/json'
-			),
-			CURLOPT_USERPWD => $username . ':' . $password,
-			CURLOPT_POST => true,
-			CURLOPT_POSTFIELDS => json_encode ( $data ),
-			CURLOPT_RETURNTRANSFER => true
-	);
-}
-
-curl_setopt_array ( $curl, $options );
-$jsonString = curl_exec ( $curl );
-$json = json_decode ( $jsonString, true );
-
-$conversationId = $json ["context"] ["conversation_id"];
-$dialogNode = $json ["context"] ["system"] ["dialog_stack"] [0] ["dialog_node"];
-
-
 function callWatson() {
 	global $curl, $url, $username, $password, $data, $options;
 	$curl = curl_init ( $url );
