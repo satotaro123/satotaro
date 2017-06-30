@@ -403,7 +403,8 @@ if (! $link) {
 
 // cvsdataテーブルでのデータ変更
 
-$sql = sprintf ( "UPDATE cvsdata SET userid = '$userID' , conversationid = '$conversationId', dnode = '$dialogNode'", pg_escape_string ( $userID, $conversationId, $dialogNode ) );
+$sql = sprintf ( "UPDATE cvsdata SET userid = '$userID' , conversationid = '$conversationId', dnode = '$dialogNode'"
+		, pg_escape_string ( $userID, $conversationId, $dialogNode ) );
 
 $result_flag = pg_query ( $sql );
 
