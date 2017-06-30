@@ -410,7 +410,7 @@ if (! $link) {
 //$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId', '$dialogNode')";
 //$result_flag = pg_query ( $sql );
 
-$sql = sprintf ( "UPDATE cvsdata SET userid = '$userID' , conversationid = '$conversationId', dnode = '$dialogNode'"
+$sql = sprintf ( "UPDATE cvsdata SET userid = '$userID' , conversationid = '$conversationId', dnode = 'root'"
 		, pg_escape_string ( $userID, $conversationId, $dialogNode ) );
 
 $result_flag = pg_query ( $sql );
