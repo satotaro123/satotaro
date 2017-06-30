@@ -407,14 +407,14 @@ if (! $link) {
 
 // cvsdataテーブルでのデータ変更
 
-$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId', 'root')";
-$result_flag = pg_query ( $sql );
+//$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId', 'root')";
+//$result_flag = pg_query ( $sql );
 
-/*$sql = sprintf ( "UPDATE cvsdata SET userid = '$userID' , conversationid = '$conversationId', dnode = 'root'"
+$sql = sprintf ( "UPDATE cvsdata SET userid = '$userID' , conversationid = '$conversationId', dnode = 'root'"
 		, pg_escape_string ( $userID, $conversationId, $dialogNode ) );
 
 $result_flag = pg_query ( $sql );
-*/
+
 // データベースの切断
 pg_close ( $conn );
 
