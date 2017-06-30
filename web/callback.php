@@ -212,7 +212,7 @@ if (!$result) {
 }
 
 $rows = pg_fetch_array ( $result, NULL, PGSQL_ASSOC );
-error_log ($rows['dnode']);
+error_log ($rows[dnode]);
 
 // データベースの切断
 pg_close ($conn);
@@ -222,7 +222,7 @@ $data ["context"] = array (
 		"system" => array (
 				"dialog_stack" => array (
 						array (
-								"dialog_node" => $rows['dnode']
+								"dialog_node" => $rows[dnode]
 						)
 				),
 				"dialog_turn_counter" => 1,
@@ -404,11 +404,14 @@ if (! $link) {
 
 // cvsdataテーブルでのデータ変更
 
-$sql = sprintf ( "UPDATE cvsdata SET userid = '$userID' , conversationid = '$conversationId', dnode = '$dialogNode'"
+$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId', '$dialogNode')";
+$result_flag = pg_query ( $sql );
+
+/*$sql = sprintf ( "UPDATE cvsdata SET userid = '$userID' , conversationid = '$conversationId', dnode = '$dialogNode'"
 		, pg_escape_string ( $userID, $conversationId, $dialogNode ) );
 
 $result_flag = pg_query ( $sql );
-
+*/
 // データベースの切断
 pg_close ( $conn );
 
