@@ -419,7 +419,7 @@ if($rows[conversationid] = null){
 	$result_flag = pg_query($sql);
 
 }else{
-	$sql = sprintf("UPDATE cvsdata SET  conversationid = '$conversationId', dnode = '$dialogNode'"
+	$sql = sprintf("UPDATE cvsdata SET  userid = '$userID', conversationid = '$conversationId', dnode = '$dialogNode'"
 			, pg_escape_string($conversationId, $dialogNode));
 
 	$result_flag = pg_query($sql);
