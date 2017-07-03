@@ -407,9 +407,12 @@ if (! $link) {
 
 // cvsdataテーブルでデータ変更
 
-$result = pg_query('SELECT conversationid,dnode FROM cvsdata WHERE userid =$userID');
+$result = pg_query('SELECT userid, conversationid, dnode FROM cvsdata WHERE userid = $userID');
 $rows = pg_fetch_array($result, NULL, PGSQL_ASSOC);
-error_log($rows[dnode]);
+error_log('413');
+error_log($rows[userid]);
+error_log('415');
+error_log($userID);
 
 if($rows[conversationid] =null){
 	$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId', '$dialogNode')";
@@ -420,7 +423,9 @@ if($rows[conversationid] =null){
 			, pg_escape_string($conversationId, $dialogNode));
 
 	$result_flag = pg_query($sql);
+
 }
+
 //$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId', 'root')";
 //$result_flag = pg_query ( $sql );
 //$sql = sprintf ( "UPDATE cvsdata SET userid = '$userID' , conversationid = '$conversationId', dnode = '$dialogNode'"
