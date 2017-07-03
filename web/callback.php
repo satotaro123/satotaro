@@ -410,10 +410,10 @@ if (! $link) {
 $result = pg_query("SELECT * FROM cvsdata WHERE userid = '$userID'");
 $rows = pg_fetch_array($result, NULL, PGSQL_ASSOC);
 error_log('413');
-error_log($rows[conversationid]);
+error_log($rows[userid]);
 error_log('415');
 error_log($userID);
-
+/*
 if(!$rows[userid]= $userID){
 	$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId', '$dialogNode')";
 	$result_flag = pg_query($sql);
@@ -424,6 +424,18 @@ if(!$rows[userid]= $userID){
 
 	$result_flag = pg_query($sql);
 	error_log('426');
+}
+*/
+
+if($rows[userid] = $userID){
+	$sql = sprintf("UPDATE cvsdata SET  conversationid = '$conversationId', dnode = '$dialogNode'"
+			, pg_escape_string($conversationId, $dialogNode));
+
+	$result_flag = pg_query($sql);
+	error_log('426');
+}else{
+	$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId', '$dialogNode')";
+	$result_flag = pg_query($sql);
 }
 
 //$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId', 'root')";
