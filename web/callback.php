@@ -416,7 +416,7 @@ INSERT INTO cvsdata (userid, conversationid, dnode)
        SELECT $userID , '$conversationId', '$dialogNode'
        		WHERE NOT EXISTS (SELECT 1 FROM cvsdata WHERE userid = '$userID');
 */
-if ($rows[userid]=='$userID') {
+if (!$rows[userid]==null) {
 	$sql = sprintf ( "UPDATE cvsdata SET  conversationid = '$conversationId', dnode = '$dialogNode'"
 			, pg_escape_string ( $conversationId, $dialogNode ) );
 	$result_flag = pg_query ( $sql );
