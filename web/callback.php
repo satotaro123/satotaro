@@ -405,7 +405,7 @@ if (! $link) {
 	error_log ( 接続に成功 );
 }
 
-// cvsdataテーブルでのデータ変更
+// cvsdataテーブルでデータ変更
 
 //$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId', 'root')";
 //$result_flag = pg_query ( $sql );
