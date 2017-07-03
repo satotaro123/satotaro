@@ -407,7 +407,7 @@ if (! $link) {
 
 // cvsdataテーブルでデータ変更
 
-$result = pg_query('SELECT userid, conversationid, dnode FROM cvsdata ');
+$result = pg_query('SELECT userid, conversationid, dnode FROM cvsdata  WHERE dnode = 引っ越しの手続き');
 $rows = pg_fetch_array($result, NULL, PGSQL_ASSOC);
 error_log('413');
 error_log($rows[conversationid]);
