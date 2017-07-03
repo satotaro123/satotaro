@@ -417,13 +417,13 @@ INSERT INTO cvsdata (userid, conversationid, dnode)
        		WHERE NOT EXISTS (SELECT 1 FROM cvsdata WHERE userid = '$userID');
 */
 if ($rows[userid]==$userID) {
-	$sql = sprintf ( "UPDATE cvsdata SET  conversationid = '$conversationId', dnode = '$dialogNode'"
-			, pg_escape_string ( $conversationId, $dialogNode ) );
-	$result_flag = pg_query ( $sql );
+	$sql = sprintf ( "UPDATE cvsdata SET  conversationid = '$conversationId', dnode = '$dialogNode'");
+			//, pg_escape_string ( $conversationId, $dialogNode ) );
+	//$result_flag = pg_query ( $sql );
 
 } else {
 	$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId', '$dialogNode')";
-	$result_flag = pg_query ( $sql );
+	//$result_flag = pg_query ( $sql );
 }
 
 
