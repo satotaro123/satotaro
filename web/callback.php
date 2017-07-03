@@ -205,24 +205,24 @@ if (! $link) {
 }
 
 // cvsdataテーブルからデータの取得
-$result = pg_query ('SELECT dnode FROM cvsdata');
+$result = pg_query ( 'SELECT dnode FROM cvsdata' );
 
-if (!$result) {
+if (! $result) {
 	die ( 'クエリーが失敗しました。' . pg_last_error () );
 }
 
 $rows = pg_fetch_array ( $result, NULL, PGSQL_ASSOC );
-error_log ($rows[dnode]);
+error_log ( $rows [dnode] );
 
 // データベースの切断
-pg_close ($conn);
+pg_close ( $conn );
 
 $data ["context"] = array (
 		"conversation_id" => $conversation_id,
 		"system" => array (
 				"dialog_stack" => array (
 						array (
-								"dialog_node" => $rows[dnode]
+								"dialog_node" => $rows [dnode]
 						)
 				),
 				"dialog_turn_counter" => 1,
@@ -372,9 +372,6 @@ curl_setopt ( $ch, CURLOPT_HTTPHEADER, array (
 ) );
 $result = curl_exec ( $ch );
 curl_close ( $ch );
-
-
-
 function makeOptions() {
 	global $username, $password, $data;
 	return array (
@@ -394,7 +391,7 @@ $json = json_decode ( $jsonString, true );
 
 $conversationId = $json ["context"] ["conversation_id"];
 $dialogNode = $json ["context"] ["system"] ["dialog_stack"] [0] ["dialog_node"];
-error_log($dialogNode);
+error_log ( $dialogNode );
 // データベースへの接続
 $conn = "host=ec2-54-83-26-65.compute-1.amazonaws.com dbname=daj2h828dej8bv user=hjxiibzzbialkm
  password=227ba653a1200a8a8bf40645763da904bfca62e1ee9e64b6f68ca2f7824da99d";
@@ -407,42 +404,41 @@ if (! $link) {
 
 // cvsdataテーブルでデータ変更
 
-$result = pg_query("SELECT * FROM cvsdata WHERE userid = '$userID'");
-$rows = pg_fetch_array($result, NULL, PGSQL_ASSOC);
-error_log('413');
-error_log($rows[userid]);
-error_log('415');
-error_log($userID);
+$result = pg_query ( "SELECT * FROM cvsdata WHERE userid = '$userID'" );
+$rows = pg_fetch_array ( $result, NULL, PGSQL_ASSOC );
+error_log ( '413' );
+error_log ( $rows [userid] );
+error_log ( '415' );
+error_log ( $userID );
 /*
-if(!$rows[userid]= $userID){
+ * if(!$rows[userid]= $userID){
+ * $sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId', '$dialogNode')";
+ * $result_flag = pg_query($sql);
+ *
+ * }else if($rows[userid]= $userID){
+ * $sql = sprintf("UPDATE cvsdata SET conversationid = '$conversationId', dnode = '$dialogNode'"
+ * , pg_escape_string($conversationId, $dialogNode));
+ *
+ * $result_flag = pg_query($sql);
+ * error_log('426');
+ * }
+ */
+
+if ($rows [userid] = "$userID") {
 	$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId', '$dialogNode')";
-	$result_flag = pg_query($sql);
+	$result_flag = pg_query ( $sql );
 
-}else if($rows[userid]= $userID){
-	$sql = sprintf("UPDATE cvsdata SET  conversationid = '$conversationId', dnode = '$dialogNode'"
-			, pg_escape_string($conversationId, $dialogNode));
+} else {
 
-	$result_flag = pg_query($sql);
-	error_log('426');
-}
-*/
-
-if($rows[userid] = "$userID"){
-	$sql = sprintf("UPDATE cvsdata SET userid = '$userID', conversationid = '$conversationId', dnode = '$dialogNode'"
-			, pg_escape_string($conversationId, $dialogNode));
-
-	$result_flag = pg_query($sql);
-	error_log('426');
-}else{
-	$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId', '$dialogNode')";
-	$result_flag = pg_query($sql);
+	$sql = sprintf ( "UPDATE cvsdata SET  conversationid = '$conversationId', dnode = '$dialogNode'", pg_escape_string ( $conversationId, $dialogNode ) );
+	$result_flag = pg_query ( $sql );
 }
 
-//$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId', 'root')";
-//$result_flag = pg_query ( $sql );
-//$sql = sprintf ( "UPDATE cvsdata SET userid = '$userID' , conversationid = '$conversationId', dnode = '$dialogNode'"
-		//, pg_escape_string ( $userID, $conversationId, $dialogNode ) );
-//$result_flag = pg_query ( $sql );
+// $sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId', 'root')";
+// $result_flag = pg_query ( $sql );
+// $sql = sprintf ( "UPDATE cvsdata SET userid = '$userID' , conversationid = '$conversationId', dnode = '$dialogNode'"
+// , pg_escape_string ( $userID, $conversationId, $dialogNode ) );
+// $result_flag = pg_query ( $sql );
 
 // データベースの切断
 pg_close ( $conn );
