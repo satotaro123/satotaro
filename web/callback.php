@@ -414,7 +414,7 @@ error_log($rows[conversationid]);
 error_log('415');
 error_log($userID);
 
-if(!$result){
+if($rows[conversationid] = null){
 	$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId', '$dialogNode')";
 	$result_flag = pg_query($sql);
 
