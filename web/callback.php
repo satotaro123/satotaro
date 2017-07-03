@@ -404,7 +404,7 @@ if (! $link) {
 
 // cvsdataテーブルでデータ変更
 
-$result = pg_query ( "SELECT * FROM cvsdata WHERE userid LIKE '$userID'" );
+$result = pg_query ( "SELECT * FROM cvsdata WHERE userid = '$userID'" );
 $rows = pg_fetch_array ( $result, NULL, PGSQL_ASSOC );
 error_log ( '413' );
 error_log ( $rows [userid] );
@@ -416,7 +416,7 @@ INSERT INTO cvsdata (userid, conversationid, dnode)
        SELECT $userID , '$conversationId', '$dialogNode'
        		WHERE NOT EXISTS (SELECT 1 FROM cvsdata WHERE userid = '$userID');
 */
-if ($rows [userid] = "$userID") {
+if ($rows [userid] = $userID) {
 	$sql = sprintf ( "UPDATE cvsdata SET  conversationid = '$conversationId', dnode = '$dialogNode'"
 			, pg_escape_string ( $conversationId, $dialogNode ) );
 	$result_flag = pg_query ( $sql );
