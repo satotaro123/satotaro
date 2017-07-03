@@ -414,11 +414,11 @@ error_log($rows[conversationid]);
 error_log('415');
 error_log($userID);
 
-if($rows[conversationid] = null){
+if(!$rows[userid]= $userID){
 	$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId', '$dialogNode')";
 	$result_flag = pg_query($sql);
 
-}else{
+}else if($rows[userid]= $userID){
 	$sql = sprintf("UPDATE cvsdata SET  conversationid = '$conversationId', dnode = '$dialogNode'"
 			, pg_escape_string($conversationId, $dialogNode));
 
