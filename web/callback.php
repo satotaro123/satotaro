@@ -410,7 +410,7 @@ if (! $link) {
 $result = pg_query('SELECT userid, conversationid, dnode FROM cvsdata WHERE userid = $userID');
 $rows = pg_fetch_array($result, NULL, PGSQL_ASSOC);
 error_log('413');
-error_log($rows[userid]);
+error_log($rows[conversationid]);
 error_log('415');
 error_log($userID);
 
