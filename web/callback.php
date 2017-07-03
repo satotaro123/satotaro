@@ -423,7 +423,7 @@ if($rows[conversationid] =null){
 			, pg_escape_string($conversationId, $dialogNode));
 
 	$result_flag = pg_query($sql);
-
+	error_log('426');
 }
 
 //$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId', 'root')";
