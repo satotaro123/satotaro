@@ -212,32 +212,45 @@ $rows = pg_fetch_array ( $result, NULL, PGSQL_ASSOC );
 
 if ( $rows[dnode] == null) {
 	error_log(214);
-	$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId', '$dialogNode')";
-	$result_flag = pg_query ( $sql );
 
+	$data ["context"] = array (
+			"conversation_id" => $conversation_id,
+			"system" => array (
+					"dialog_stack" => array (
+							array (
+									"dialog_node" => 'root'
+							)
+					),
+					"dialog_turn_counter" => 1,
+					"dialog_request_counter" => 1
+			)
+	);
+
+}else{
+	$data ["context"] = array (
+			"conversation_id" => $conversation_id,
+			"system" => array (
+					"dialog_stack" => array (
+							array (
+									"dialog_node" => $rows [dnode]
+							)
+					),
+					"dialog_turn_counter" => 1,
+					"dialog_request_counter" => 1
+			)
+	);
 }
 
-$result = pg_query ( 'SELECT dnode FROM cvsdata' );
-$rows = pg_fetch_array ( $result, NULL, PGSQL_ASSOC );
-error_log(223);
-error_log($rows[dnode]);
+
+error_log(245);
+error_log("dialog_node");
+
 
 
 // データベースの切断
 pg_close ( $conn );
 
-$data ["context"] = array (
-		"conversation_id" => $conversation_id,
-		"system" => array (
-				"dialog_stack" => array (
-						array (
-								"dialog_node" => $rows [dnode]
-						)
-				),
-				"dialog_turn_counter" => 1,
-				"dialog_request_counter" => 1
-		)
-);
+
 
 /*
  * $curl = curl_init($url);
