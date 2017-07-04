@@ -214,7 +214,7 @@ if ( $rows[dnode] == null) {
 	error_log(214);
 	//$sql = "INSERT INTO cvsdata (dnode) VALUES ('$')";
 	//$result_flag = pg_query ( $sql );
-	$rows[dnode] = root;
+	$rows[dnode] = "root";
 }
 
 $result = pg_query ( 'SELECT dnode FROM cvsdata' );
