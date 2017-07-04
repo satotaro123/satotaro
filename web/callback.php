@@ -207,10 +207,11 @@ if (! $link) {
 // cvsdataテーブルからデータの取得
 $result = pg_query ( 'SELECT dnode FROM cvsdata' );
 $rows = pg_fetch_array ( $result, NULL, PGSQL_ASSOC );
-error_log ( $rows [dnode] );
+
 
 if ( $rows[dnode] == null) {
-	$sql = "INSERT INTO cvsdata (dnode) VALUES (root)";
+	error_log(214);
+	$sql = "INSERT INTO cvsdata (dnode) VALUES ('root')";
 	$result_flag = pg_query ( $sql );
 
 }
