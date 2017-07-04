@@ -209,9 +209,10 @@ $result = pg_query ( 'SELECT dnode FROM cvsdata' );
 $rows = pg_fetch_array ( $result, NULL, PGSQL_ASSOC );
 
 
+$satotaro = 'root';
 if ( $rows[dnode] == null) {
 	error_log(214);
-	$sql = "INSERT INTO cvsdata (dnode) VALUES ('root')";
+	$sql = "INSERT INTO cvsdata (dnode) VALUES ('$satotaro')";
 	$result_flag = pg_query ( $sql );
 
 }
