@@ -212,9 +212,9 @@ $rows = pg_fetch_array ( $result, NULL, PGSQL_ASSOC );
 
 if ( $rows[dnode] == null) {
 	error_log(214);
-	//$sql = "INSERT INTO cvsdata (dnode) VALUES ('$')";
-	//$result_flag = pg_query ( $sql );
-	$rows[dnode] = "root";
+	$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId', '$dialogNode')";
+	$result_flag = pg_query ( $sql );
+
 }
 
 $result = pg_query ( 'SELECT dnode FROM cvsdata' );
