@@ -207,7 +207,7 @@ if (! $link) {
 // cvsdataテーブルからデータの取得
 $result = pg_query ( 'SELECT dnode FROM cvsdata' );
 
-if (! $result) {
+if ( $result == null) {
 	die ( 'クエリーが失敗しました。' . pg_last_error () );
 }
 
