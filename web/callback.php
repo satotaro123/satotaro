@@ -210,11 +210,14 @@ $rows = pg_fetch_array ( $result, NULL, PGSQL_ASSOC );
 error_log ( $rows [dnode] );
 
 if ( $rows[dnode] == null) {
-	error_log (接続に失敗しました);
-	//die ( 'クエリーが失敗しました。' . pg_last_error () );
+	$sql = "INSERT INTO cvsdata (dnode) VALUES ('root')";
+	$result_flag = pg_query ( $sql );
+
 }
 
-
+$result = pg_query ( 'SELECT dnode FROM cvsdata' );
+$rows = pg_fetch_array ( $result, NULL, PGSQL_ASSOC );
+error_log($rows[dnode]);
 
 
 // データベースの切断
