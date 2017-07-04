@@ -199,9 +199,9 @@ $conn = "host=ec2-54-83-26-65.compute-1.amazonaws.com dbname=daj2h828dej8bv user
  password=227ba653a1200a8a8bf40645763da904bfca62e1ee9e64b6f68ca2f7824da99d";
 $link = pg_connect ( $conn );
 if (! $link) {
-	error_log ( 接続に失敗 );
+	error_log ( '202接続に失敗' );
 } else {
-	error_log ( 接続に成功 );
+	error_log ( '204接続に成功' );
 }
 
 // cvsdataテーブルからデータの取得
@@ -341,9 +341,9 @@ $conn = "host=ec2-54-83-26-65.compute-1.amazonaws.com dbname=daj2h828dej8bv user
  password=227ba653a1200a8a8bf40645763da904bfca62e1ee9e64b6f68ca2f7824da99d";
 $link = pg_connect ( $conn );
 if (! $link) {
-	error_log ( '接続に失敗' );
+	error_log ( '344接続に失敗' );
 } else {
-	error_log ( '接続に成功' );
+	error_log ( '346接続に成功' );
 }
 
 error_log ( $userID );
@@ -404,9 +404,9 @@ $conn = "host=ec2-54-83-26-65.compute-1.amazonaws.com dbname=daj2h828dej8bv user
  password=227ba653a1200a8a8bf40645763da904bfca62e1ee9e64b6f68ca2f7824da99d";
 $link = pg_connect ( $conn );
 if (! $link) {
-	error_log ( '接続に失敗' );
+	error_log ( '407接続に失敗' );
 } else {
-	error_log ( '接続に成功' );
+	error_log ( '409接続に成功' );
 }
 
 // cvsdataテーブルでデータ変更
