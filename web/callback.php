@@ -205,7 +205,7 @@ if (! $link) {
 }
 
 // cvsdataテーブルからデータの取得
-$result = pg_query ( 'SELECT dnode FROM cvsdata' );
+$result = pg_query ( "SELECT dnode FROM cvsdata WHERE userid = '$userID'");
 $rows = pg_fetch_array ( $result, NULL, PGSQL_ASSOC );
 
 
