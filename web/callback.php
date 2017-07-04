@@ -207,13 +207,15 @@ if (! $link) {
 // cvsdataテーブルからデータの取得
 $result = pg_query ( 'SELECT dnode FROM cvsdata' );
 $rows = pg_fetch_array ( $result, NULL, PGSQL_ASSOC );
+error_log ( $rows [dnode] );
 
 if ( $rows[dnode] == null) {
-	die ( 'クエリーが失敗しました。' . pg_last_error () );
+	error_log (接続に失敗しました);
+	//die ( 'クエリーが失敗しました。' . pg_last_error () );
 }
 
 
-error_log ( $rows [dnode] );
+
 
 // データベースの切断
 pg_close ( $conn );
