@@ -146,6 +146,7 @@ if ($eventType == "postback") {
 
 // メッセージ以外のときは何も返さず終了
 if ($type != "text") {
+	error_log(149);
 	exit ();
 }
 
