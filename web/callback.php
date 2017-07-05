@@ -15,7 +15,6 @@ $replyToken = $jsonObj->{"events"} [0]->{"replyToken"};
 // ユーザーID取得
 $userID = $jsonObj->{"events"} [0]->{"source"}->{"userId"};
 
-error_log ( $eventType );
 if ($eventType == "follow") {
 	$response_format_text = [
 			"type" => "template",
