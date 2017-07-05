@@ -143,7 +143,7 @@ if ($eventType == "postback") {
 	}
 }
 
-// メッセージ以外のときは何も返さず終了
+// メッセージ以外のとき何も返さず終了
 if ($type != "text") {
 	$url = 'https://gateway-a.watsonplatform.net/visual-recognition/api';
 	$api_response = watson_visual_recognition($url);
