@@ -146,330 +146,332 @@ if ($eventType == "postback") {
 
 // メッセージ以外のときは何も返さず終了
 if ($type != "text") {
-	error_log(149);
-	exit ();
-}
-
-$classfier = "12d0fcx34-nlc-410";
-$workspace_id = "07465486-684f-4618-b5e6-fa7362b20e6c";
-
-// $url = "https://gateway.watson-j.jp/natural-language-classifier/api/v1/classifiers/".$classfier."/classify?text=".$text;
-// $url = "https://gateway.watson-j.jp/natural-language-classifier/api/v1/classifiers/".$classfier."/classify";
-$url = "https://gateway.watsonplatform.net/conversation/api/v1/workspaces/" . $workspace_id . "/message?version=2017-04-21";
-
-$username = "fe038c2b-1a1b-41fe-8a10-3cda71c90203";
-$password = "HsJnOFDeFLIU";
-
-// $data = array("text" => $text);
-$data = array (
-		'input' => array (
-				"text" => $text
-		)
-);
-/*
- * $data["context"] = array("conversation_id" => "",
- * "system" => array("dialog_stack" => array(array("dialog_node" => "")),
- * "dialog_turn_counter" => 1,
- * "dialog_request_counter" => 1));
- *
- * $curl = curl_init($url);
- *
- * $options = array(
- * CURLOPT_HTTPHEADER => array(
- * 'Content-Type: application/json',
- * ),
- * CURLOPT_USERPWD => $username . ':' . $password,
- * CURLOPT_POST => true,
- * CURLOPT_POSTFIELDS => json_encode($data),
- * CURLOPT_RETURNTRANSFER => true,
- * );
- *
- * curl_setopt_array($curl, $options);
- * $jsonString = curl_exec($curl);
- */
-$jsonString = callWatson ();
-$json = json_decode ( $jsonString, true );
-
-$conversation_id = $json ["context"] ["conversation_id"];
-$userArray [$userID] ["cid"] = $conversation_id;
-$userArray [$userID] ["time"] = date ( 'Y/m/d H:i:s' );
-// $lastConversationData [];
-
-// データベースへの接続
-$conn = "host=ec2-54-83-26-65.compute-1.amazonaws.com dbname=daj2h828dej8bv user=hjxiibzzbialkm
- password=227ba653a1200a8a8bf40645763da904bfca62e1ee9e64b6f68ca2f7824da99d";
-$link = pg_connect ( $conn );
-if (! $link) {
-	error_log ( '202接続に失敗' );
+	$tmpfname = tempnam ( './', 'json_string_' );
+	unlink ( $tempfname );
+	$tmpfname = $tmpname . '.jpg';
+	$url = 'https://gateway-a.watsonplatform.net/visual-recognition/api';
+	$username = "fe038c2b-1a1b-41fe-8a10-3cda71c90203";
+	$password = "HsJnOFDeFLIU";
+	$api_response = watson_visual_recognition ( $url );
+	function watson_visual_recognition($url) {
+		$api_key = '283b9efc0122dd901eda82e72b178c2ac9ae9d20'; // IBM Bluemixで取得
+		$api_url = 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify';
+		$response = file_get_contents ( $api_url . '?api_key=' . $api_key . '&url=' . $url . '&version=2016-05-19' );
+		return json_decode ( $response, true );
+	}
 } else {
-	error_log ( '204接続に成功' );
-}
 
-// cvsdataテーブルからデータの取得
-$result = pg_query ( "SELECT dnode FROM cvsdata WHERE userid = '$userID'");
-$rows = pg_fetch_array ( $result, NULL, PGSQL_ASSOC );
+	$classfier = "12d0fcx34-nlc-410";
+	$workspace_id = "07465486-684f-4618-b5e6-fa7362b20e6c";
 
+	// $url = "https://gateway.watson-j.jp/natural-language-classifier/api/v1/classifiers/".$classfier."/classify?text=".$text;
+	// $url = "https://gateway.watson-j.jp/natural-language-classifier/api/v1/classifiers/".$classfier."/classify";
+	$url = "https://gateway.watsonplatform.net/conversation/api/v1/workspaces/" . $workspace_id . "/message?version=2017-04-21";
 
+	$username = "fe038c2b-1a1b-41fe-8a10-3cda71c90203";
+	$password = "HsJnOFDeFLIU";
 
-if ( $rows[dnode] == null) {
-	error_log(214);
-
-	$data ["context"] = array (
-			"conversation_id" => $conversation_id,
-			"system" => array (
-					"dialog_stack" => array (
-							array (
-									"dialog_node" => 'root'
-							)
-					),
-					"dialog_turn_counter" => 1,
-					"dialog_request_counter" => 1
+	// $data = array("text" => $text);
+	$data = array (
+			'input' => array (
+					"text" => $text
 			)
 	);
+	/*
+	 * $data["context"] = array("conversation_id" => "",
+	 * "system" => array("dialog_stack" => array(array("dialog_node" => "")),
+	 * "dialog_turn_counter" => 1,
+	 * "dialog_request_counter" => 1));
+	 *
+	 * $curl = curl_init($url);
+	 *
+	 * $options = array(
+	 * CURLOPT_HTTPHEADER => array(
+	 * 'Content-Type: application/json',
+	 * ),
+	 * CURLOPT_USERPWD => $username . ':' . $password,
+	 * CURLOPT_POST => true,
+	 * CURLOPT_POSTFIELDS => json_encode($data),
+	 * CURLOPT_RETURNTRANSFER => true,
+	 * );
+	 *
+	 * curl_setopt_array($curl, $options);
+	 * $jsonString = curl_exec($curl);
+	 */
+	$jsonString = callWatson ();
+	$json = json_decode ( $jsonString, true );
 
-}else{
-	$data ["context"] = array (
-			"conversation_id" => $conversation_id,
-			"system" => array (
-					"dialog_stack" => array (
-							array (
-									"dialog_node" => $rows [dnode]
-							)
-					),
-					"dialog_turn_counter" => 1,
-					"dialog_request_counter" => 1
-			)
-	);
-}
+	$conversation_id = $json ["context"] ["conversation_id"];
+	$userArray [$userID] ["cid"] = $conversation_id;
+	$userArray [$userID] ["time"] = date ( 'Y/m/d H:i:s' );
+	// $lastConversationData [];
 
+	// データベースへの接続
+	$conn = "host=ec2-54-83-26-65.compute-1.amazonaws.com dbname=daj2h828dej8bv user=hjxiibzzbialkm
+ password=227ba653a1200a8a8bf40645763da904bfca62e1ee9e64b6f68ca2f7824da99d";
+	$link = pg_connect ( $conn );
+	if (! $link) {
+		error_log ( '202接続に失敗' );
+	} else {
+		error_log ( '204接続に成功' );
+	}
 
-error_log(245);
-error_log("dialog_node");
+	// cvsdataテーブルからデータの取得
+	$result = pg_query ( "SELECT dnode FROM cvsdata WHERE userid = '$userID'" );
+	$rows = pg_fetch_array ( $result, NULL, PGSQL_ASSOC );
 
+	if ($rows [dnode] == null) {
+		error_log ( 214 );
 
+		$data ["context"] = array (
+				"conversation_id" => $conversation_id,
+				"system" => array (
+						"dialog_stack" => array (
+								array (
+										"dialog_node" => 'root'
+								)
+						),
+						"dialog_turn_counter" => 1,
+						"dialog_request_counter" => 1
+				)
+		);
+	} else {
+		$data ["context"] = array (
+				"conversation_id" => $conversation_id,
+				"system" => array (
+						"dialog_stack" => array (
+								array (
+										"dialog_node" => $rows [dnode]
+								)
+						),
+						"dialog_turn_counter" => 1,
+						"dialog_request_counter" => 1
+				)
+		);
+	}
 
-// データベースの切断
-pg_close ( $conn );
+	error_log ( 245 );
+	error_log ( "dialog_node" );
 
+	// データベースの切断
+	pg_close ( $conn );
 
+	/*
+	 * $curl = curl_init($url);
+	 * $options = array(
+	 * CURLOPT_HTTPHEADER => array(
+	 * 'Content-Type: application/json',
+	 * ),
+	 * CURLOPT_USERPWD => $username . ':' . $password,
+	 * CURLOPT_POST => true,
+	 * CURLOPT_POSTFIELDS => json_encode($data),
+	 * CURLOPT_RETURNTRANSFER => true,
+	 * );
+	 *
+	 * curl_setopt_array($curl, $options);
+	 * $jsonString = curl_exec($curl);
+	 */
+	$jsonString = callWatson ();
+	// error_log($jsonString);
+	$json = json_decode ( $jsonString, true );
 
-/*
- * $curl = curl_init($url);
- * $options = array(
- * CURLOPT_HTTPHEADER => array(
- * 'Content-Type: application/json',
- * ),
- * CURLOPT_USERPWD => $username . ':' . $password,
- * CURLOPT_POST => true,
- * CURLOPT_POSTFIELDS => json_encode($data),
- * CURLOPT_RETURNTRANSFER => true,
- * );
- *
- * curl_setopt_array($curl, $options);
- * $jsonString = curl_exec($curl);
- */
-$jsonString = callWatson ();
-// error_log($jsonString);
-$json = json_decode ( $jsonString, true );
+	$mes = $json ["output"] ["text"] [0];
+	// $mes = $json["output"];
 
-$mes = $json ["output"] ["text"] [0];
-// $mes = $json["output"];
+	if ($mes == "usrChoise_1") {
+		$response_format_text = [
+				"type" => "template",
+				"altText" => "this is a buttons template",
+				"template" => [
+						"type" => "buttons",
+						"text" => "お調べしますので、あなたのお住いの地区名を下記から選択してください。",
+						"actions" => [
+								[
+										"type" => "postback",
+										"label" => "①○○地区、△△地区、□□地区",
+										"data" => "action=uc_1_1"
+								],
+								[
+										"type" => "postback",
+										"label" => "②●●地区、▲▲地区、■■地区",
+										"data" => "action=uc_1_2"
+								],
+								[
+										"type" => "postback",
+										"label" => "③Ａ地区、Ｂ地区、Ｃ地区",
+										"data" => "action=uc_1_3"
+								],
+								[
+										"type" => "postback",
+										"label" => "④あ地区、い地区、う地区",
+										"data" => "action=uc_1_4"
+								]
+						]
+				]
+		];
+		goto lineSend;
+	}
 
-if ($mes == "usrChoise_1") {
+	if ($mes == "usrChoise_2") {
+		$response_format_text = [
+				"type" => "template",
+				"altText" => "this is a buttons template",
+				"template" => [
+						"type" => "buttons",
+						"text" => "住民票の写しは行政市役所本庁舎、行政第一支所、行政第二支所の窓口で発行できます。\n受付時間は、月曜日～金曜日の午前8時30分～午後5時です。\nちなみに個人番号カードはお持ちですか？",
+						"actions" => [
+								[
+										"type" => "postback",
+										"label" => "１．はい",
+										"data" => "action=uc_2_1"
+								],
+								[
+										"type" => "postback",
+										"label" => "２．いいえ",
+										"data" => "action=uc_2_2"
+								],
+								[
+										"type" => "postback",
+										"label" => "３．わからない",
+										"data" => "action=uc_2_3"
+								]
+						]
+				]
+		];
+		goto lineSend;
+	}
+
 	$response_format_text = [
-			"type" => "template",
-			"altText" => "this is a buttons template",
-			"template" => [
-					"type" => "buttons",
-					"text" => "お調べしますので、あなたのお住いの地区名を下記から選択してください。",
-					"actions" => [
-							[
-									"type" => "postback",
-									"label" => "①○○地区、△△地区、□□地区",
-									"data" => "action=uc_1_1"
-							],
-							[
-									"type" => "postback",
-									"label" => "②●●地区、▲▲地区、■■地区",
-									"data" => "action=uc_1_2"
-							],
-							[
-									"type" => "postback",
-									"label" => "③Ａ地区、Ｂ地区、Ｃ地区",
-									"data" => "action=uc_1_3"
-							],
-							[
-									"type" => "postback",
-									"label" => "④あ地区、い地区、う地区",
-									"data" => "action=uc_1_4"
-							]
-					]
+			"type" => "text",
+			"text" => $mes
+	];
+
+	lineSend:
+	error_log ( $response_format_text );
+	$post_data = [
+			"replyToken" => $replyToken,
+			"messages" => [
+					$response_format_text
 			]
 	];
-	goto lineSend;
-}
 
-if ($mes == "usrChoise_2") {
-	$response_format_text = [
-			"type" => "template",
-			"altText" => "this is a buttons template",
-			"template" => [
-					"type" => "buttons",
-					"text" => "住民票の写しは行政市役所本庁舎、行政第一支所、行政第二支所の窓口で発行できます。\n受付時間は、月曜日～金曜日の午前8時30分～午後5時です。\nちなみに個人番号カードはお持ちですか？",
-					"actions" => [
-							[
-									"type" => "postback",
-									"label" => "１．はい",
-									"data" => "action=uc_2_1"
-							],
-							[
-									"type" => "postback",
-									"label" => "２．いいえ",
-									"data" => "action=uc_2_2"
-							],
-							[
-									"type" => "postback",
-									"label" => "３．わからない",
-									"data" => "action=uc_2_3"
-							]
-					]
-			]
-	];
-	goto lineSend;
-}
-
-$response_format_text = [
-		"type" => "text",
-		"text" => $mes
-];
-
-lineSend:
-error_log ( $response_format_text );
-$post_data = [
-		"replyToken" => $replyToken,
-		"messages" => [
-				$response_format_text
-		]
-];
-
-// データベースへの接続
-$conn = "host=ec2-54-83-26-65.compute-1.amazonaws.com dbname=daj2h828dej8bv user=hjxiibzzbialkm
+	// データベースへの接続
+	$conn = "host=ec2-54-83-26-65.compute-1.amazonaws.com dbname=daj2h828dej8bv user=hjxiibzzbialkm
  password=227ba653a1200a8a8bf40645763da904bfca62e1ee9e64b6f68ca2f7824da99d";
-$link = pg_connect ( $conn );
-if (! $link) {
-	error_log ( '344接続に失敗' );
-} else {
-	error_log ( '346接続に成功' );
-}
+	$link = pg_connect ( $conn );
+	if (! $link) {
+		error_log ( '344接続に失敗' );
+	} else {
+		error_log ( '346接続に成功' );
+	}
 
-error_log ( $userID );
-error_log ( $text );
-error_log ( $mes );
+	error_log ( $userID );
+	error_log ( $text );
+	error_log ( $mes );
 
-// botlog テーブルへのデータ登録
-$sql = "INSERT INTO botlog (userid, contents, return) VALUES ('$userID', '$text', '$mes')";
-$result_flag = pg_query ( $sql );
-
-// botlog テーブルからのデータの取得
-$result = pg_query ( 'SELECT time, userid, contents FROM botlog ORDER BY no DESC LIMIT 1' );
-
-if (! $result) {
-	die ( 'クエリーが失敗しました。' . pg_last_error () );
-}
-$rows = pg_fetch_array ( $result, NULL, PGSQL_ASSOC );
-error_log ( $rows ['time'] );
-error_log ( $rows ['userid'] );
-error_log ( $rows ['contents'] );
-
-// データベースの切断
-pg_close ( $conn );
-
-$ch = curl_init ( "https://api.line.me/v2/bot/message/reply" );
-curl_setopt ( $ch, CURLOPT_POST, true );
-curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, 'POST' );
-curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
-curl_setopt ( $ch, CURLOPT_POSTFIELDS, json_encode ( $post_data ) );
-curl_setopt ( $ch, CURLOPT_HTTPHEADER, array (
-		'Content-Type: application/json; charser=UTF-8',
-		'Authorization: Bearer ' . $accessToken
-) );
-$result = curl_exec ( $ch );
-curl_close ( $ch );
-function makeOptions() {
-	global $username, $password, $data;
-	return array (
-			CURLOPT_HTTPHEADER => array (
-					'Content-Type: application/json'
-			),
-			CURLOPT_USERPWD => $username . ':' . $password,
-			CURLOPT_POST => true,
-			CURLOPT_POSTFIELDS => json_encode ( $data ),
-			CURLOPT_RETURNTRANSFER => true
-	);
-}
-
-curl_setopt_array ( $curl, $options );
-$jsonString = curl_exec ( $curl );
-$json = json_decode ( $jsonString, true );
-
-$conversationId = $json ["context"] ["conversation_id"];
-$dialogNode = $json ["context"] ["system"] ["dialog_stack"] [0] ["dialog_node"];
-error_log ( $dialogNode );
-// データベースへの接続
-$conn = "host=ec2-54-83-26-65.compute-1.amazonaws.com dbname=daj2h828dej8bv user=hjxiibzzbialkm
- password=227ba653a1200a8a8bf40645763da904bfca62e1ee9e64b6f68ca2f7824da99d";
-$link = pg_connect ( $conn );
-if (! $link) {
-	error_log ( '407接続に失敗' );
-} else {
-	error_log ( '409接続に成功' );
-}
-
-// cvsdataテーブルでデータ変更
-
-$result = pg_query ( "SELECT * FROM cvsdata WHERE userid = '$userID'" );
-$rows = pg_fetch_array ( $result, NULL, PGSQL_ASSOC );
-error_log ( $rows [userid] );
-error_log ( $userID );
-
-if (!$rows[userid]==null) {
-	$sql = sprintf ( "UPDATE cvsdata SET  conversationid = '$conversationId', dnode = '$dialogNode' WHERE userid = '$userID'"
-			, pg_escape_string ( $conversationId, $dialogNode ) );
+	// botlog テーブルへのデータ登録
+	$sql = "INSERT INTO botlog (userid, contents, return) VALUES ('$userID', '$text', '$mes')";
 	$result_flag = pg_query ( $sql );
 
-} else {
-	$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId', '$dialogNode')";
-	$result_flag = pg_query ( $sql );
-}
+	// botlog テーブルからのデータの取得
+	$result = pg_query ( 'SELECT time, userid, contents FROM botlog ORDER BY no DESC LIMIT 1' );
 
-// データベースの切断
-pg_close ( $conn );
+	if (! $result) {
+		die ( 'クエリーが失敗しました。' . pg_last_error () );
+	}
+	$rows = pg_fetch_array ( $result, NULL, PGSQL_ASSOC );
+	error_log ( $rows ['time'] );
+	error_log ( $rows ['userid'] );
+	error_log ( $rows ['contents'] );
 
-/*
- * $conversationData = array (
- * 'conversation_id' => $conversationId,
- * 'dialog_node' => $dialogNode
- * );
- * setLastConversationData ( $event->getUserId (), $conversationData );
- *
- * $outputText = $json ['output'] ['text'] [count ( $json ['output'] ['text'] ) - 1];
- *
- * replyTextMessage ( $bot, $event->getReplyToken (), $outputText );
- */
-function callWatson() {
-	global $curl, $url, $username, $password, $data, $options;
-	$curl = curl_init ( $url );
+	// データベースの切断
+	pg_close ( $conn );
 
-	$options = array (
-			CURLOPT_HTTPHEADER => array (
-					'Content-Type: application/json'
-			),
-			CURLOPT_USERPWD => $username . ':' . $password,
-			CURLOPT_POST => true,
-			CURLOPT_POSTFIELDS => json_encode ( $data ),
-			CURLOPT_RETURNTRANSFER => true
-	);
+	$ch = curl_init ( "https://api.line.me/v2/bot/message/reply" );
+	curl_setopt ( $ch, CURLOPT_POST, true );
+	curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, 'POST' );
+	curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
+	curl_setopt ( $ch, CURLOPT_POSTFIELDS, json_encode ( $post_data ) );
+	curl_setopt ( $ch, CURLOPT_HTTPHEADER, array (
+			'Content-Type: application/json; charser=UTF-8',
+			'Authorization: Bearer ' . $accessToken
+	) );
+	$result = curl_exec ( $ch );
+	curl_close ( $ch );
+	function makeOptions() {
+		global $username, $password, $data;
+		return array (
+				CURLOPT_HTTPHEADER => array (
+						'Content-Type: application/json'
+				),
+				CURLOPT_USERPWD => $username . ':' . $password,
+				CURLOPT_POST => true,
+				CURLOPT_POSTFIELDS => json_encode ( $data ),
+				CURLOPT_RETURNTRANSFER => true
+		);
+	}
 
 	curl_setopt_array ( $curl, $options );
-	return curl_exec ( $curl );
+	$jsonString = curl_exec ( $curl );
+	$json = json_decode ( $jsonString, true );
+
+	$conversationId = $json ["context"] ["conversation_id"];
+	$dialogNode = $json ["context"] ["system"] ["dialog_stack"] [0] ["dialog_node"];
+	error_log ( $dialogNode );
+	// データベースへの接続
+	$conn = "host=ec2-54-83-26-65.compute-1.amazonaws.com dbname=daj2h828dej8bv user=hjxiibzzbialkm
+ password=227ba653a1200a8a8bf40645763da904bfca62e1ee9e64b6f68ca2f7824da99d";
+	$link = pg_connect ( $conn );
+	if (! $link) {
+		error_log ( '407接続に失敗' );
+	} else {
+		error_log ( '409接続に成功' );
+	}
+
+	// cvsdataテーブルでデータ変更
+
+	$result = pg_query ( "SELECT * FROM cvsdata WHERE userid = '$userID'" );
+	$rows = pg_fetch_array ( $result, NULL, PGSQL_ASSOC );
+	error_log ( $rows [userid] );
+	error_log ( $userID );
+
+	if (! $rows [userid] == null) {
+		$sql = sprintf ( "UPDATE cvsdata SET  conversationid = '$conversationId', dnode = '$dialogNode' WHERE userid = '$userID'", pg_escape_string ( $conversationId, $dialogNode ) );
+		$result_flag = pg_query ( $sql );
+	} else {
+		$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId', '$dialogNode')";
+		$result_flag = pg_query ( $sql );
+	}
+
+	// データベースの切断
+	pg_close ( $conn );
+
+	/*
+	 * $conversationData = array (
+	 * 'conversation_id' => $conversationId,
+	 * 'dialog_node' => $dialogNode
+	 * );
+	 * setLastConversationData ( $event->getUserId (), $conversationData );
+	 *
+	 * $outputText = $json ['output'] ['text'] [count ( $json ['output'] ['text'] ) - 1];
+	 *
+	 * replyTextMessage ( $bot, $event->getReplyToken (), $outputText );
+	 */
+	function callWatson() {
+		global $curl, $url, $username, $password, $data, $options;
+		$curl = curl_init ( $url );
+
+		$options = array (
+				CURLOPT_HTTPHEADER => array (
+						'Content-Type: application/json'
+				),
+				CURLOPT_USERPWD => $username . ':' . $password,
+				CURLOPT_POST => true,
+				CURLOPT_POSTFIELDS => json_encode ( $data ),
+				CURLOPT_RETURNTRANSFER => true
+		);
+
+		curl_setopt_array ( $curl, $options );
+		return curl_exec ( $curl );
+	}
 }
