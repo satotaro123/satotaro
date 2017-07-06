@@ -159,7 +159,7 @@ if ($type != "text") {
 		$response = file_get_contents ( $api_url . '?api_key=' . $api_key . '&url=' . $url . '&version=2016-05-19' );
 		return json_decode ( $response, true );
 	}
-} else {
+}
 
 	$classfier = "12d0fcx34-nlc-410";
 	$workspace_id = "07465486-684f-4618-b5e6-fa7362b20e6c";
@@ -474,4 +474,3 @@ if ($type != "text") {
 		curl_setopt_array ( $curl, $options );
 		return curl_exec ( $curl );
 	}
-}
