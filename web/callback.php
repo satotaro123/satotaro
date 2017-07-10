@@ -150,14 +150,14 @@ if ($type != "text") {
 }
 
 $classfier = "12d0fcx34-nlc-410";
-$workspace_id = "07465486-684f-4618-b5e6-fa7362b20e6c";
+$workspace_id = "c65de3c6-4ca2-4434-a27b-02585aec2815";
 
 // $url = "https://gateway.watson-j.jp/natural-language-classifier/api/v1/classifiers/".$classfier."/classify?text=".$text;
 // $url = "https://gateway.watson-j.jp/natural-language-classifier/api/v1/classifiers/".$classfier."/classify";
-$url = "https://gateway.watsonplatform.net/conversation/api/v1/workspaces/" . $workspace_id . "/message?version=2017-04-21";
+$url = "https://gateway.watsonplatform.net/conversation/api" . $workspace_id . "/message?version=2017-04-21";
 
-$username = "fe038c2b-1a1b-41fe-8a10-3cda71c90203";
-$password = "HsJnOFDeFLIU";
+$username = "a1ff7482-0333-4750-a7dd-9add973b035e";
+$password = "yEXJnqxCGWWM";
 
 // $data = array("text" => $text);
 $data = array (
