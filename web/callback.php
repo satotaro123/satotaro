@@ -146,19 +146,7 @@ if ($eventType == "postback") {
 
 // メッセージ以外のときは何も返さず終了
 if ($type != "text") {
-	$tmpfname = tempnam ( './', 'json_string_' );
-	unlink ( $tempfname );
-	$tmpfname = $tmpname . '.jpg';
-	$url = 'https://gateway-a.watsonplatform.net/visual-recognition/api';
-	$username = "fe038c2b-1a1b-41fe-8a10-3cda71c90203";
-	$password = "HsJnOFDeFLIU";
-	$api_response = watson_visual_recognition ( $url );
-	function watson_visual_recognition($url) {
-		$api_key = '283b9efc0122dd901eda82e72b178c2ac9ae9d20'; // IBM Bluemixで取得
-		$api_url = 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify';
-		$response = file_get_contents ( $api_url . '?api_key=' . $api_key . '&url=' . $url . '&version=2016-05-19' );
-		return json_decode ( $response, true );
-	}
+	exit ();
 }
 
 $classfier = "12d0fcx34-nlc-410";
@@ -217,11 +205,13 @@ if (! $link) {
 }
 
 // cvsdataテーブルからデータの取得
-$result = pg_query ( "SELECT dnode FROM cvsdata WHERE userid = '$userID'" );
+$result = pg_query ( "SELECT dnode FROM cvsdata WHERE userid = '$userID'");
 $rows = pg_fetch_array ( $result, NULL, PGSQL_ASSOC );
 
-if ($rows [dnode] == null) {
-	error_log ( 214 );
+
+
+if ( $rows[dnode] == null) {
+	error_log(214);
 
 	$data ["context"] = array (
 			"conversation_id" => $conversation_id,
@@ -235,7 +225,8 @@ if ($rows [dnode] == null) {
 					"dialog_request_counter" => 1
 			)
 	);
-} else {
+
+}else{
 	$data ["context"] = array (
 			"conversation_id" => $conversation_id,
 			"system" => array (
@@ -250,11 +241,16 @@ if ($rows [dnode] == null) {
 	);
 }
 
-error_log ( 245 );
-error_log ( "dialog_node" );
+
+error_log(245);
+error_log("dialog_node");
+
+
 
 // データベースの切断
 pg_close ( $conn );
+
+
 
 /*
  * $curl = curl_init($url);
@@ -435,9 +431,11 @@ $rows = pg_fetch_array ( $result, NULL, PGSQL_ASSOC );
 error_log ( $rows [userid] );
 error_log ( $userID );
 
-if (! $rows [userid] == null) {
-	$sql = sprintf ( "UPDATE cvsdata SET  conversationid = '$conversationId', dnode = '$dialogNode' WHERE userid = '$userID'", pg_escape_string ( $conversationId, $dialogNode ) );
+if (!$rows[userid]==null) {
+	$sql = sprintf ( "UPDATE cvsdata SET  conversationid = '$conversationId', dnode = '$dialogNode' WHERE userid = '$userID'"
+			, pg_escape_string ( $conversationId, $dialogNode ) );
 	$result_flag = pg_query ( $sql );
+
 } else {
 	$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId', '$dialogNode')";
 	$result_flag = pg_query ( $sql );
