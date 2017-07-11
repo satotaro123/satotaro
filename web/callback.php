@@ -13,11 +13,7 @@ $text = $jsonObj->{"events"} [0]->{"message"}->{"text"};
 $replyToken = $jsonObj->{"events"} [0]->{"replyToken"};
 // ユーザーID取得
 $userID = $jsonObj->{"events"} [0]->{"source"}->{"userId"};
-//画像取得
-$json_string = file_get_contents('php://input');
-$jsonObj = json_decode($json_string);
 
-$messageId = $jsonObj->{"events"}[0]->{"message"}->{"id"};
 
 error_log ( $eventType );
 if ($eventType == "follow") {
@@ -150,10 +146,14 @@ if ($eventType == "postback") {
 
 // メッセージ以外の場合
 if ($type != "text") {
+	$json_string = file_get_contents('php://input');
+	$jsonObj = json_decode($json_string);
 
+	$replyToken = $jsonObj->{"events"}[0]->{"replyToken"};
+	$messageId = $jsonObj->{"events"}[0]->{"message"}->{"id"};
 
 	//画像ファイルのバイナリ取得
-	$ch = curl_init("https://api.line.me/v2/bot/message/".$messageId."/content");
+	$ch = curl_init("https://api.line.me/v2/bot/message/reply".$messageId."/content");
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
 			'Content-Type: application/json; charser=UTF-8',
@@ -161,26 +161,6 @@ if ($type != "text") {
 	));
 	$result = curl_exec($ch);
 	curl_close($ch);
-
-	//画像ファイルの作成
-	$fp = fopen('./img/test.jpg', 'wb');
-
-	if ($fp){
-		if (flock($fp, LOCK_EX)){
-			if (fwrite($fp,  $result ) === FALSE){
-				print('ファイル書き込みに失敗しました<br>');
-			}else{
-				print($data.'をファイルに書き込みました<br>');
-			}
-
-			flock($fp, LOCK_UN);
-		}else{
-			print('ファイルロックに失敗しました<br>');
-		}
-	}
-
-	fclose($fp);
-
 	//そのまま画像をオウム返しで送信
 	$response_format_text = [
 			"type" => "image",
@@ -206,16 +186,17 @@ if ($type != "text") {
 	curl_close($ch);
 
 	$url = 'https://gateway-a.watsonplatform.net/visual-recognition/api';
+	$api_response = watson_visual_recognition($url);
 	$username = "a1ff7482-0333-4750-a7dd-9add973b035e";
 	$password = "yEXJnqxCGWWM";
-	$api_response = watson_visual_recognition ( $url );
 
-	/*function watson_visual_recognition($url) {
+
+	function watson_visual_recognition($url) {
 		$api_key = 'c24e26752cbdd81008614ff2379f39be5dc9b629'; // IBM Bluemixで取得
 		$api_url = 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify';
 		$response = file_get_contents ( $api_url . '?api_key=' . $api_key . '&url=' . $url . '&version=2016-05-19' );
 		return json_decode ( $response, true );
-		*/
+
 	}
 }
 
