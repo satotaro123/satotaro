@@ -146,6 +146,7 @@ if ($eventType == "postback") {
 
 // メッセージ以外の場合
 if ($type != "text") {
+	error_log(149);
 	$json_string = file_get_contents('php://input');
 	$jsonObj = json_decode($json_string);
 
