@@ -5,7 +5,6 @@ $accessToken = getenv ( 'LINE_CHANNEL_ACCESS_TOKEN' );
 // ユーザーからのメッセージ取得
 $json_string = file_get_contents ( 'php://input' );
 $jsonObj = json_decode ( $json_string );
-
 $type = $jsonObj->{"events"} [0]->{"message"}->{"type"};
 $eventType = $jsonObj->{"events"} [0]->{"type"};
 // メッセージ取得
@@ -146,18 +145,76 @@ if ($eventType == "postback") {
 
 // メッセージ以外の場合
 if ($type != "text") {
-	$tmpfname = tempnam ( './', 'json_string_' );
-	unlink ( $tempfname );
-	$tmpfname = $tmpname . '.jpg';
+	$json_string = file_get_contents('php://input');
+	$jsonObj = json_decode($json_string);
+
+	$replyToken = $jsonObj->{"events"}[0]->{"replyToken"};
+	$messageId = $jsonObj->{"events"}[0]->{"message"}->{"id"};
+
+	//画像ファイルのバイナリ取得
+	$ch = curl_init("https://api.line.me/v2/bot/message/".$messageId."/content");
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+			'Content-Type: application/json; charser=UTF-8',
+			'Authorization: Bearer ' . $accessToken
+	));
+	$result = curl_exec($ch);
+	curl_close($ch);
+
+	//画像ファイルの作成
+	$fp = fopen('./img/test.jpg', 'wb');
+
+	if ($fp){
+		if (flock($fp, LOCK_EX)){
+			if (fwrite($fp,  $result ) === FALSE){
+				print('ファイル書き込みに失敗しました<br>');
+			}else{
+				print($data.'をファイルに書き込みました<br>');
+			}
+
+			flock($fp, LOCK_UN);
+		}else{
+			print('ファイルロックに失敗しました<br>');
+		}
+	}
+
+	fclose($fp);
+
+	//そのまま画像をオウム返しで送信
+	$response_format_text = [
+			"type" => "image",
+			"originalContentUrl" => "【画像ファイルのパス】/img/test.jpg",
+			"previewImageUrl" => "【画像ファイルのパス】/img/test.jpg"
+	];
+
+	$post_data = [
+			"replyToken" => $replyToken,
+			"messages" => [$response_format_text]
+	];
+
+	$ch = curl_init("https://api.line.me/v2/bot/message/reply");
+	curl_setopt($ch, CURLOPT_POST, true);
+	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post_data));
+	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+			'Content-Type: application/json; charser=UTF-8',
+			'Authorization: Bearer ' . $accessToken
+	));
+	$result = curl_exec($ch);
+	curl_close($ch);
+
 	$url = 'https://gateway-a.watsonplatform.net/visual-recognition/api';
-	$username = "fe038c2b-1a1b-41fe-8a10-3cda71c90203";
-	$password = "HsJnOFDeFLIU";
+	$username = "a1ff7482-0333-4750-a7dd-9add973b035e";
+	$password = "yEXJnqxCGWWM";
 	$api_response = watson_visual_recognition ( $url );
-	function watson_visual_recognition($url) {
-		$api_key = '283b9efc0122dd901eda82e72b178c2ac9ae9d20'; // IBM Bluemixで取得
+
+	/*function watson_visual_recognition($url) {
+		$api_key = 'c24e26752cbdd81008614ff2379f39be5dc9b629'; // IBM Bluemixで取得
 		$api_url = 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify';
 		$response = file_get_contents ( $api_url . '?api_key=' . $api_key . '&url=' . $url . '&version=2016-05-19' );
 		return json_decode ( $response, true );
+		*/
 	}
 }
 
