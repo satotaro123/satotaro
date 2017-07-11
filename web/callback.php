@@ -13,6 +13,11 @@ $text = $jsonObj->{"events"} [0]->{"message"}->{"text"};
 $replyToken = $jsonObj->{"events"} [0]->{"replyToken"};
 // ユーザーID取得
 $userID = $jsonObj->{"events"} [0]->{"source"}->{"userId"};
+//画像取得
+$json_string = file_get_contents('php://input');
+$jsonObj = json_decode($json_string);
+
+$messageId = $jsonObj->{"events"}[0]->{"message"}->{"id"};
 
 error_log ( $eventType );
 if ($eventType == "follow") {
@@ -145,11 +150,7 @@ if ($eventType == "postback") {
 
 // メッセージ以外の場合
 if ($type != "text") {
-	$json_string = file_get_contents('php://input');
-	$jsonObj = json_decode($json_string);
 
-	$replyToken = $jsonObj->{"events"}[0]->{"replyToken"};
-	$messageId = $jsonObj->{"events"}[0]->{"message"}->{"id"};
 
 	//画像ファイルのバイナリ取得
 	$ch = curl_init("https://api.line.me/v2/bot/message/".$messageId."/content");
