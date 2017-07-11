@@ -9,6 +9,8 @@ $type = $jsonObj->{"events"} [0]->{"message"}->{"type"};
 $eventType = $jsonObj->{"events"} [0]->{"type"};
 // メッセージ取得
 $text = $jsonObj->{"events"} [0]->{"message"}->{"text"};
+// 画像取得
+$image = $jsonObj->{"events"} [0]->{"message"}->{"image"};
 // ReplyToken取得
 $replyToken = $jsonObj->{"events"} [0]->{"replyToken"};
 // ユーザーID取得
@@ -145,8 +147,8 @@ if ($eventType == "postback") {
 }
 
 // メッセージ以外の場合
-if ($type != "text") {
-	error_log(149);
+if ($type = "image") {
+	error_log(画像を認識);
 	$json_string = file_get_contents('php://input');
 	$jsonObj = json_decode($json_string);
 
@@ -207,9 +209,9 @@ if ($type != "text") {
 	curl_close($ch);
 	error_log(208);
 	/*
-	$url = 'https://gateway-a.watsonplatform.net/visual-recognition/api';
-	$api_response = watson_visual_recognition($url);
-	$username = "a1ff7482-0333-4750-a7dd-9add973b035e";
+	$url = 'https://gateway-a.watsonpwatson_visual_recognition($url);
+	$username = "a1ff7482-0333-47latform.net/visual-recognition/api';
+	$api_response = 50-a7dd-9add973b035e";
 	$password = "yEXJnqxCGWWM";
 
 
