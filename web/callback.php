@@ -161,6 +161,26 @@ if ($type != "text") {
 	));
 	$result = curl_exec($ch);
 	curl_close($ch);
+
+	//画像ファイルの作成
+	$fp = fopen('./img/test.jpg', 'wb');
+
+	if ($fp){
+		if (flock($fp, LOCK_EX)){
+			if (fwrite($fp,  $result ) === FALSE){
+				print('ファイル書き込みに失敗しました<br>');
+			}else{
+				print($data.'をファイルに書き込みました<br>');
+			}
+
+			flock($fp, LOCK_UN);
+		}else{
+			print('ファイルロックに失敗しました<br>');
+		}
+	}
+
+	fclose($fp);
+
 	//そのまま画像をオウム返しで送信
 	$response_format_text = [
 			"type" => "image",
@@ -185,6 +205,7 @@ if ($type != "text") {
 	$result = curl_exec($ch);
 	curl_close($ch);
 
+	/*
 	$url = 'https://gateway-a.watsonplatform.net/visual-recognition/api';
 	$api_response = watson_visual_recognition($url);
 	$username = "a1ff7482-0333-4750-a7dd-9add973b035e";
@@ -198,6 +219,7 @@ if ($type != "text") {
 		return json_decode ( $response, true );
 
 	}
+	*/
 }
 
 $classfier = "12d0fcx34-nlc-410";
