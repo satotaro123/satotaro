@@ -171,9 +171,9 @@ if ($type = "image") {
 	if ($fp){
 		if (flock($fp, LOCK_EX)){
 			if (fwrite($fp,  $result ) === FALSE){
-				print('ファイル書き込みに失敗しました<br>');
+				error_log('ファイル書き込みに失敗しました');
 			}else{
-				print($data.'をファイルに書き込みました<br>');
+				error_log($data.'をファイルに書き込みました<br>');
 			}
 
 			flock($fp, LOCK_UN);
@@ -187,8 +187,8 @@ if ($type = "image") {
 	//そのまま画像をオウム返しで送信
 	$response_format_text = [
 			"type" => "image",
-			"originalContentUrl" => "【画像ファイルのパス】/img/test.jpg",
-			"previewImageUrl" => "【画像ファイルのパス】/img/test.jpg"
+			"originalContentUrl" => "file:///C:/Users/Tomoya_Sakaguchi/git/satotaro/web/img/test.jpg",
+			"previewImageUrl" => "file:///C:/Users/Tomoya_Sakaguchi/git/satotaro/web/img/test.jpg"
 	];
 
 	$post_data = [
