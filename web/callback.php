@@ -221,6 +221,7 @@ if ($type != "text") {
 
 	}
 	*/
+	exit();
 }
 
 $classfier = "12d0fcx34-nlc-410";
