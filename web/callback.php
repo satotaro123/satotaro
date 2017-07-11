@@ -147,7 +147,7 @@ if ($eventType == "postback") {
 }
 
 // メッセージ以外の場合
-if ($type = "image") {
+if ($type != "text") {
 	error_log(画像を認識);
 	$json_string = file_get_contents('php://input');
 	$jsonObj = json_decode($json_string);
@@ -187,8 +187,8 @@ if ($type = "image") {
 	//そのまま画像をオウム返しで送信
 	$response_format_text = [
 			"type" => "image",
-			"originalContentUrl" => "file:///C:/Users/Tomoya_Sakaguchi/git/satotaro/web/img/test.jpg",
-			"previewImageUrl" => "file:///C:/Users/Tomoya_Sakaguchi/git/satotaro/web/img/test.jpg"
+			"originalContentUrl" => "file:///C:/Users/Tomoya_Sakaguchi/git/satotaro/web/test.jpg",
+			"previewImageUrl" => "file:///C:/Users/Tomoya_Sakaguchi/git/satotaro/web/test.jpg"
 	];
 
 	$post_data = [
@@ -207,22 +207,8 @@ if ($type = "image") {
 	));
 	$result = curl_exec($ch);
 	curl_close($ch);
-	error_log(208);
-	/*
-	$url = 'https://gateway-a.watsonpwatson_visual_recognition($url);
-	$username = "a1ff7482-0333-47latform.net/visual-recognition/api';
-	$api_response = 50-a7dd-9add973b035e";
-	$password = "yEXJnqxCGWWM";
+	error_log(210);
 
-
-	function watson_visual_recognition($url) {
-		$api_key = 'c24e26752cbdd81008614ff2379f39be5dc9b629'; // IBM Bluemixで取得
-		$api_url = 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify';
-		$response = file_get_contents ( $api_url . '?api_key=' . $api_key . '&url=' . $url . '&version=2016-05-19' );
-		return json_decode ( $response, true );
-
-	}
-	*/
 	exit();
 }
 
