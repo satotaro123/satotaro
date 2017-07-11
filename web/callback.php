@@ -204,7 +204,7 @@ if ($type != "text") {
 	));
 	$result = curl_exec($ch);
 	curl_close($ch);
-
+	error_log(207);
 	/*
 	$url = 'https://gateway-a.watsonplatform.net/visual-recognition/api';
 	$api_response = watson_visual_recognition($url);
