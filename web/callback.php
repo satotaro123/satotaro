@@ -15,39 +15,158 @@ $replyToken = $jsonObj->{"events"} [0]->{"replyToken"};
 // ユーザーID取得
 $userID = $jsonObj->{"events"} [0]->{"source"}->{"userId"};
 
-
-$ch = curl_init ( "https://watson-conversation.ng.bluemix.net/us-south/ef8e85d0-6a55-49d3-9135-acebbff9323c/workspaces/c65de3c6-4ca2-4434-a27b-02585aec2815/build/dialogx" );
-curl_setopt ( $ch, CURLOPT_POST, true );
-curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, 'POST' );
-curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
-curl_setopt ( $ch, CURLOPT_POSTFIELDS, json_encode ( $post_data ) );
-curl_setopt ( $ch, CURLOPT_HTTPHEADER, array (
-		'Content-Type:  application/json; charset=UTF-8',
-		'Authorization: BASIC dXNlcjpwYXNzd29yZA== ' . $accessToken
-) );
-{
-	"api_version": "",
-	"session_id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-	"choice_id": ""
-	"message": "これはHTTPリクエスト例ですか？"
+error_log ( $eventType );
+if ($eventType == "follow") {
+	$response_format_text = [
+			"type" => "template",
+			"altText" => "this is a buttons template",
+			"template" => [
+					"type" => "buttons",
+					"thumbnailImageUrl" => "https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg",
+					"title" => "行政市役所",
+					// "text" => "こんにちは。行政市のすいか太郎です。\n皆さんの質問にはりきってお答えしますよ～\nまずは、下のメニュータブをタップしてみてください",
+					"text" => "こんにちは。\n行政市のすいか太郎です。\n皆さんの質問にはりきってお答えしますよ～",
+					"actions" => [
+							[
+									"type" => "postback",
+									"label" => "LINEで質問",
+									"data" => "action=qaline"
+							],
+							[
+									"type" => "postback",
+									"label" => "証明書",
+									"data" => "action=shomei"
+							],
+							[
+									"type" => "postback",
+									"label" => "施設予約",
+									"data" => "action=shisetsu"
+							],
+							[
+									"type" => "postback",
+									"label" => "ご利用方法",
+									"data" => "action=riyo"
+							]
+					]
+			]
+	];
+	goto lineSend;
 }
-$result = curl_exec ( $ch );
-curl_close ( $ch );
 
+if ($eventType == "postback") {
+	$bData = $jsonObj->{"events"} [0]->{"postback"}->{"data"};
+	if ($bData == 'action=qaline') {
+		$response_format_text = [
+				"type" => "text",
+				"text" => "それでは、質問をお願いします。"
+		];
+		goto lineSend;
+	}
 
+	if ($bData == 'action=shomei') {
+		$response_format_text = [
+				"type" => "text",
+				"text" => "証明書についてはこちらをごらんください。"
+		];
+		goto lineSend;
+	}
 
+	if ($bData == 'action=shisetsu') {
+		$response_format_text = [
+				"type" => "text",
+				"text" => "施設予約についてはこちらをごらんください。"
+		];
+		goto lineSend;
+	}
 
-// メッセージ以外のときは何も返さず終了
+	if ($bData == 'action=riyo') {
+		$response_format_text = [
+				"type" => "text",
+				"text" => "ご利用方法についてはこちらをごらんください。"
+		];
+		goto lineSend;
+	}
+
+	if ($bData == 'action=uc_1_1') {
+		$response_format_text = [
+				"type" => "text",
+				"text" => "①○○地区、△△地区、□□地区ですね。\nその場合、最寄りの税務署は「行政第一税務署」になります。「行政第一税務署」の詳細はURLをご確認ください。\n他に質問はありますか？"
+		];
+		goto lineSend;
+	}
+
+	if ($bData == 'action=uc_1_2') {
+		$response_format_text = [
+				"type" => "text",
+				"text" => "②●●地区、▲▲地区、■■地区ですね。\nその場合、最寄りの税務署は「行政第二税務署」になります。「行政第二税務署」の詳細はURLをご確認ください。\n他に質問はありますか？"
+		];
+		goto lineSend;
+	}
+
+	if ($bData == 'action=uc_1_3') {
+		$response_format_text = [
+				"type" => "text",
+				"text" => "③Ａ地区、Ｂ地区、Ｃ地区ですね。\nその場合、最寄りの税務署は「行政第三税務署」になります。「行政第三税務署」の詳細はURLをご確認ください。\n他に質問はありますか？"
+		];
+		goto lineSend;
+	}
+
+	if ($bData == 'action=uc_1_4') {
+		$response_format_text = [
+				"type" => "text",
+				"text" => "④あ地区、い地区、う地区ですね。\nその場合、最寄りの税務署は「行政第四税務署」になります。「行政第四税務署」の詳細はURLをご確認ください。\n他に質問はありますか？"
+		];
+		goto lineSend;
+	}
+
+	if ($bData == 'action=uc_2_1') {
+		$response_format_text = [
+				"type" => "text",
+				"text" => "ありがとうございます。\n個人番号カードをお持ちでコンビニエンスストアでの証明書交付の利用申請がお済の方は、下記のコンビニエンスストアでも住民票の写しが取れますよ～\n\n・セブンイレブン\n・ローソン\n・ファミリーマート\n・サークルＫサンクス\n\nまた、コンビニエンスストアの証明交付サービスは、年末年始（12月29日～翌年1月3日）を除き、毎日6:30から23:00まで、ご利用いただけます。\n他に質問はありますか？"
+		];
+		goto lineSend;
+	}
+
+	if ($bData == 'action=uc_2_2') {
+		$response_format_text = [
+				"type" => "text",
+				"text" => "個人番号カードを持っていればコンビニで住民票が発行できて便利ですよ。\n他に質問はありますか？"
+		];
+		goto lineSend;
+	}
+
+	if ($bData == 'action=uc_2_3') {
+		$response_format_text = [
+				"type" => "text",
+				"text" => "もし、個人番号カードを持っていればコンビニで住民票が発行できて便利ですよ。\n他に質問はありますか？"
+		];
+		goto lineSend;
+	}
+}
+
+// メッセージ以外の場合
 if ($type != "text") {
-	exit ();
+	$tmpfname = tempnam ( './', 'json_string_' );
+	unlink ( $tempfname );
+	$tmpfname = $tmpname . '.jpg';
+	$url = 'https://gateway-a.watsonplatform.net/visual-recognition/api';
+	$username = "fe038c2b-1a1b-41fe-8a10-3cda71c90203";
+	$password = "HsJnOFDeFLIU";
+	$api_response = watson_visual_recognition ( $url );
+	function watson_visual_recognition($url) {
+		$api_key = '283b9efc0122dd901eda82e72b178c2ac9ae9d20'; // IBM Bluemixで取得
+		$api_url = 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify';
+		$response = file_get_contents ( $api_url . '?api_key=' . $api_key . '&url=' . $url . '&version=2016-05-19' );
+		return json_decode ( $response, true );
+	}
 }
 
 $classfier = "12d0fcx34-nlc-410";
-$workspace_id = "c65de3c6-4ca2-4434-a27b-02585aec2815";
+$workspace_id = "5989586b-2815-45fd-9563-ed3ea863dfaa";
 
 // $url = "https://gateway.watson-j.jp/natural-language-classifier/api/v1/classifiers/".$classfier."/classify?text=".$text;
 // $url = "https://gateway.watson-j.jp/natural-language-classifier/api/v1/classifiers/".$classfier."/classify";
-$url = "https://gateway.watsonplatform.net/conversation/api" . $workspace_id . "/message?version=2017-04-21";
+$url = "https://gateway.watsonplatform.net/conversation/api/v1/workspaces/" . $workspace_id . "/message?version=2017-04-21";
 
 $username = "a1ff7482-0333-4750-a7dd-9add973b035e";
 $password = "yEXJnqxCGWWM";
@@ -98,13 +217,11 @@ if (! $link) {
 }
 
 // cvsdataテーブルからデータの取得
-$result = pg_query ( "SELECT dnode FROM cvsdata WHERE userid = '$userID'");
+$result = pg_query ( "SELECT dnode FROM cvsdata WHERE userid = '$userID'" );
 $rows = pg_fetch_array ( $result, NULL, PGSQL_ASSOC );
 
-
-
-if ( $rows[dnode] == null) {
-	error_log(214);
+if ($rows [dnode] == null) {
+	error_log ( 214 );
 
 	$data ["context"] = array (
 			"conversation_id" => $conversation_id,
@@ -118,8 +235,7 @@ if ( $rows[dnode] == null) {
 					"dialog_request_counter" => 1
 			)
 	);
-
-}else{
+} else {
 	$data ["context"] = array (
 			"conversation_id" => $conversation_id,
 			"system" => array (
@@ -134,16 +250,11 @@ if ( $rows[dnode] == null) {
 	);
 }
 
-
-error_log(245);
-error_log("dialog_node");
-
-
+error_log ( 245 );
+error_log ( "dialog_node" );
 
 // データベースの切断
 pg_close ( $conn );
-
-
 
 /*
  * $curl = curl_init($url);
@@ -324,11 +435,9 @@ $rows = pg_fetch_array ( $result, NULL, PGSQL_ASSOC );
 error_log ( $rows [userid] );
 error_log ( $userID );
 
-if (!$rows[userid]==null) {
-	$sql = sprintf ( "UPDATE cvsdata SET  conversationid = '$conversationId', dnode = '$dialogNode' WHERE userid = '$userID'"
-			, pg_escape_string ( $conversationId, $dialogNode ) );
+if (! $rows [userid] == null) {
+	$sql = sprintf ( "UPDATE cvsdata SET  conversationid = '$conversationId', dnode = '$dialogNode' WHERE userid = '$userID'", pg_escape_string ( $conversationId, $dialogNode ) );
 	$result_flag = pg_query ( $sql );
-
 } else {
 	$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('$userID', '$conversationId', '$dialogNode')";
 	$result_flag = pg_query ( $sql );
