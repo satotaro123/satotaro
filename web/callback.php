@@ -160,6 +160,13 @@ if ($type != "text") {
 			"text" => $message
 	];
 
+	$post_data = [
+			"replyToken" => $replyToken,
+			"messages" => [
+					$response_format_text
+			]
+	];
+
 function callvisual_recognition(){
 	$ch = curl_init("https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key={c24e26752cbdd81008614ff2379f39be5dc9b629}&version=2016-05-20");
 	//curl_setopt ( $curl, CURLOPT_URL, $url );
@@ -174,11 +181,11 @@ function callvisual_recognition(){
 }
 
 
-	/*$ch = curl_init ("https://api.line.me/v2/bot/message/reply");
+	$ch = curl_init ("https://api.line.me/v2/bot/message/reply");
 	curl_setopt ( $ch, CURLOPT_POST, true );
 	curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, 'POST' );
 	curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
-	curl_setopt ( $ch, CURLOPT_POSTFIELDS, json_encode ());
+	curl_setopt ( $ch, CURLOPT_POSTFIELDS, json_encode ($post_data));
 	curl_setopt ( $ch, CURLOPT_HTTPHEADER, array (
 			'Content-Type: application/json; charser=UTF-8',
 			'Authorization: Bearer ' . $accessToken
@@ -191,7 +198,7 @@ function callvisual_recognition(){
 			"text" => ""
 	];
 
-*/
+
 	/*
 	 * 画像ファイルのバイナリ取得
 	 * $ch = curl_init("https://api.line.me/v2/bot/message/reply".$messageId."/content");
