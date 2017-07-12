@@ -157,7 +157,9 @@ if ($type != "text") {
 
 	$response_format_text = [
 			"type" => "image",
-			"image" => $imagedata
+			"originalContentUrl" => "https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg",
+			"previewImageUrl" => "https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg"
+
 	];
 
 	$post_data = [
