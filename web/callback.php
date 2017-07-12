@@ -157,7 +157,7 @@ if ($type != "text") {
 
 	$response_format_text = [
 			"type" => "text",
-			"text" => $message
+			"text" => "hello"
 	];
 
 	$post_data = [
