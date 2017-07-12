@@ -168,7 +168,7 @@ if ($type != "text") {
 	curl_setopt ( $ch, CURLOPT_POST, true );
 	curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, 'POST' );
 	curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
-	curl_setopt ( $ch, CURLOPT_POSTFIELDS, $re);
+	curl_setopt ( $ch, CURLOPT_POSTFIELDS, $result);
 	curl_setopt ( $ch, CURLOPT_HTTPHEADER, array (
 			'Content-Type: application/json; charser=UTF-8',
 			'Authorization: Bearer ' . $accessToken
