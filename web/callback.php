@@ -149,9 +149,18 @@ if ($eventType == "postback") {
 if ($type != "text") {
 	error_log ( 画像を認識 );
 
-	$imagedata = array(
-			'file'=>'@./gyosei.jpg;filename=gyosei.jpg;type=image/jpeg'
-	);
+	$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg";
+
+	$jsonString = callvisual_recognition();
+	$json = json_decode ( $jsonString, true );
+	$messsage = $json ["output"] ["text"] [0];
+
+	$response_format_text = [
+			"type" => "text",
+			"text" => $message
+	];
+
+function callvisual_recognition(){
 	$ch = curl_init("https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key={c24e26752cbdd81008614ff2379f39be5dc9b629}&version=2016-05-20");
 	//curl_setopt ( $curl, CURLOPT_URL, $url );
 	// curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
@@ -162,17 +171,14 @@ if ($type != "text") {
 	//curl_setopt_array ( $curl, $options );
 	curl_close($ch);
 
-	$response_format_text = [
-			"type" => "text",
-			"text" => $result
-	];
+}
 
 
-	$ch = curl_init ("https://api.line.me/v2/bot/message/reply");
+	/*$ch = curl_init ("https://api.line.me/v2/bot/message/reply");
 	curl_setopt ( $ch, CURLOPT_POST, true );
 	curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, 'POST' );
 	curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
-	curl_setopt ( $ch, CURLOPT_POSTFIELDS, json_encode ($imagedata));
+	curl_setopt ( $ch, CURLOPT_POSTFIELDS, json_encode ());
 	curl_setopt ( $ch, CURLOPT_HTTPHEADER, array (
 			'Content-Type: application/json; charser=UTF-8',
 			'Authorization: Bearer ' . $accessToken
@@ -180,7 +186,12 @@ if ($type != "text") {
 	$result = curl_exec ( $ch );
 	curl_close ( $ch);
 
+	$response_format_text = [
+			"type" => "text",
+			"text" => ""
+	];
 
+*/
 	/*
 	 * 画像ファイルのバイナリ取得
 	 * $ch = curl_init("https://api.line.me/v2/bot/message/reply".$messageId."/content");
