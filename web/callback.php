@@ -151,10 +151,10 @@ if ($type != "text") {
 
 	$ch = curl_init("https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key={c24e26752cbdd81008614ff2379f39be5dc9b629}&version=2016-05-20");
 	$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg";
-	curl_setopt ( $curl, CURLOPT_URL, $url );
+	//curl_setopt ( $curl, CURLOPT_URL, $url );
 	// curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
 	curl_setopt ( $curl, CURLOPT_POST, TRUE );
-	curl_setopt ( $curl, CURLOPT_POSTFIELDS, $imagedata);
+	curl_setopt ( $curl, CURLOPT_POSTFIELDS,json_encode($imagedata));
 	curl_setopt ( $curl, CURLOPT_VERBOSE, TRUE );
 	curl_setopt ( $curl, CURLOPT_RETURNTRANSFER, TRUE );
 
@@ -164,11 +164,23 @@ if ($type != "text") {
 	//curl_close($ch);
 
 
+	$response_format_text = [
+			"type" => "text",
+			"text" => $mes
+	];
+
+	$post_data = [
+			"replyToken" => $replyToken,
+			"messages" => [
+					$response_format_text
+			]
+	];
+
 	$ch = curl_init ( "https://api.line.me/v2/bot/message/reply" );
 	curl_setopt ( $ch, CURLOPT_POST, true );
 	curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, 'POST' );
 	curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
-	curl_setopt ( $ch, CURLOPT_POSTFIELDS, $result);
+	curl_setopt ( $ch, CURLOPT_POSTFIELDS, json_encode ( $post_data));
 	curl_setopt ( $ch, CURLOPT_HTTPHEADER, array (
 			'Content-Type: application/json; charser=UTF-8',
 			'Authorization: Bearer ' . $accessToken
