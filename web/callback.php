@@ -176,7 +176,7 @@ function callvisual_recognition(){
 	// curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
 	$options = array (
 	CURLOPT_POST=> TRUE ,
-	CURLOPT_POSTFIELDS => json_encode ($imagedata),
+	CURLOPT_POSTFIELDS => "images_file = @gyosei.jpg",
 	CURLOPT_RETURNTRANSFER =>TRUE
 	);
 
