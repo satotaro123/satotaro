@@ -16,7 +16,6 @@ $replyToken = $jsonObj->{"events"} [0]->{"replyToken"};
 // ユーザーID取得
 $userID = $jsonObj->{"events"} [0]->{"source"}->{"userId"};
 
-
 error_log ( $eventType );
 if ($eventType == "follow") {
 	$response_format_text = [
@@ -148,64 +147,64 @@ if ($eventType == "postback") {
 
 // メッセージ以外の場合
 if ($type != "text") {
-	error_log(画像を認識);
+	error_log ( 画像を認識 );
 
 	$url = "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key={api-key}&version=2016-05-20";
-	$curl = curl_init();
+	$curl = curl_init ();
 	$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg";
-	curl_setopt($curl, CURLOPT_URL, $url);
-	//curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
-	curl_setopt($curl, CURLOPT_POST, TRUE);
-	curl_setopt($curl, CURLOPT_POSTFIELDS, $imagedata);
-	curl_setopt($curl, CURLOPT_VERBOSE, TRUE);
-	curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-	$vr_exec = curl_exec($curl);
-	curl_close($curl)
+	curl_setopt ( $curl, CURLOPT_URL, $url );
+	// curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
+	curl_setopt ( $curl, CURLOPT_POST, TRUE );
+	curl_setopt ( $curl, CURLOPT_POSTFIELDS, $imagedata );
+	curl_setopt ( $curl, CURLOPT_VERBOSE, TRUE );
+	curl_setopt ( $curl, CURLOPT_RETURNTRANSFER, TRUE );
+	$vr_exec = curl_exec ( $curl );
+	curl_close($curl);
 
-	/*画像ファイルのバイナリ取得
-	$ch = curl_init("https://api.line.me/v2/bot/message/reply".$messageId."/content");
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-			'Content-Type: application/json; charser=UTF-8',
-			'Authorization: Bearer ' . $accessToken
-	));
-	$result = curl_exec($ch);
-	curl_close($ch);
-
-	//画像ファイルの作成
-	$fp = fopen('./img/test.jpg', 'wb');
-
-	if ($fp){
-		if (flock($fp, LOCK_EX)){
-			if (fwrite($fp,  $result ) === FALSE){
-				error_log('ファイル書き込みに失敗しました');
-			}else{
-				error_log($data.'をファイルに書き込みました<br>');
-			}
-
-			flock($fp, LOCK_UN);
-		}else{
-			print('ファイルロックに失敗しました<br>');
-		}
-	}
-
-	fclose($fp);
-
-	//そのまま画像をオウム返しで送信
-	$response_format_text = [
-			"type" => "image",
-			"originalContentUrl" => "file:///C:/Users/Tomoya_Sakaguchi/git/satotaro/web/test.jpg",
-			"previewImageUrl" => "file:///C:/Users/Tomoya_Sakaguchi/git/satotaro/web/test.jpg"
-	];
-
-	$post_data = [
-			"replyToken" => $replyToken,
-			"messages" => [$response_format_text]
-	];
-
-	*/
+	/*
+	 * 画像ファイルのバイナリ取得
+	 * $ch = curl_init("https://api.line.me/v2/bot/message/reply".$messageId."/content");
+	 * curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	 * curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+	 * 'Content-Type: application/json; charser=UTF-8',
+	 * 'Authorization: Bearer ' . $accessToken
+	 * ));
+	 * $result = curl_exec($ch);
+	 * curl_close($ch);
+	 *
+	 * //画像ファイルの作成
+	 * $fp = fopen('./img/test.jpg', 'wb');
+	 *
+	 * if ($fp){
+	 * if (flock($fp, LOCK_EX)){
+	 * if (fwrite($fp, $result ) === FALSE){
+	 * error_log('ファイル書き込みに失敗しました');
+	 * }else{
+	 * error_log($data.'をファイルに書き込みました<br>');
+	 * }
+	 *
+	 * flock($fp, LOCK_UN);
+	 * }else{
+	 * print('ファイルロックに失敗しました<br>');
+	 * }
+	 * }
+	 *
+	 * fclose($fp);
+	 *
+	 * //そのまま画像をオウム返しで送信
+	 * $response_format_text = [
+	 * "type" => "image",
+	 * "originalContentUrl" => "file:///C:/Users/Tomoya_Sakaguchi/git/satotaro/web/test.jpg",
+	 * "previewImageUrl" => "file:///C:/Users/Tomoya_Sakaguchi/git/satotaro/web/test.jpg"
+	 * ];
+	 *
+	 * $post_data = [
+	 * "replyToken" => $replyToken,
+	 * "messages" => [$response_format_text]
+	 * ];
+	 *
+	 */
 }
-
 $classfier = "12d0fcx34-nlc-410";
 $workspace_id = "5989586b-2815-45fd-9563-ed3ea863dfaa";
 
