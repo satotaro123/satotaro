@@ -160,6 +160,21 @@ if ($type != "text") {
 	curl_setopt ( $curl, CURLOPT_RETURNTRANSFER, TRUE );
 	$vr_exec = curl_exec ( $curl );
 	curl_close($curl);
+	$re = json_decode($vr_exec,true);
+	return $re;
+
+	$ch = curl_init ( "https://api.line.me/v2/bot/message/reply" );
+	curl_setopt ( $ch, CURLOPT_POST, true );
+	curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, 'POST' );
+	curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
+	curl_setopt ( $ch, CURLOPT_POSTFIELDS, $re);
+	curl_setopt ( $ch, CURLOPT_HTTPHEADER, array (
+			'Content-Type: application/json; charser=UTF-8',
+			'Authorization: Bearer ' . $accessToken
+	) );
+	$result = curl_exec ( $ch );
+	curl_close ( $ch );
+
 
 	/*
 	 * 画像ファイルのバイナリ取得
