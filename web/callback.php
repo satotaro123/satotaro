@@ -149,7 +149,7 @@ if ($eventType == "postback") {
 if ($type != "text") {
 	error_log ( 画像を認識 );
 
-	$imagedata = "C:/Users/Tomoya_Sakaguchi/git/satotaro/web/gyosei.jpg";
+	$imagedata = "C:\Users\Tomoya_Sakaguchi\git\satotaro\web\gyosei.jpg";
 
 	$jsonString = callvisual_recognition();
 	$json = json_decode ( $jsonString, true );
