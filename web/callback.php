@@ -157,10 +157,12 @@ if ($type != "text") {
 	curl_setopt ( $curl, CURLOPT_POSTFIELDS, "images_file=@gyosei.jpg");
 	curl_setopt ( $curl, CURLOPT_VERBOSE, TRUE );
 	curl_setopt ( $curl, CURLOPT_RETURNTRANSFER, TRUE );
-	$vr_exec = curl_exec ( $curl );
-	curl_close($curl);
-	$re = json_decode($vr_exec,true);
-	return $re;
+
+	//curl_setopt_array ( $curl, $options );
+	$result = curl_exec ( $ch );
+	return $result;
+	curl_close($ch);
+
 
 	$ch = curl_init ( "https://api.line.me/v2/bot/message/reply" );
 	curl_setopt ( $ch, CURLOPT_POST, true );
