@@ -149,28 +149,18 @@ if ($eventType == "postback") {
 // メッセージ以外の場合
 if ($type != "text") {
 	error_log(画像を認識);
-	$json_string = file_get_contents('php://input');
-	$jsonObj = json_decode($json_string);
 
-	$replyToken = $jsonObj->{"events"}[0]->{"replyToken"};
-	$messageId = $jsonObj->{"events"}[0]->{"message"}->{"id"};
-
-	global $curl, $url, $options;
 	$url = "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key={api-key}&version=2016-05-20";
-	$imagedata = C\Users\Tomoya_Sakaguchi\git\satotaro\web\gyosei.jpg;
-	$curl = curl_init ( $url);
-	$options = array (
-			CURLOPT_POST => true,
-			CURLOPT_POSTFIELDS => $imagedata,
-			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_VERBOSE =>TRUE
-	);
-
-	curl_setopt_array ( $curl,$url,$options );
-	$jsonString = curl_exec ( $curl );
-	$json = json_decode ( $jsonString, true );
-
-	return curl_exec ( $curl );
+	$curl = curl_init();
+	$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg";
+	curl_setopt($curl, CURLOPT_URL, $url);
+	//curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
+	curl_setopt($curl, CURLOPT_POST, TRUE);
+	curl_setopt($curl, CURLOPT_POSTFIELDS, $imagedata);
+	curl_setopt($curl, CURLOPT_VERBOSE, TRUE);
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+	$vr_exec = curl_exec($curl);
+	curl_close($curl)
 
 	/*画像ファイルのバイナリ取得
 	$ch = curl_init("https://api.line.me/v2/bot/message/reply".$messageId."/content");
