@@ -150,14 +150,14 @@ if ($type != "text") {
 	error_log ( 画像を認識 );
 
 	$imagedata = "C:\Users\Tomoya_Sakaguchi\git\satotaro\web\gyosei.jpg";
-
+	$url = "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key={c24e26752cbdd81008614ff2379f39be5dc9b629}&version=2016-05-20";
 	$jsonString = callvisual_recognition();
 	$json = json_decode ( $jsonString, true );
 	$message = $json ["output"] ["text"] [0];
 
 	$response_format_text = [
 			"type" => "text",
-			"text" => "hello"
+			"text" => "message"
 	];
 
 	$post_data = [
@@ -168,10 +168,9 @@ if ($type != "text") {
 	];
 
 function callvisual_recognition(){
-	global $curl, $options;
+	global $curl,$url,$options;
 
-	$curl = curl_init("https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key={c24e26752cbdd81008614ff2379f39be5dc9b629}&version=2016-05-20"
-			);
+	$curl = curl_init($url);
 	//curl_setopt ( $curl, CURLOPT_URL, $url );
 	// curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
 	$options = array (
