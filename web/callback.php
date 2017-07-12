@@ -150,11 +150,11 @@ if ($type != "text") {
 	error_log ( 画像を認識 );
 
 	$ch = curl_init("https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key={api-key}&version=2016-05-20");
-	//$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg";
+	$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg";
 	curl_setopt ( $curl, CURLOPT_URL, $url );
 	// curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
 	curl_setopt ( $curl, CURLOPT_POST, TRUE );
-	curl_setopt ( $curl, CURLOPT_POSTFIELDS, "images_file=@gyosei.jpg");
+	curl_setopt ( $curl, CURLOPT_POSTFIELDS, "images_file=$imagedata");
 	curl_setopt ( $curl, CURLOPT_VERBOSE, TRUE );
 	curl_setopt ( $curl, CURLOPT_RETURNTRANSFER, TRUE );
 
