@@ -146,7 +146,7 @@ if ($eventType == "postback") {
 }
 
 // メッセージ以外の場合
-if ($type = "image") {
+if ($type != "text") {
 	error_log ( 画像を認識 );
 
 	$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg";
@@ -156,10 +156,8 @@ if ($type = "image") {
 	$messsage = $json ["output"] ["text"] [0];
 
 	$response_format_text = [
-			"type" => "image",
-			"originalContentUrl" => "https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg",
-			"previewImageUrl" => "https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg"
-
+			"type" => "text",
+			"text" => $message
 	];
 
 	$post_data = [
@@ -172,7 +170,8 @@ if ($type = "image") {
 function callvisual_recognition(){
 	global $curl, $options;
 
-	$curl = curl_init("https://gateway-a.watsonplatform.net/visual-recognition/api/v3/collections/{collection_id}/images?api_key={c24e26752cbdd81008614ff2379f39be5dc9b629}&version=2016-05-20");
+	$curl = curl_init("https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key={c24e26752cbdd81008614ff2379f39be5dc9b629}&version=2016-05-20"
+			);
 	//curl_setopt ( $curl, CURLOPT_URL, $url );
 	// curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
 	$options = array (
@@ -246,7 +245,6 @@ function callvisual_recognition(){
 	 *
 	 */
 }
-/*
 $classfier = "12d0fcx34-nlc-410";
 $workspace_id = "5989586b-2815-45fd-9563-ed3ea863dfaa";
 
@@ -283,8 +281,7 @@ $data = array (
  *
  * curl_setopt_array($curl, $options);
  * $jsonString = curl_exec($curl);
-
-
+ */
 $jsonString = callWatson ();
 $json = json_decode ( $jsonString, true );
 
@@ -357,7 +354,7 @@ pg_close ( $conn );
  *
  * curl_setopt_array($curl, $options);
  * $jsonString = curl_exec($curl);
- *
+ */
 $jsonString = callWatson ();
 // error_log($jsonString);
 $json = json_decode ( $jsonString, true );
@@ -543,7 +540,7 @@ pg_close ( $conn );
  * $outputText = $json ['output'] ['text'] [count ( $json ['output'] ['text'] ) - 1];
  *
  * replyTextMessage ( $bot, $event->getReplyToken (), $outputText );
- *
+ */
 function callWatson() {
 	global $curl, $url, $username, $password, $data, $options;
 	$curl = curl_init ( $url );
