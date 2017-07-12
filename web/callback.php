@@ -149,17 +149,19 @@ if ($eventType == "postback") {
 if ($type != "text") {
 	error_log ( 画像を認識 );
 
-	$ch = curl_init("https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key={c24e26752cbdd81008614ff2379f39be5dc9b629}&version=2016-05-20");
-	$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg";
+	$data = array(
+			'file'=>'@./gyosei.jpg;filename=gyosei.jpg;type=image/jpeg'
+	);
+	$ch = curl_init();
 	//curl_setopt ( $curl, CURLOPT_URL, $url );
 	// curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
-	curl_setopt ( $curl, CURLOPT_POST, TRUE );
-	curl_setopt ( $curl, CURLOPT_POSTFIELDS,json_encode($imagedata));
-	curl_setopt ( $curl, CURLOPT_VERBOSE, TRUE );
-	curl_setopt ( $curl, CURLOPT_RETURNTRANSFER, TRUE );
-
-	//curl_setopt_array ( $curl, $options );
+	curl_setopt ( $ch, CURLOPT_POST, TRUE );
+	curl_setopt ( $ch, CURLOPT_POSTFIELDS,$data);
+	curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, TRUE );
+	curl_setopt ( $ch, CURLOPT_URL, 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key={c24e26752cbdd81008614ff2379f39be5dc9b629}&version=2016-05-20');
 	$result = curl_exec ( $ch );
+	//curl_setopt_array ( $curl, $options );
+
 	return $result;
 	//curl_close($ch);
 
