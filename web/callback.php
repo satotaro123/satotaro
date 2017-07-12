@@ -149,9 +149,8 @@ if ($eventType == "postback") {
 if ($type != "text") {
 	error_log ( 画像を認識 );
 
-	$url = "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key={api-key}&version=2016-05-20";
-	$curl = curl_init ();
-	$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg";
+	$ch = curl_init("https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key={api-key}&version=2016-05-20");
+	//$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg";
 	curl_setopt ( $curl, CURLOPT_URL, $url );
 	// curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
 	curl_setopt ( $curl, CURLOPT_POST, TRUE );
