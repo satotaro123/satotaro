@@ -146,7 +146,7 @@ if ($eventType == "postback") {
 }
 
 // メッセージ以外の場合
-if ($type != "text") {
+if ($type = "image") {
 	error_log ( 画像を認識 );
 
 	$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg";
