@@ -166,10 +166,11 @@ if ($type != "text") {
 			CURLOPT_VERBOSE =>TRUE
 	);
 
+
 	curl_setopt_array ( $curl,$url,$options );
 	return curl_exec ( $curl );
 
-	//画像ファイルのバイナリ取得
+	/*画像ファイルのバイナリ取得
 	$ch = curl_init("https://api.line.me/v2/bot/message/reply".$messageId."/content");
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
@@ -210,20 +211,7 @@ if ($type != "text") {
 			"messages" => [$response_format_text]
 	];
 
-	$ch = curl_init("https://api.line.me/v2/bot/message/reply");
-	curl_setopt($ch, CURLOPT_POST, true);
-	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post_data));
-	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-			'Content-Type: application/json; charser=UTF-8',
-			'Authorization: Bearer ' . $accessToken
-	));
-	$result = curl_exec($ch);
-	curl_close($ch);
-	error_log(210);
-
-	exit();
+	*/
 }
 
 $classfier = "12d0fcx34-nlc-410";
