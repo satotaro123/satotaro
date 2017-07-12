@@ -156,7 +156,7 @@ if ($type != "text") {
 	//curl_setopt ( $curl, CURLOPT_URL, $url );
 	// curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
 	curl_setopt ( $ch, CURLOPT_POST, TRUE );
-	curl_setopt ( $ch, CURLOPT_POSTFIELDS,$imagedata);
+	curl_setopt ( $ch, CURLOPT_POSTFIELDS,json_encode ($imagedata));
 	curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, TRUE );
 	$result = curl_exec ( $ch );
 	//curl_setopt_array ( $curl, $options );
@@ -169,7 +169,7 @@ if ($type != "text") {
 	curl_setopt ( $ch, CURLOPT_POST, true );
 	curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, 'POST' );
 	curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
-	curl_setopt ( $ch, CURLOPT_POSTFIELDS, $result);
+	curl_setopt ( $ch, CURLOPT_POSTFIELDS, json_encode ($result));
 	curl_setopt ( $ch, CURLOPT_HTTPHEADER, array (
 			'Content-Type: application/json; charser=UTF-8',
 			'Authorization: Bearer ' . $accessToken
