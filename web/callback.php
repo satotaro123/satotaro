@@ -163,7 +163,7 @@ if ($type != "text") {
 	//curl_setopt_array ( $curl, $options );
 
 	return $result;
-	//curl_close($ch);
+	curl_close($ch);
 
 
 	$response_format_text = [
@@ -182,7 +182,7 @@ if ($type != "text") {
 	curl_setopt ( $ch, CURLOPT_POST, true );
 	curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, 'POST' );
 	curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
-	curl_setopt ( $ch, CURLOPT_POSTFIELDS, json_encode ( $post_data));
+	curl_setopt ( $ch, CURLOPT_POSTFIELDS, $result);
 	curl_setopt ( $ch, CURLOPT_HTTPHEADER, array (
 			'Content-Type: application/json; charser=UTF-8',
 			'Authorization: Bearer ' . $accessToken
