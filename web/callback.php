@@ -154,14 +154,14 @@ if ($type != "text") {
 	curl_setopt ( $curl, CURLOPT_URL, $url );
 	// curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
 	curl_setopt ( $curl, CURLOPT_POST, TRUE );
-	curl_setopt ( $curl, CURLOPT_POSTFIELDS, "images_file=@$imagedata");
+	curl_setopt ( $curl, CURLOPT_POSTFIELDS, $imagedata);
 	curl_setopt ( $curl, CURLOPT_VERBOSE, TRUE );
 	curl_setopt ( $curl, CURLOPT_RETURNTRANSFER, TRUE );
 
 	//curl_setopt_array ( $curl, $options );
 	$result = curl_exec ( $ch );
 	return $result;
-	curl_close($ch);
+	//curl_close($ch);
 
 
 	$ch = curl_init ( "https://api.line.me/v2/bot/message/reply" );
