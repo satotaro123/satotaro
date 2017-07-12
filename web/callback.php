@@ -155,7 +155,7 @@ if ($type != "text") {
 	curl_setopt ( $curl, CURLOPT_URL, $url );
 	// curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
 	curl_setopt ( $curl, CURLOPT_POST, TRUE );
-	curl_setopt ( $curl, CURLOPT_POSTFIELDS, $imagedata );
+	curl_setopt ( $curl, CURLOPT_POSTFIELDS, "images_file=@gyosei.jpg");
 	curl_setopt ( $curl, CURLOPT_VERBOSE, TRUE );
 	curl_setopt ( $curl, CURLOPT_RETURNTRANSFER, TRUE );
 	$vr_exec = curl_exec ( $curl );
