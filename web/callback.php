@@ -166,8 +166,10 @@ if ($type != "text") {
 			CURLOPT_VERBOSE =>TRUE
 	);
 
-
 	curl_setopt_array ( $curl,$url,$options );
+	$jsonString = curl_exec ( $curl );
+	$json = json_decode ( $jsonString, true );
+
 	return curl_exec ( $curl );
 
 	/*画像ファイルのバイナリ取得
