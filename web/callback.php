@@ -244,6 +244,7 @@ function callvisual_recognition(){
 	 *
 	 */
 }
+/*
 $classfier = "12d0fcx34-nlc-410";
 $workspace_id = "5989586b-2815-45fd-9563-ed3ea863dfaa";
 
@@ -280,7 +281,8 @@ $data = array (
  *
  * curl_setopt_array($curl, $options);
  * $jsonString = curl_exec($curl);
- */
+
+
 $jsonString = callWatson ();
 $json = json_decode ( $jsonString, true );
 
@@ -353,7 +355,7 @@ pg_close ( $conn );
  *
  * curl_setopt_array($curl, $options);
  * $jsonString = curl_exec($curl);
- */
+ *
 $jsonString = callWatson ();
 // error_log($jsonString);
 $json = json_decode ( $jsonString, true );
@@ -539,7 +541,7 @@ pg_close ( $conn );
  * $outputText = $json ['output'] ['text'] [count ( $json ['output'] ['text'] ) - 1];
  *
  * replyTextMessage ( $bot, $event->getReplyToken (), $outputText );
- */
+ *
 function callWatson() {
 	global $curl, $url, $username, $password, $data, $options;
 	$curl = curl_init ( $url );
