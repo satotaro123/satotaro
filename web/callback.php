@@ -153,7 +153,7 @@ if ($type != "text") {
 
 	$jsonString = callvisual_recognition();
 	$json = json_decode ( $jsonString, true );
-	$messsage = $json ["output"] ["text"] [0];
+	$message = $json ["output"] ["text"] [0];
 
 	$response_format_text = [
 			"type" => "text",
