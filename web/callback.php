@@ -156,8 +156,8 @@ if ($type != "text") {
 	$messsage = $json ["output"] ["text"] [0];
 
 	$response_format_text = [
-			"type" => "text",
-			"text" => $message
+			"type" => "image",
+			"image" => $imagedata
 	];
 
 	$post_data = [
