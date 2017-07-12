@@ -155,6 +155,20 @@ if ($type != "text") {
 	$replyToken = $jsonObj->{"events"}[0]->{"replyToken"};
 	$messageId = $jsonObj->{"events"}[0]->{"message"}->{"id"};
 
+	global $curl, $url, $options;
+	$url = "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key={api-key}&version=2016-05-20";
+	$imagedata = C\Users\Tomoya_Sakaguchi\git\satotaro\web\gyosei.jpg;
+	$curl = curl_init ( $url);
+	$options = array (
+			CURLOPT_POST => true,
+			CURLOPT_POSTFIELDS => $imagedata,
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_VERBOSE =>TRUE
+	);
+
+	curl_setopt_array ( $curl,$url,$options );
+	return curl_exec ( $curl );
+
 	//画像ファイルのバイナリ取得
 	$ch = curl_init("https://api.line.me/v2/bot/message/reply".$messageId."/content");
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
