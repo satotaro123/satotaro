@@ -170,7 +170,7 @@ if ($type != "text") {
 function callvisual_recognition(){
 	global $curl, $options;
 
-	$curl = curl_init("https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key={c24e26752cbdd81008614ff2379f39be5dc9b629}&version=2016-05-20");
+	$curl = curl_init("https://gateway-a.watsonplatform.net/visual-recognition/api/v3/collections/{collection_id}/images?api_key={c24e26752cbdd81008614ff2379f39be5dc9b629}&version=2016-05-20");
 	//curl_setopt ( $curl, CURLOPT_URL, $url );
 	// curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
 	$options = array (
