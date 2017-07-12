@@ -168,15 +168,19 @@ if ($type != "text") {
 	];
 
 function callvisual_recognition(){
-	$ch = curl_init("https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key={c24e26752cbdd81008614ff2379f39be5dc9b629}&version=2016-05-20");
+	global $curl, $options;
+
+	$curl = curl_init("https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key={c24e26752cbdd81008614ff2379f39be5dc9b629}&version=2016-05-20");
 	//curl_setopt ( $curl, CURLOPT_URL, $url );
 	// curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
-	curl_setopt ( $ch, CURLOPT_POST, TRUE );
-	curl_setopt ( $ch, CURLOPT_POSTFIELDS,json_encode ($imagedata));
-	curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, TRUE );
-	$result = curl_exec ( $ch );
-	//curl_setopt_array ( $curl, $options );
-	curl_close($ch);
+	$options = array (
+	CURLOPT_POST=> TRUE ,
+	CURLOPT_POSTFIELDS => json_encode ($imagedata),
+	CURLOPT_RETURNTRANSFER =>TRUE
+	);
+
+	curl_setopt_array ( $curl, $options );
+	return curl_exec ( $curl );
 
 }
 
@@ -193,10 +197,7 @@ function callvisual_recognition(){
 	$result = curl_exec ( $ch );
 	curl_close ( $ch);
 
-	$response_format_text = [
-			"type" => "text",
-			"text" => ""
-	];
+
 
 
 	/*
