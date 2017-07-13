@@ -162,15 +162,27 @@ if ($type != "text") {
 	];
 	*/
 
-	$data = file_get_contents("https://" . $_SERVER ['SERVER_NAME'] . "/lion.jpg");
-	file_put_contents('file:///C:/Users/Tomoya_Sakaguchi/git/satotaro/web/lion.jpg'.lion.jpg,$data);
+	$url = "http://e-犬のしつけ方.com/img/fotolia_31042623_xs.jpg";
+	$header = get_headers($url, 1);
 
-	error_log ( $data );
+	header('Content-Type: application/octet-stream');
+	header('Content-Length: '.$header['Content-Length']);
+	header('Content-disposition: attachment; filename="sample.mp4"');
+
+	$fp = fopen($url, 'rb');
+	while(!feof($fp)) {
+		$buf = fread($fp, 1048576);
+		echo $buf;
+		ob_flush();
+		flush();
+	}
+	fclose($fp);
+
 
 	$url = "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key=c24e26752cbdd81008614ff2379f39be5dc9b629&version=2016-05-20";
 
 	// $ch = curl_init ("https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key={c24e26752cbdd81008614ff2379f39be5dc9b629}&version=2016-05-20");
-	$jsonString = callVisual_recognition ();
+	$jsonString = callVisual_recognition ($header);
 	$json = json_decode ( $jsonString, true );
 	$class = $json ["images"] [0] ["classifiers"] [0] ["classes"] [0] ["class"];
 	$score = $json ["images"] [0] ["classifiers"] [0] ["classes"] [0] ["score"];
@@ -532,7 +544,7 @@ function callVisual_recognition() {
 	$curl = curl_init ( $url );
 	$options = array (
 			CURLOPT_POST => TRUE,
-			CURLOPT_POSTFIELDS => $data ,
+			CURLOPT_POSTFIELDS => $header,
 			CURLOPT_RETURNTRANSFER => TRUE
 	);
 
