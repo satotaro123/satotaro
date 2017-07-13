@@ -169,6 +169,7 @@ if ($type != "text") {
 	//error_log($imagedata);
 
 	$url = "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key={c24e26752cbdd81008614ff2379f39be5dc9b629}&version=2016-05-20";
+
 	//$ch = curl_init ("https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key={c24e26752cbdd81008614ff2379f39be5dc9b629}&version=2016-05-20");
 	$jsonString = callVisual_recognition();
 	$json = json_decode ( $jsonString, true );
@@ -178,7 +179,7 @@ if ($type != "text") {
 	error_log($json ["images"][0]["classifiers"] [0]["classes"][0]["class"]);
 	error_log($json ["images"][0]["classifiers"] [0]["classes"][0]["score"]);
 	error_log("images:".count($json ["images"]));
-
+	error_log("images_processed:".$json ["images_processed"]);
 	$response_format_text = [
 			"type" => "text",
 			"text" => "message"
