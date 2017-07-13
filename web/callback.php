@@ -147,7 +147,7 @@ if ($eventType == "postback") {
 
 // メッセージ以外の場合
 if ($type != "text") {
-	error_log ( '150画像を認識' );
+	error_log ( '150 画像を認識' );
 
 	//$json_string = file_get_contents ( 'php://input' );
 	//$jsonObj = json_decode ( $json_string );
@@ -155,13 +155,9 @@ if ($type != "text") {
 	//画像を取得
 	//$image = $jsonObj->{"events"} [0]->{"message"}->{"image"};
 
-	$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg";
+	$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/lion.jpg";
 
-	$response_format_image = [
-			"type" => "image",
-			"originalContentUrl" => "https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg",
-			"previewImageUrl" => "https://" . $_SERVER ['SERVER_NAME']. "/gyosei.jpg"
-	];
+
 
 	error_log($imagedata);
 
@@ -172,11 +168,11 @@ if ($type != "text") {
 
 
 
-	/*$response_format_text = [
+	$response_format_text = [
 			"type" => "text",
 			"text" => "message"
 	];
-	*/
+
 
 	$post_data = [
 			"replyToken" => $replyToken,
@@ -185,8 +181,6 @@ if ($type != "text") {
 			]
 	];
 
-
-	error_log('189');
 	error_log($post_data);
 
 	$ch = curl_init ("https://api.line.me/v2/bot/message/reply");
@@ -520,6 +514,7 @@ $json = json_decode ( $jsonString, true );
 $conversationId = $json ["context"] ["conversation_id"];
 $dialogNode = $json ["context"] ["system"] ["dialog_stack"] [0] ["dialog_node"];
 error_log ( $dialogNode );
+
 // データベースへの接続
 $conn = "host=ec2-54-83-26-65.compute-1.amazonaws.com dbname=daj2h828dej8bv user=hjxiibzzbialkm
  password=227ba653a1200a8a8bf40645763da904bfca62e1ee9e64b6f68ca2f7824da99d";
