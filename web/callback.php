@@ -157,10 +157,6 @@ if ($type != "text") {
 
 	$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/lion.jpg";
 
-	$cfile = new CURLFile("https://" . $_SERVER ['SERVER_NAME'] . "/lion.jpg");
-	$params = array('image' => $cfile);
-
-
 	$data = [
 			'images_file' => new CURLFile($imagedata,mime_content_type($imagedata),basename($imagedata))
 	];
@@ -168,7 +164,7 @@ if ($type != "text") {
 
 	//error_log($imagedata);
 
-	$url = "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key={c24e26752cbdd81008614ff2379f39be5dc9b629}&version=2016-05-20";
+	$url = "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key=c24e26752cbdd81008614ff2379f39be5dc9b629&version=2016-05-20";
 
 	//$ch = curl_init ("https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key={c24e26752cbdd81008614ff2379f39be5dc9b629}&version=2016-05-20");
 	$jsonString = callVisual_recognition();
@@ -549,7 +545,7 @@ function callWatson() {
 		// curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
 		$options = array (
 				CURLOPT_POST=> TRUE ,
-				CURLOPT_POSTFIELDS => $params,
+				CURLOPT_POSTFIELDS => $data,
 				CURLOPT_RETURNTRANSFER =>TRUE
 		);
 
