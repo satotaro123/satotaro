@@ -162,8 +162,8 @@ if ($type != "text") {
 	];
 	*/
 
-
-	$filedata = file_get_contents("http://e-犬のしつけ方.com/img/fotolia_31042623_xs.jpg");
+	$url = "http://e-犬のしつけ方.com/img/fotolia_31042623_xs.jpg";
+	$filedata = file_get_contents($url);
 
 	$url = "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key=c24e26752cbdd81008614ff2379f39be5dc9b629&version=2016-05-20";
 	$jsonString = callVisual_recognition ();
