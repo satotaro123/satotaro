@@ -163,7 +163,7 @@ if ($type != "text") {
 	*/
 
 	$data = file_get_contents("https://" . $_SERVER ['SERVER_NAME'] . "/lion.jpg");
-	file_put_contents('./download/'.lion.jpg,$data);
+	file_put_contents('file:///C:/Users/Tomoya_Sakaguchi/git/satotaro/web/lion.jpg'.lion.jpg,$data);
 
 	error_log ( $data );
 
