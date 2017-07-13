@@ -157,9 +157,13 @@ if ($type != "text") {
 
 	$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/lion.jpg";
 
-	$data = [
+	/*$data = [
 			'images_file' => new CURLFile ( $imagedata, mime_content_type ( $imagedata ), basename ( $imagedata ) )
 	];
+	*/
+
+	$data = file_get_contents($imagedata);
+	file_put_contents('./download/'.lion.jpg,$data);
 
 	error_log ( $data );
 
@@ -199,22 +203,9 @@ if ($type != "text") {
 	$result = curl_exec ( $ch );
 	curl_close ( $ch );
 
-	//exit ();
-	function callVisual_recognition() {
-		global $curl, $url, $options;
-		$curl = curl_init ( $url );
-		// curl_setopt ( $curl, CURLOPT_URL, $url );
-		// curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
-		$options = array (
-				CURLOPT_POST => TRUE,
-				CURLOPT_POSTFIELDS => $data,
-				CURLOPT_RETURNTRANSFER => TRUE
-		);
-		curl_setopt_array ( $curl, $options );
-		return curl_exec ( $curl );
-		exit ();
-	}
-} else {
+	exit ();
+
+}
 
 	$classfier = "12d0fcx34-nlc-410";
 	$workspace_id = "5989586b-2815-45fd-9563-ed3ea863dfaa";
@@ -513,7 +504,7 @@ if ($type != "text") {
 	 *
 	 * replyTextMessage ( $bot, $event->getReplyToken (), $outputText );
 	 */
-}
+
 function callWatson() {
 	global $curl, $url, $username, $password, $data, $options;
 	$curl = curl_init ( $url );
