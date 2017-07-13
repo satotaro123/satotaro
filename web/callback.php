@@ -261,6 +261,7 @@ function callVisual_recognition(){
 	 * ];
 	 *
 	 */
+	exit();
 }
 $classfier = "12d0fcx34-nlc-410";
 $workspace_id = "5989586b-2815-45fd-9563-ed3ea863dfaa";
