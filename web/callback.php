@@ -184,7 +184,7 @@ if ($type != "text") {
 
 	$response_format_text = [
 			"type" => "text",
-			"text" => "messag"
+			"text" => $class
 	];
 
 	$post_data = [
