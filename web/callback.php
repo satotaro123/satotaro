@@ -163,20 +163,7 @@ if ($type != "text") {
 	*/
 
 	$url = "http://e-犬のしつけ方.com/img/fotolia_31042623_xs.jpg";
-	$header = get_headers($url, 1);
 
-	header('Content-Type: application/octet-stream');
-	header('Content-Length: '.$header['Content-Length']);
-	header('Content-disposition: attachment; filename="sample.mp4"');
-
-	$fp = fopen($url, 'rb');
-	while(!feof($fp)) {
-		$buf = fread($fp, 1048576);
-		echo $buf;
-		ob_flush();
-		flush();
-	}
-	fclose($fp);
 
 
 	$url = "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key=c24e26752cbdd81008614ff2379f39be5dc9b629&version=2016-05-20";
