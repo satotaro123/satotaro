@@ -155,7 +155,7 @@ if ($type != "text") {
 	//画像を取得
 	//$image = $jsonObj->{"events"} [0]->{"message"}->{"image"};
 
-	$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/lion.jpg";
+	$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg";
 
 	$data = [
 			'images_file' => new CURLFile($imagedata,mime_content_type($imagedata),basename($imagedata))
