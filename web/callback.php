@@ -165,10 +165,11 @@ if ($text = "a") {
 
 	error_log($imagedata);
 
-	$ch = curl_init ("https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key={c24e26752cbdd81008614ff2379f39be5dc9b629}&version=2016-05-20");
+	/*$ch = curl_init ("https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key={c24e26752cbdd81008614ff2379f39be5dc9b629}&version=2016-05-20");
 	$jsonString = callVisual_recognition();
 	$json = json_decode ( $jsonString, true );
 	$message = $json ["output"] ["text"] [0];
+	*/
 
 
 	/*$response_format_text = [
@@ -208,7 +209,7 @@ function callVisual_recognition(){
 	// curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
 	$options = array (
 	CURLOPT_POST=> TRUE ,
-	CURLOPT_POSTFIELDS => json_encode (),
+			CURLOPT_POSTFIELDS => json_encode ($imagedata),
 	CURLOPT_RETURNTRANSFER =>TRUE
 	);
 
