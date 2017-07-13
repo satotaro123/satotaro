@@ -156,6 +156,7 @@ if ($type != "text") {
 	$json = json_decode ( $jsonString, true );
 	$message = $json ["output"] ["text"] [0];
 
+	error_log(159);
 	$response_format_text = [
 			"type" => "text",
 			"text" => "message"
