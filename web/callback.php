@@ -163,7 +163,7 @@ if ($type != "text") {
 	*/
 
 
-	$data = file_get_contents("http://e-犬のしつけ方.com/img/fotolia_31042623_xs.jpg");
+	$filedata = file_get_contents("http://e-犬のしつけ方.com/img/fotolia_31042623_xs.jpg");
 
 	$url = "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key=c24e26752cbdd81008614ff2379f39be5dc9b629&version=2016-05-20";
 	$jsonString = callVisual_recognition ();
@@ -524,12 +524,12 @@ function callWatson() {
 }
 
 function callVisual_recognition() {
-	global $curl, $url, $options,$data;
+	global $curl, $url, $options,$filedata;
 
 	$curl = curl_init ( $url );
 	$options = array (
 			CURLOPT_POST => TRUE,
-			CURLOPT_POSTFIELDS => $data,
+			CURLOPT_POSTFIELDS => $filedata,
 			CURLOPT_RETURNTRANSFER => TRUE
 	);
 
