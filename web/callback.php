@@ -156,6 +156,9 @@ if ($type != "text") {
 	//$image = $jsonObj->{"events"} [0]->{"message"}->{"image"};
 
 	$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/lion.jpg";
+	$param = [
+			'media' => new CURLFile('lion.jpg')
+	];
 
 
 
@@ -187,7 +190,7 @@ if ($type != "text") {
 	curl_setopt ( $ch, CURLOPT_POST, true );
 	curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, 'POST' );
 	curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
-	curl_setopt ( $ch, CURLOPT_POSTFIELDS, json_encode ($post_data));
+	curl_setopt ( $ch, CURLOPT_POSTFIELDS, json_encode ($param));
 	curl_setopt ( $ch, CURLOPT_HTTPHEADER, array (
 			'Content-Type: application/json; charser=UTF-8',
 			'Authorization: Bearer ' . $accessToken
@@ -203,7 +206,7 @@ function callVisual_recognition(){
 	// curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
 	$options = array (
 	CURLOPT_POST=> TRUE ,
-	CURLOPT_POSTFIELDS => json_encode ($imagedata),
+	CURLOPT_POSTFIELDS => json_encode ($param),
 	CURLOPT_RETURNTRANSFER =>TRUE
 	);
 
