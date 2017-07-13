@@ -181,6 +181,7 @@ if ($type != "text") {
 	$response_format_text = [
 			"type" => "text",
 			"text" => $class,
+			"text" => $score,
 			//"text" => $score
 	];
 
