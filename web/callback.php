@@ -155,7 +155,7 @@ if ($type != "text") {
 	//画像を取得
 	//$image = $jsonObj->{"events"} [0]->{"message"}->{"image"};
 
-	$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg";
+	$imagedata = "file:///C:/Users/Tomoya_Sakaguchi/git/satotaro/web/gyosei.jpg";
 
 	error_log($imagedata);
 
@@ -164,7 +164,7 @@ if ($type != "text") {
 	$json = json_decode ( $jsonString, true );
 	$message = $json ["output"] ["text"] [0];
 
-	error_log(159);
+
 	$response_format_text = [
 			"type" => "text",
 			"text" => "message"
