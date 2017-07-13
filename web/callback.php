@@ -155,7 +155,7 @@ if ($text = "あ") {
 	//画像を取得
 	//$image = $jsonObj->{"events"} [0]->{"message"}->{"image"};
 
-	$imagedata = "file:///C:/Users/Tomoya_Sakaguchi/git/satotaro/web/gyosei.jpg";
+	$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg";
 
 	error_log($imagedata);
 
