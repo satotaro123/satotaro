@@ -147,7 +147,7 @@ if ($eventType == "postback") {
 
 // メッセージ以外の場合
 if ($type != "text") {
-	error_log ( 画像を認識 );
+	error_log ( '150画像を認識' );
 
 	$data = "C:\Users\Tomoya_Sakaguchi\git\satotaro\web\gyosei.jpg";
 
