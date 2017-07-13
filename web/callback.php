@@ -220,52 +220,9 @@ if ($type != "text") {
 	curl_setopt_array ( $curl, $options );
 	return curl_exec ( $curl );
 */
+	exit();
 }
 
-	/*
-	 * 画像ファイルのバイナリ取得
-	 * $ch = curl_init("https://api.line.me/v2/bot/message/reply".$messageId."/content");
-	 * curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	 * curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-	 * 'Content-Type: application/json; charser=UTF-8',
-	 * 'Authorization: Bearer ' . $accessToken
-	 * ));
-	 * $result = curl_exec($ch);
-	 * curl_close($ch);
-	 *
-	 * //画像ファイルの作成
-	 * $fp = fopen('./img/test.jpg', 'wb');
-	 *
-	 * if ($fp){
-	 * if (flock($fp, LOCK_EX)){
-	 * if (fwrite($fp, $result ) === FALSE){
-	 * error_log('ファイル書き込みに失敗しました');
-	 * }else{
-	 * error_log($data.'をファイルに書き込みました<br>');
-	 * }
-	 *
-	 * flock($fp, LOCK_UN);
-	 * }else{
-	 * print('ファイルロックに失敗しました<br>');
-	 * }
-	 * }
-	 *
-	 * fclose($fp);
-	 *
-	 * //そのまま画像をオウム返しで送信
-	 * $response_format_text = [
-	 * "type" => "image",
-	 * "originalContentUrl" => "file:///C:/Users/Tomoya_Sakaguchi/git/satotaro/web/test.jpg",
-	 * "previewImageUrl" => "file:///C:/Users/Tomoya_Sakaguchi/git/satotaro/web/test.jpg"
-	 * ];
-	 *
-	 * $post_data = [
-	 * "replyToken" => $replyToken,
-	 * "messages" => [$response_format_text]
-	 * ];
-	 *
-	 */
-	exit();
 
 $classfier = "12d0fcx34-nlc-410";
 $workspace_id = "5989586b-2815-45fd-9563-ed3ea863dfaa";
