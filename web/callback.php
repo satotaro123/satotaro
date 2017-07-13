@@ -149,10 +149,18 @@ if ($eventType == "postback") {
 if ($type != "text") {
 	error_log ( '150画像を認識' );
 
-	$data = "C:\Users\Tomoya_Sakaguchi\git\satotaro\web\gyosei.jpg";
+	//$json_string = file_get_contents ( 'php://input' );
+	//$jsonObj = json_decode ( $json_string );
+
+	//画像を取得
+	//$image = $jsonObj->{"events"} [0]->{"message"}->{"image"};
+
+	$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg";
+
+	error_log($imagedata);
 
 	$url = 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify'.'?api_key={"c24e26752cbdd81008614ff2379f39be5dc9b629"}&version=2016-05-20';
-	$jsonString = callvisual_recognition($data);
+	$jsonString = callvisual_recognition();
 	$json = json_decode ( $jsonString, true );
 	$message = $json ["output"] ["text"] [0];
 
@@ -169,23 +177,6 @@ if ($type != "text") {
 			]
 	];
 
-function callvisual_recognition(){
-	global $curl,$url,$options;
-
-	$curl = curl_init($url);
-	//curl_setopt ( $curl, CURLOPT_URL, $url );
-	// curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
-	$options = array (
-	CURLOPT_POST=> TRUE ,
-	CURLOPT_POSTFIELDS => json_encode ($data),
-	CURLOPT_RETURNTRANSFER =>TRUE
-	);
-
-	curl_setopt_array ( $curl, $options );
-	return curl_exec ( $curl );
-
-}
-
 
 	$ch = curl_init ("https://api.line.me/v2/bot/message/reply");
 	curl_setopt ( $ch, CURLOPT_POST, true );
@@ -199,8 +190,22 @@ function callvisual_recognition(){
 	$result = curl_exec ( $ch );
 	curl_close ( $ch);
 
+function callvisual_recognition(){
+	global $curl,$url,$options;
 
+	$curl = curl_init($url);
+	//curl_setopt ( $curl, CURLOPT_URL, $url );
+	// curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
+	$options = array (
+	CURLOPT_POST=> TRUE ,
+	CURLOPT_POSTFIELDS => json_encode (),
+	CURLOPT_RETURNTRANSFER =>TRUE
+	);
 
+	curl_setopt_array ( $curl, $options );
+	return curl_exec ( $curl );
+
+}
 
 	/*
 	 * 画像ファイルのバイナリ取得
