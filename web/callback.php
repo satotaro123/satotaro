@@ -163,13 +163,11 @@ if ($type != "text") {
 	*/
 
 	$url = "http://e-犬のしつけ方.com/img/fotolia_31042623_xs.jpg";
-
+	$data = file_get_contents($url);
 
 
 	$url = "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key=c24e26752cbdd81008614ff2379f39be5dc9b629&version=2016-05-20";
-
-	// $ch = curl_init ("https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key={c24e26752cbdd81008614ff2379f39be5dc9b629}&version=2016-05-20");
-	$jsonString = callVisual_recognition ($header);
+	$jsonString = callVisual_recognition ();
 	$json = json_decode ( $jsonString, true );
 	$class = $json ["images"] [0] ["classifiers"] [0] ["classes"] [0] ["class"];
 	$score = $json ["images"] [0] ["classifiers"] [0] ["classes"] [0] ["score"];
@@ -183,7 +181,8 @@ if ($type != "text") {
 
 	$response_format_text = [
 			"type" => "text",
-			"text" => $class
+			"text" => $class,
+			//"text" => $score
 	];
 
 	$post_data = [
@@ -531,7 +530,7 @@ function callVisual_recognition() {
 	$curl = curl_init ( $url );
 	$options = array (
 			CURLOPT_POST => TRUE,
-			CURLOPT_POSTFIELDS => $header,
+			CURLOPT_POSTFIELDS => $data,
 			CURLOPT_RETURNTRANSFER => TRUE
 	);
 
