@@ -166,7 +166,7 @@ if ($text = "a") {
 	error_log($imagedata);
 
 	$ch = curl_init ("https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key={c24e26752cbdd81008614ff2379f39be5dc9b629}&version=2016-05-20");
-	$jsonString = callvisual_recognition();
+	$jsonString = callVisual_recognition();
 	$json = json_decode ( $jsonString, true );
 	$message = $json ["output"] ["text"] [0];
 
@@ -200,7 +200,7 @@ if ($text = "a") {
 	$result = curl_exec ( $ch );
 	curl_close ( $ch);
 
-function callvisual_recognition(){
+function callVisual_recognition(){
 	global $curl,$url,$options;
 
 	$curl = curl_init($url);
