@@ -149,38 +149,36 @@ if ($eventType == "postback") {
 if ($type != "text") {
 	error_log ( '150 画像を認識' );
 
-	//$json_string = file_get_contents ( 'php://input' );
-	//$jsonObj = json_decode ( $json_string );
+	// $json_string = file_get_contents ( 'php://input' );
+	// $jsonObj = json_decode ( $json_string );
 
-	//画像を取得
-	//$image = $jsonObj->{"events"} [0]->{"message"}->{"image"};
+	// 画像を取得
+	// $image = $jsonObj->{"events"} [0]->{"message"}->{"image"};
 
-	$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg";
+	$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/lion.jpg";
 
 	$data = [
-			'images_file' => new CURLFile($imagedata,mime_content_type($imagedata),basename($imagedata))
+			'images_file' => new CURLFile ( $imagedata, mime_content_type ( $imagedata ), basename ( $imagedata ) )
 	];
 
-
-	//error_log($imagedata);
+	error_log($data);
 
 	$url = "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key=c24e26752cbdd81008614ff2379f39be5dc9b629&version=2016-05-20";
 
-	//$ch = curl_init ("https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key={c24e26752cbdd81008614ff2379f39be5dc9b629}&version=2016-05-20");
-	$jsonString = callVisual_recognition();
+	// $ch = curl_init ("https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key={c24e26752cbdd81008614ff2379f39be5dc9b629}&version=2016-05-20");
+	$jsonString = callVisual_recognition ();
 	$json = json_decode ( $jsonString, true );
-	//$message = $json ["output"] ["text"] [0];
+	// $message = $json ["output"] ["text"] [0];
 
-	error_log($json ["images"][0]["classifiers"] [0]["classes"][0]["class"]);
-	error_log($json ["images"][0]["classifiers"] [0]["classes"][0]["score"]);
-	error_log("images:".count($json ["images"]));
-	error_log("images_processed:".$json ["images_processed"]);
+	error_log ( $json ["images"] [0] ["classifiers"] [0] ["classes"] [0] ["class"] );
+	error_log ( $json ["images"] [0] ["classifiers"] [0] ["classes"] [0] ["score"] );
+	error_log ( "images:" . count ( $json ["images"] ) );
+	error_log ( "images_processed:" . $json ["images_processed"] );
 
 	$response_format_text = [
 			"type" => "text",
 			"text" => "message"
 	];
-
 
 	$post_data = [
 			"replyToken" => $replyToken,
@@ -189,39 +187,35 @@ if ($type != "text") {
 			]
 	];
 
-
-
-	$ch = curl_init ("https://api.line.me/v2/bot/message/reply");
+	$ch = curl_init ( "https://api.line.me/v2/bot/message/reply" );
 	curl_setopt ( $ch, CURLOPT_POST, true );
 	curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, 'POST' );
 	curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
-	curl_setopt ( $ch, CURLOPT_POSTFIELDS, json_encode ($post_data));
+	curl_setopt ( $ch, CURLOPT_POSTFIELDS, json_encode ( $post_data ) );
 	curl_setopt ( $ch, CURLOPT_HTTPHEADER, array (
 			'Content-Type: application/json; charser=UTF-8',
 			'Authorization: Bearer ' . $accessToken
 	) );
 	$result = curl_exec ( $ch );
-	curl_close ( $ch);
+	curl_close ( $ch );
+	function callVisual_recognition() {
+		global $curl, $url, $options;
 
-/*function callVisual_recognition(){
-	global $curl,$url,$options;
+		$curl = curl_init ( $url );
+		// curl_setopt ( $curl, CURLOPT_URL, $url );
+		// curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
+		$options = array (
+				CURLOPT_POST => TRUE,
+				CURLOPT_POSTFIELDS => $data,
+				CURLOPT_RETURNTRANSFER => TRUE
+		);
 
-	$curl = curl_init($url);
-	//curl_setopt ( $curl, CURLOPT_URL, $url );
-	// curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
-	$options = array (
-	CURLOPT_POST=> TRUE ,
-	CURLOPT_POSTFIELDS => $data,
-	CURLOPT_RETURNTRANSFER =>TRUE
-	);
+		curl_setopt_array ( $curl, $options );
+		return curl_exec ( $curl );
 
-	curl_setopt_array ( $curl, $options );
-	return curl_exec ( $curl );
-*/
-	exit();
+		exit ();
+	}
 }
-
-
 $classfier = "12d0fcx34-nlc-410";
 $workspace_id = "5989586b-2815-45fd-9563-ed3ea863dfaa";
 
@@ -537,18 +531,20 @@ function callWatson() {
 	return curl_exec ( $curl );
 }
 
-	function callVisual_recognition(){
-		global $curl,$url,$options;
-
-		$curl = curl_init($url);
-		//curl_setopt ( $curl, CURLOPT_URL, $url );
-		// curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
-		$options = array (
-				CURLOPT_POST=> TRUE ,
-				CURLOPT_POSTFIELDS => $data,
-				CURLOPT_RETURNTRANSFER =>TRUE
-		);
-
-		curl_setopt_array ( $curl, $options );
-		return curl_exec ( $curl );
-}
+	/*
+	 * function callVisual_recognition(){
+	 * global $curl,$url,$options;
+	 *
+	 * $curl = curl_init($url);
+	 * //curl_setopt ( $curl, CURLOPT_URL, $url );
+	 * // curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
+	 * $options = array (
+	 * CURLOPT_POST=> TRUE ,
+	 * CURLOPT_POSTFIELDS => $data,
+	 * CURLOPT_RETURNTRANSFER =>TRUE
+	 * );
+	 *
+	 * curl_setopt_array ( $curl, $options );
+	 * return curl_exec ( $curl );
+	 * }
+	 */
