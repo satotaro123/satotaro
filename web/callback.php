@@ -531,19 +531,17 @@ function callWatson() {
 	curl_setopt_array ( $curl, $options );
 	return curl_exec ( $curl );
 }
+
 function callVisual_recognition() {
 	global $curl, $url, $options;
 
-
-
 	$curl = curl_init ( $url );
-	// curl_setopt ( $curl, CURLOPT_URL, $url );
-	// curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
 	$options = array (
 			CURLOPT_POST => TRUE,
-			CURLOPT_POSTFIELDS => $data,
+			CURLOPT_POSTFIELDS => $data ,
 			CURLOPT_RETURNTRANSFER => TRUE
 	);
+
 	curl_setopt_array ( $curl, $options );
 	return curl_exec ( $curl );
 }
