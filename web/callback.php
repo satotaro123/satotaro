@@ -156,13 +156,13 @@ if ($type != "text") {
 	//$image = $jsonObj->{"events"} [0]->{"message"}->{"image"};
 
 	$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/lion.jpg";
-	/*$param = [
-			'media' => new CURLFile('lion.jpg')
-	];
-	*/
+
+	//$cfile = new CURLFile();
+	//$params = array('image' => $cfile);
+
 
 	$data = [
-			'images_file' => '@' . $imagedata
+			'images_file' => new CURLFile($imagedata,mime_content_type($imagedata),basename($imagedata))
 	];
 
 
@@ -172,7 +172,8 @@ if ($type != "text") {
 	//$ch = curl_init ("https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key={c24e26752cbdd81008614ff2379f39be5dc9b629}&version=2016-05-20");
 	$jsonString = callVisual_recognition();
 	$json = json_decode ( $jsonString, true );
-	$message = $json ["output"] ["text"] [0];
+	$class =
+	//$message = $json ["output"] ["text"] [0];
 
 	error_log($json ["images"][0]["classifiers"] [0]["classes"][0]["class"]);
 	error_log($json ["images"][0]["classifiers"] [0]["classes"][0]["score"]);
@@ -191,7 +192,7 @@ if ($type != "text") {
 			]
 	];
 
-	error_log($post_data);
+
 
 	$ch = curl_init ("https://api.line.me/v2/bot/message/reply");
 	curl_setopt ( $ch, CURLOPT_POST, true );
