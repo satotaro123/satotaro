@@ -157,6 +157,12 @@ if ($text = "a") {
 
 	$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg";
 
+	$response_format_text = [
+			"type" => "image",
+			"originalContentUrl" => "https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg",
+			"previewImageUrl" => "https://" . $_SERVER ['SERVER_NAME']. "/gyosei.jpg"
+	];
+
 	error_log($imagedata);
 
 	$url = 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify'.'?api_key={"c24e26752cbdd81008614ff2379f39be5dc9b629"}&version=2016-05-20';
@@ -165,10 +171,11 @@ if ($text = "a") {
 	$message = $json ["output"] ["text"] [0];
 
 
-	$response_format_text = [
+	/*$response_format_text = [
 			"type" => "text",
 			"text" => "message"
 	];
+	*/
 
 	$post_data = [
 			"replyToken" => $replyToken,
