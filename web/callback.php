@@ -170,6 +170,7 @@ if ($type != "text") {
 	$json = json_decode ( $jsonString, true );
 	$class = $json ["images"] [0] ["classifiers"] [0] ["classes"] [0] ["class"];
 	$score = $json ["images"] [0] ["classifiers"] [0] ["classes"] [0] ["score"];
+	$resmess = $json ["images"][0]["classifiers"] [0]["classes"][0]["score"] . "の確率で「".$json ["images"][0]["classifiers"] [0]["classes"][0]["class"]."」です";
 
 	// $message = $json ["output"] ["text"] [0];
 
@@ -180,9 +181,8 @@ if ($type != "text") {
 
 	$response_format_text = [
 			"type" => "text",
-			"text" => $class,
-			"text" => $score,
-			//"text" => $score
+			"text" => $resmess,
+
 	];
 
 	$post_data = [
