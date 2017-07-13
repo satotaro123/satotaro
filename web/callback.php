@@ -176,6 +176,7 @@ if ($type != "text") {
 
 	error_log($json ["images"][0]["classifiers"] [0]["classes"][0]["class"]);
 	error_log($json ["images"][0]["classifiers"] [0]["classes"][0]["score"]);
+	error_log("images:".count($json ["images"]));
 
 	$response_format_text = [
 			"type" => "text",
