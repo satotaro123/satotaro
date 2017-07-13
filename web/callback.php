@@ -531,12 +531,10 @@ function callWatson() {
 	curl_setopt_array ( $curl, $options );
 	return curl_exec ( $curl );
 }
-/*function callVisual_recognition() {
+function callVisual_recognition() {
 	global $curl, $url, $options;
-	/*
-	 * $data = [
-	 * 'images_file' => new CURLFile ( $imagedata, mime_content_type ( $imagedata ), basename ( $imagedata ) )
-	 * ];
+
+
 
 	$curl = curl_init ( $url );
 	// curl_setopt ( $curl, CURLOPT_URL, $url );
@@ -549,4 +547,4 @@ function callWatson() {
 	curl_setopt_array ( $curl, $options );
 	return curl_exec ( $curl );
 }
-*/
+
