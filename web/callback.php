@@ -186,7 +186,7 @@ if ($text = "a") {
 	];
 
 
-	error_log('188');
+	error_log('189');
 	error_log($post_data);
 
 	$ch = curl_init ("https://api.line.me/v2/bot/message/reply");
@@ -209,7 +209,7 @@ function callVisual_recognition(){
 	// curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
 	$options = array (
 	CURLOPT_POST=> TRUE ,
-			CURLOPT_POSTFIELDS => json_encode ($imagedata),
+	CURLOPT_POSTFIELDS => json_encode ($imagedata),
 	CURLOPT_RETURNTRANSFER =>TRUE
 	);
 
