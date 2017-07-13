@@ -152,7 +152,7 @@ if ($type != "text") {
 	$data = "C:\Users\Tomoya_Sakaguchi\git\satotaro\web\gyosei.jpg";
 
 	$url = 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify'.'?api_key={"c24e26752cbdd81008614ff2379f39be5dc9b629"}&version=2016-05-20';
-	$jsonString = callvisual_recognition();
+	$jsonString = callvisual_recognition($data);
 	$json = json_decode ( $jsonString, true );
 	$message = $json ["output"] ["text"] [0];
 
