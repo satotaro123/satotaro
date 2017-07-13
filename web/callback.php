@@ -204,7 +204,7 @@ if ($type != "text") {
 	$result = curl_exec ( $ch );
 	curl_close ( $ch);
 
-function callVisual_recognition(){
+/*function callVisual_recognition(){
 	global $curl,$url,$options;
 
 	$curl = curl_init($url);
@@ -218,7 +218,7 @@ function callVisual_recognition(){
 
 	curl_setopt_array ( $curl, $options );
 	return curl_exec ( $curl );
-
+*/
 }
 
 	/*
@@ -265,7 +265,7 @@ function callVisual_recognition(){
 	 *
 	 */
 	exit();
-}
+
 $classfier = "12d0fcx34-nlc-410";
 $workspace_id = "5989586b-2815-45fd-9563-ed3ea863dfaa";
 
@@ -579,4 +579,20 @@ function callWatson() {
 
 	curl_setopt_array ( $curl, $options );
 	return curl_exec ( $curl );
+}
+
+	function callVisual_recognition(){
+		global $curl,$url,$options;
+
+		$curl = curl_init($url);
+		//curl_setopt ( $curl, CURLOPT_URL, $url );
+		// curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
+		$options = array (
+				CURLOPT_POST=> TRUE ,
+				CURLOPT_POSTFIELDS => $data,
+				CURLOPT_RETURNTRANSFER =>TRUE
+		);
+
+		curl_setopt_array ( $curl, $options );
+		return curl_exec ( $curl );
 }
