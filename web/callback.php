@@ -146,7 +146,7 @@ if ($eventType == "postback") {
 }
 
 // メッセージ以外の場合
-if ($text = "あ") {
+if ($text = "a") {
 	error_log ( '150画像を認識' );
 
 	//$json_string = file_get_contents ( 'php://input' );
