@@ -164,15 +164,13 @@ if ($type != "text") {
 	$result = curl_exec ( $ch );
 	curl_close($ch);
 
-	$imagedata = file_get_contents($result);
+	$img = base64_encode(file_get_contents($result));
 
 
-	error_log ( 181 );
-	error_log ( $json_string);
 	error_log ( 183 );
 	error_log ( $result );
 	error_log ( 185 );
-	error_log ( $imagedata);
+	error_log ( $img);
 
 
 
