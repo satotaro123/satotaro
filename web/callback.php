@@ -149,48 +149,6 @@ if ($eventType == "postback") {
 if ($type != "text") {
 	error_log ( '150 画像を認識' );
 
-	$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/lion.jpg";
-
-	$url = "https://" . $_SERVER ['SERVER_NAME'] . "/lion.jpg";
-	$filedata = file_get_contents($url);
-
-	$url = "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key=c24e26752cbdd81008614ff2379f39be5dc9b629&version=2016-05-20";
-	$jsonString = callVisual_recognition ();
-	$json = json_decode ( $jsonString, true );
-	$class = $json ["images"] [0] ["classifiers"] [0] ["classes"] [0] ["class"];
-	$score = $json ["images"] [0] ["classifiers"] [0] ["classes"] [0] ["score"];
-	$resmess = $json ["images"][0]["classifiers"] [0]["classes"][0]["score"] . "の確率で「".$json ["images"][0]["classifiers"] [0]["classes"][0]["class"]."」です";
-
-	error_log ( $json ["images"] [0] ["classifiers"] [0] ["classes"] [0] ["class"] );
-	error_log ( $json ["images"] [0] ["classifiers"] [0] ["classes"] [0] ["score"] );
-	error_log ( "images:" . count ( $json ["images"] ) );
-	error_log ( "images_processed:" . $json ["images_processed"] );
-
-	$response_format_text = [
-			"type" => "text",
-			"text" => $resmess,
-
-	];
-
-	$post_data = [
-			"replyToken" => $replyToken,
-			"messages" => [
-					$response_format_text
-			]
-	];
-
-	$ch = curl_init ( "https://api.line.me/v2/bot/message/reply" );
-	curl_setopt ( $ch, CURLOPT_POST, true );
-	curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, 'POST' );
-	curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
-	curl_setopt ( $ch, CURLOPT_POSTFIELDS, json_encode ( $post_data ) );
-	curl_setopt ( $ch, CURLOPT_HTTPHEADER, array (
-			'Content-Type: application/json; charser=UTF-8',
-			'Authorization: Bearer ' . $accessToken
-	) );
-	$result = curl_exec ( $ch );
-	curl_close ( $ch );
-
 
 	//画像ファイルのバイナリ取得
 	$ch = curl_init ( "https://api.line.me/v2/bot/message/reply" . $messageId . "/content" );
@@ -229,6 +187,20 @@ if ($type != "text") {
 			]
 
 	];
+
+
+	$ch = curl_init ( "https://api.line.me/v2/bot/message/reply" );
+	curl_setopt ( $ch, CURLOPT_POST, true );
+	curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, 'POST' );
+	curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
+	curl_setopt ( $ch, CURLOPT_POSTFIELDS, json_encode ( $post_data ) );
+	curl_setopt ( $ch, CURLOPT_HTTPHEADER, array (
+			'Content-Type: application/json; charser=UTF-8',
+			'Authorization: Bearer ' . $accessToken
+	) );
+	$result = curl_exec ( $ch );
+	curl_close ( $ch );
+
 
 	exit ();
 
