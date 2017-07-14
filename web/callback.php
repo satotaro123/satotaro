@@ -164,8 +164,6 @@ if ($type != "text") {
 	$result = curl_exec ( $ch );
 	curl_close($ch);
 
-	$zyuurokusinnsu = bin2hex($result);
-	error_log ($zyuurokusinnsu);
 
 	error_log ( 181 );
 	error_log ( $json_string);
@@ -173,11 +171,22 @@ if ($type != "text") {
 	error_log ( $result );
 
 
+	if (file_exists($result)) {
+		$fp   = fopen($result,'rb');
+		$size = filesize($result);
+		$img  = fread($fp, $size);
+		fclose($fp);
+
+		header('Content-Type: image/jpeg');
+
+	}
+
+
 	// そのまま画像をオウム返しで送信
 	$response_format_text = [
 			"type" => "image",
-			"originalContentUrl" => $image_resource,
-			"previewImageUrl" => $image_resource
+			"originalContentUrl" => $img,
+			"previewImageUrl" => $img
 	];
 
 	$post_data = [
