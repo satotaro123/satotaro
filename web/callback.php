@@ -153,13 +153,15 @@ if ($type != "text") {
 
 
 	//画像ファイルのバイナリ取得
-	$ch = curl_init ( "https://api.line.me/v2/bot/message/reply" . $messageId . "/content" );
+	$ch = curl_init ("https://api.line.me/v2/bot/message/reply" . $messageId . "/content") ;
 	curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
 	curl_setopt ( $ch, CURLOPT_HTTPHEADER, array (
 			'Content-Type: application/json; charser=UTF-8',
 			'Authorization: Bearer ' . $accessToken
 	) );
 	$result = curl_exec ( $ch );
+
+	$image_resource = imagecreatefromstring($result);
 
 	error_log ( 181 );
 	error_log ( $json_string);
@@ -175,11 +177,10 @@ if ($type != "text") {
 
 
 	// そのまま画像をオウム返しで送信
-	$lion = "https://" . $_SERVER ['SERVER_NAME'] . "/lion.jpg";
 	$response_format_text = [
 			"type" => "image",
-			"originalContentUrl" => $lion,
-			"previewImageUrl" => $lion
+			"originalContentUrl" => $image_resource,
+			"previewImageUrl" => $image_resource
 	];
 
 	$post_data = [
@@ -205,6 +206,7 @@ if ($type != "text") {
 	error_log ( "images:" . count ( $json ["images"] ) );
 	error_log ( "images_processed:" . $json ["images_processed"] );
 
+	/*
 	$response_format_text = [
 			"type" => "text",
 			"text" => $resmess,
@@ -217,6 +219,7 @@ if ($type != "text") {
 					$response_format_text
 			]
 	];
+	*/
 
 	$ch = curl_init ( "https://api.line.me/v2/bot/message/reply" );
 	curl_setopt ( $ch, CURLOPT_POST, true );
