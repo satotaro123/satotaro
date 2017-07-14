@@ -569,7 +569,7 @@ function callWatson() {
 }
 
 function callVisual_recognition() {
-	global $curl, $url, $options,$image_resource;
+	global $curl, $url, $options,$result;
 
 	$curl = curl_init ( $url );
 	$options = array (
