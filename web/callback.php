@@ -13,7 +13,7 @@ $text = $jsonObj->{"events"} [0]->{"message"}->{"text"};
 $image = $jsonObj->{"events"} [0]->{"message"}->{"image"};
 // ReplyToken取得
 $replyToken = $jsonObj->{"events"} [0]->{"replyToken"};
-
+// messageIdを取得
 $messageId = $jsonObj->{"events"}[0]->{"message"}->{"id"};
 // ユーザーID取得
 $userID = $jsonObj->{"events"} [0]->{"source"}->{"userId"};
@@ -155,7 +155,7 @@ if ($type != "text") {
 
 
 	//画像ファイルのバイナリ取得
-	$ch = curl_init ("https://api.line.me/v2/bot/message/reply" . $messageId . "/content") ;
+	$ch = curl_init ("https://api.line.me/v2/bot/message/". $messageId ."/content") ;
 	curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
 	curl_setopt ( $ch, CURLOPT_HTTPHEADER, array (
 			'Content-Type: application/json; charser=UTF-8',
