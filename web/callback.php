@@ -177,7 +177,7 @@ if ($type != "text") {
 	//↑コメ
 
 
-	/* そのまま画像をオウム返しで送信
+	// そのまま画像をオウム返しで送信
 	$response_format_text = [
 			"type" => "image",
 			"originalContentUrl" => $image_resource,
@@ -191,9 +191,21 @@ if ($type != "text") {
 			]
 
 	];
-	*/
 
-	//$url = "https://" . $_SERVER ['SERVER_NAME'] . "/lion.jpg";
+	$ch = curl_init ( "https://api.line.me/v2/bot/message/reply" );
+	curl_setopt ( $ch, CURLOPT_POST, true );
+	curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, 'POST' );
+	curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
+	curl_setopt ( $ch, CURLOPT_POSTFIELDS, json_encode ( $post_data ) );
+	curl_setopt ( $ch, CURLOPT_HTTPHEADER, array (
+			'Content-Type: application/json; charser=UTF-8',
+			'Authorization: Bearer ' . $accessToken
+	) );
+	$result = curl_exec ( $ch );
+	curl_close ( $ch );
+
+
+	/*$url = "https://" . $_SERVER ['SERVER_NAME'] . "/lion.jpg";
 	//$filedata = file_get_contents($url);
 
 	$url = "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key=c24e26752cbdd81008614ff2379f39be5dc9b629&version=2016-05-20";
@@ -236,7 +248,7 @@ if ($type != "text") {
 	curl_close ( $ch );
 
 	exit ();
-
+	*/
 }
 
 	$classfier = "12d0fcx34-nlc-410";
