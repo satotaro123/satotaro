@@ -182,8 +182,8 @@ if ($type != "text") {
 	// そのまま画像をオウム返しで送信
 	$response_format_text = [
 			"type" => "image",
-			"originalContentUrl" => $image_resource,
-			"previewImageUrl" => $image_resource
+			"originalContentUrl" => $result,
+			"previewImageUrl" => $result
 	];
 
 	$post_data = [
