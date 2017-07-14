@@ -164,7 +164,8 @@ if ($type != "text") {
 	$result = curl_exec ( $ch );
 	curl_close($ch);
 
-	$image_resource = imagecreatefromstring($result);
+	$zyuurokusinnsu = bin2hex($result);
+	error_log ($zyuurokusinnsu);
 
 	error_log ( 181 );
 	error_log ( $json_string);
