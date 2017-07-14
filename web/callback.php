@@ -164,6 +164,7 @@ if ($type != "text") {
 	$result = curl_exec ( $ch );
 	curl_close($ch);
 
+	$image_resource = imagecreatefromstring($result);
 
 	error_log ( 181 );
 	error_log ( $json_string);
@@ -174,8 +175,8 @@ if ($type != "text") {
 	// そのまま画像をオウム返しで送信
 	$response_format_text = [
 			"type" => "image",
-			"originalContentUrl" => $result,
-			"previewImageUrl" => $result
+			"originalContentUrl" => $image_resource,
+			"previewImageUrl" => $image_resource
 	];
 
 	$post_data = [
