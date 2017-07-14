@@ -167,13 +167,14 @@ if ($type != "text") {
 	$data = base64_decode($result);
 	$im = imagecreatefromstring($data);
 	if ($im !== false) {
-		header('Content-Type: image/png');
-		imagepng($im);
+		header('Content-Type: image/jpg');
+		imagejpg($im);
 		imagedestroy($im);
 	}
 	else {
 		echo 'エラーが発生しました。';
 	}
+
 
 	error_log ( 183 );
 	error_log ( $im );
