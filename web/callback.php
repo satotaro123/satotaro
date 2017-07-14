@@ -568,7 +568,7 @@ function callWatson() {
 	curl_setopt_array ( $curl, $options );
 	return curl_exec ( $curl );
 }
-
+/*
 function callVisual_recognition() {
 	global $curl, $url, $options,$image_resource;
 
@@ -582,4 +582,4 @@ function callVisual_recognition() {
 	curl_setopt_array ( $curl, $options );
 	return curl_exec ( $curl );
 }
-
+*/
