@@ -149,7 +149,7 @@ if ($eventType == "postback") {
 if ($type != "text") {
 	error_log ( '150 画像を認識' );
 
-	$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/lion.jpg";
+	//$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/lion.jpg";
 
 
 	//画像ファイルのバイナリ取得
@@ -160,6 +160,7 @@ if ($type != "text") {
 			'Authorization: Bearer ' . $accessToken
 	) );
 	$result = curl_exec ( $ch );
+	curl_close($ch);
 
 	$image_resource = imagecreatefromstring($result);
 
