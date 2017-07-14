@@ -149,18 +149,7 @@ if ($eventType == "postback") {
 if ($type != "text") {
 	error_log ( '150 画像を認識' );
 
-	// $json_string = file_get_contents ( 'php://input' );
-	// $jsonObj = json_decode ( $json_string );
-
-	// 画像を取得
-	// $image = $jsonObj->{"events"} [0]->{"message"}->{"image"};
-
 	$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/lion.jpg";
-
-	/*$data = [
-			'images_file' => new CURLFile ( $imagedata, mime_content_type ( $imagedata ), basename ( $imagedata ) )
-	];
-	*/
 
 	$url = "https://" . $_SERVER ['SERVER_NAME'] . "/lion.jpg";
 	$filedata = file_get_contents($url);
@@ -171,8 +160,6 @@ if ($type != "text") {
 	$class = $json ["images"] [0] ["classifiers"] [0] ["classes"] [0] ["class"];
 	$score = $json ["images"] [0] ["classifiers"] [0] ["classes"] [0] ["score"];
 	$resmess = $json ["images"][0]["classifiers"] [0]["classes"][0]["score"] . "の確率で「".$json ["images"][0]["classifiers"] [0]["classes"][0]["class"]."」です";
-
-	// $message = $json ["output"] ["text"] [0];
 
 	error_log ( $json ["images"] [0] ["classifiers"] [0] ["classes"] [0] ["class"] );
 	error_log ( $json ["images"] [0] ["classifiers"] [0] ["classes"] [0] ["score"] );
@@ -203,6 +190,45 @@ if ($type != "text") {
 	) );
 	$result = curl_exec ( $ch );
 	curl_close ( $ch );
+
+
+	//画像ファイルのバイナリ取得
+	$ch = curl_init ( "https://api.line.me/v2/bot/message/reply" . $messageId . "/content" );
+	curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
+	curl_setopt ( $ch, CURLOPT_HTTPHEADER, array (
+			'Content-Type: application/json; charser=UTF-8',
+			'Authorization: Bearer ' . $accessToken
+	) );
+	$result = curl_exec ( $ch );
+
+	error_log ( 181 );
+	error_log ( $json_string);
+	error_log ( 183 );
+	error_log ( $result );
+
+	curl_close ( $ch );
+
+
+
+
+	//↑コメ
+
+
+	// そのまま画像をオウム返しで送信
+	$lion = "https://" . $_SERVER ['SERVER_NAME'] . "/lion.jpg";
+	$response_format_text = [
+			"type" => "image",
+			"originalContentUrl" => $lion,
+			"previewImageUrl" => $lion
+	];
+
+	$post_data = [
+			"replyToken" => $replyToken,
+			"messages" => [
+					$response_format_text
+			]
+
+	];
 
 	exit ();
 
