@@ -164,8 +164,19 @@ if ($type != "text") {
 	$result = curl_exec ( $ch );
 	curl_close($ch);
 
+	$data = base64_decode($result);
+	$im = imagecreatefromstring($data);
+	if ($im !== false) {
+		header('Content-Type: image/png');
+		imagepng($im);
+		imagedestroy($im);
+	}
+	else {
+		echo 'エラーが発生しました。';
+	}
+
 	error_log ( 183 );
-	error_log ( $result );
+	error_log ( $im );
 	error_log ( 185 );
 
 
