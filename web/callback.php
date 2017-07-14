@@ -176,7 +176,7 @@ if ($type != "text") {
 	//↑コメ
 
 
-	// そのまま画像をオウム返しで送信
+	/* そのまま画像をオウム返しで送信
 	$response_format_text = [
 			"type" => "image",
 			"originalContentUrl" => $image_resource,
@@ -190,6 +190,7 @@ if ($type != "text") {
 			]
 
 	];
+	*/
 
 	$url = "https://" . $_SERVER ['SERVER_NAME'] . "/lion.jpg";
 	$filedata = file_get_contents($url);
@@ -554,12 +555,12 @@ function callWatson() {
 }
 
 function callVisual_recognition() {
-	global $curl, $url, $options,$filedata;
+	global $curl, $url, $options,$image_resource;
 
 	$curl = curl_init ( $url );
 	$options = array (
 			CURLOPT_POST => TRUE,
-			CURLOPT_POSTFIELDS => $filedata,
+			CURLOPT_POSTFIELDS => $image_resource,
 			CURLOPT_RETURNTRANSFER => TRUE
 	);
 
