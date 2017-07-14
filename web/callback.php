@@ -164,22 +164,19 @@ if ($type != "text") {
 	$result = curl_exec ( $ch );
 	curl_close($ch);
 
+	$imagedata = file_get_contents($result);
+
 
 	error_log ( 181 );
 	error_log ( $json_string);
 	error_log ( 183 );
 	error_log ( $result );
+	error_log ( 185 );
+	error_log ( $imagedata);
 
 
-	if (file_exists($result)) {
-		$fp   = fopen($result,'rb');
-		$size = filesize($result);
-		$img  = fread($fp, $size);
-		fclose($fp);
 
-		header('Content-Type: image/jpeg');
 
-	}
 
 
 	// そのまま画像をオウム返しで送信
