@@ -207,7 +207,7 @@ if ($type != "text") {
 	error_log ( "images:" . count ( $json ["images"] ) );
 	error_log ( "images_processed:" . $json ["images_processed"] );
 
-	/*
+
 	$response_format_text = [
 			"type" => "text",
 			"text" => $resmess,
@@ -220,7 +220,7 @@ if ($type != "text") {
 					$response_format_text
 			]
 	];
-	*/
+
 
 	$ch = curl_init ( "https://api.line.me/v2/bot/message/reply" );
 	curl_setopt ( $ch, CURLOPT_POST, true );
