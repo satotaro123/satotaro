@@ -171,13 +171,6 @@ if ($type != "text") {
 	error_log ( $result );
 
 
-
-
-
-
-	//↑コメ
-
-
 	// そのまま画像をオウム返しで送信
 	$response_format_text = [
 			"type" => "image",
@@ -248,8 +241,9 @@ if ($type != "text") {
 	$result = curl_exec ( $ch );
 	curl_close ( $ch );
 
-	exit ();
 	*/
+	exit();
+
 }
 
 	$classfier = "12d0fcx34-nlc-410";
