@@ -13,6 +13,8 @@ $text = $jsonObj->{"events"} [0]->{"message"}->{"text"};
 $image = $jsonObj->{"events"} [0]->{"message"}->{"image"};
 // ReplyToken取得
 $replyToken = $jsonObj->{"events"} [0]->{"replyToken"};
+
+$messageId = $jsonObj->{"events"}[0]->{"message"}->{"id"};
 // ユーザーID取得
 $userID = $jsonObj->{"events"} [0]->{"source"}->{"userId"};
 
