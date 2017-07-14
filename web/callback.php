@@ -155,7 +155,7 @@ if ($type != "text") {
 
 
 	//画像ファイルのバイナリ取得
-	$ch = curl_init ("https://api.line.me/v2/bot/message/". $messageId ."/content") ;
+	$ch = curl_init ("https://api.line.me/v2/bot/message/".$messageId."/content") ;
 	curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
 	curl_setopt ( $ch, CURLOPT_HTTPHEADER, array (
 			'Content-Type: application/json; charser=UTF-8',
