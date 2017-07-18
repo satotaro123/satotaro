@@ -170,6 +170,7 @@ if ($type != "text") {
 	error_log ( 183 );
 	error_log ( $result);
 	error_log ( 185 );
+	error_log ($imagedata);
 
 	// そのまま画像をオウム返しで送信
 	$response_format_text = [
