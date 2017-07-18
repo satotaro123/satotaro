@@ -164,18 +164,28 @@ if ($type != "text") {
 	$result = curl_exec ( $ch );
 	curl_close($ch);
 
+	$data = base64_decode($result);
+
+	$img = imagecreatefromstring($data);
+	if ($img !== false) {
+		header('Content-Type: image/jpg');
+		imagejpg($img);
+		imagedestroy($img);
+	}
+
+
+
 
 	error_log ( 183 );
 	error_log ( $result);
 	error_log ( 185 );
-
-
+	error_log ( $img);
 
 	// そのまま画像をオウム返しで送信
 	$response_format_text = [
 			"type" => "image",
-			"originalContentUrl" => $result,
-			"previewImageUrl" => $result
+			"originalContentUrl" => $img,
+			"previewImageUrl" => $img
 	];
 
 	$post_data = [
@@ -576,5 +586,6 @@ function callVisual_recognition() {
 	curl_setopt_array ( $curl, $options );
 	return curl_exec ( $curl );
 }
+
 
 
