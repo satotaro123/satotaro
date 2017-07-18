@@ -149,7 +149,7 @@ if ($eventType == "postback") {
 
 // メッセージ以外の場合
 if ($type != "text") {
-	error_log ( '150 画像を認識' );
+	error_log ( 画像を認識 );
 
 	//$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/lion.jpg";
 
@@ -164,18 +164,9 @@ if ($type != "text") {
 	$result = curl_exec ( $ch );
 	curl_close($ch);
 
-
-
-
 	error_log ( 183 );
 	error_log ( $result);
 	error_log ( 185 );
-
-
-
-
-
-
 
 	// そのまま画像をオウム返しで送信
 	$response_format_text = [
