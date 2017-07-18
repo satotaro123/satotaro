@@ -158,14 +158,14 @@ if ($type != "text") {
 	$ch = curl_init ("https://api.line.me/v2/bot/message/".$messageId."/content") ;
 	curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
 	curl_setopt ( $ch, CURLOPT_HTTPHEADER, array (
-			'Content-Type: application/json; charser=UTF-8',
+			'Content-Type: image/jpeg; charser=UTF-8',
 			'Authorization: Bearer ' . $accessToken
 	) );
 	$result = curl_exec ( $ch );
 	curl_close($ch);
 
 	$data = file_get_contents($result);
-	header('Content-type: image/jpeg');
+
 
 
 
