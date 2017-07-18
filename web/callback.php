@@ -158,26 +158,25 @@ if ($type != "text") {
 	$ch = curl_init ("https://api.line.me/v2/bot/message/".$messageId."/content") ;
 	curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
 	curl_setopt ( $ch, CURLOPT_HTTPHEADER, array (
-			'Content-Type: image/jpeg; charser=UTF-8',
+			'Content-Type: application/json; charser=UTF-8',
 			'Authorization: Bearer ' . $accessToken
 	) );
 	$result = curl_exec ( $ch );
 	curl_close($ch);
 
 
-
-
-
-
 	error_log ( 183 );
 	error_log ( $result);
 	error_log ( 185 );
 
+	header("Content-type: image/jpg");
+	$img = imagecreatetruecolor($result);
+
 	// そのまま画像をオウム返しで送信
 	$response_format_text = [
 			"type" => "image",
-			"originalContentUrl" => $result,
-			"previewImageUrl" => $result
+			"originalContentUrl" => $img,
+			"previewImageUrl" => $img
 	];
 
 	$post_data = [
@@ -188,7 +187,6 @@ if ($type != "text") {
 
 	];
 
-	error_log($data);
 
 	$ch = curl_init ( "https://api.line.me/v2/bot/message/reply" );
 	curl_setopt ( $ch, CURLOPT_POST, true );
@@ -196,7 +194,7 @@ if ($type != "text") {
 	curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
 	curl_setopt ( $ch, CURLOPT_POSTFIELDS, json_encode ( $post_data ) );
 	curl_setopt ( $ch, CURLOPT_HTTPHEADER, array (
-			'Content-Type: image/jpeg; charser=UTF-8',
+			'Content-Type: application/json; charser=UTF-8',
 			'Authorization: Bearer ' . $accessToken
 	) );
 	$result = curl_exec ( $ch );
