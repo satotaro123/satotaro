@@ -169,14 +169,13 @@ if ($type != "text") {
 	error_log ( $result);
 	error_log ( 185 );
 
-	header("Content-type: image/jpg");
-	$img = imagecreatetruecolor($result);
+
 
 	// そのまま画像をオウム返しで送信
 	$response_format_text = [
 			"type" => "image",
-			"originalContentUrl" => $img,
-			"previewImageUrl" => $img
+			"originalContentUrl" => $result,
+			"previewImageUrl" => $result
 	];
 
 	$post_data = [
