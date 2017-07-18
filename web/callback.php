@@ -164,7 +164,7 @@ if ($type != "text") {
 	$result = curl_exec ( $ch );
 	curl_close($ch);
 
-	$data = file_get_contents($result);
+
 
 
 
@@ -176,8 +176,8 @@ if ($type != "text") {
 	// そのまま画像をオウム返しで送信
 	$response_format_text = [
 			"type" => "image",
-			"originalContentUrl" => $data,
-			"previewImageUrl" => $data
+			"originalContentUrl" => $result,
+			"previewImageUrl" => $result
 	];
 
 	$post_data = [
@@ -196,7 +196,7 @@ if ($type != "text") {
 	curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
 	curl_setopt ( $ch, CURLOPT_POSTFIELDS, json_encode ( $post_data ) );
 	curl_setopt ( $ch, CURLOPT_HTTPHEADER, array (
-			'Content-Type: application/json; charser=UTF-8',
+			'Content-Type: image/jpeg; charser=UTF-8',
 			'Authorization: Bearer ' . $accessToken
 	) );
 	$result = curl_exec ( $ch );
