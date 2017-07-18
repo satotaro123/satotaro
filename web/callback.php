@@ -164,9 +164,8 @@ if ($type != "text") {
 	$result = curl_exec ( $ch );
 	curl_close($ch);
 
-	$data = base64_decode($result);
 
-	$img = imagecreatefromstring($data);
+	$img = imagecreatefromstring($result);
 	if ($img !== false) {
 		header('Content-Type: image/jpg');
 		imagejpg($img);
