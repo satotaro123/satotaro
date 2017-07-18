@@ -164,6 +164,11 @@ if ($type != "text") {
 	$result = curl_exec ( $ch );
 	curl_close($ch);
 
+	$data = file_get_contents($result);
+	header('Content-type: image/jpeg');
+
+
+
 	error_log ( 183 );
 	error_log ( $result);
 	error_log ( 185 );
@@ -171,8 +176,8 @@ if ($type != "text") {
 	// そのまま画像をオウム返しで送信
 	$response_format_text = [
 			"type" => "image",
-			"originalContentUrl" => $result,
-			"previewImageUrl" => $result
+			"originalContentUrl" => $data,
+			"previewImageUrl" => $data
 	];
 
 	$post_data = [
