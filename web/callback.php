@@ -165,14 +165,7 @@ if ($type != "text") {
 	curl_close($ch);
 
 
-	$img = imagecreatefromstring($result);
-	if ($img !== false) {
-		header('Content-Type: image/jpg');
-		imagejpg($img);
-		imagedestroy($img);
-	}
-
-
+	$img = createimg();
 
 
 	error_log ( 183 );
@@ -584,6 +577,15 @@ function callVisual_recognition() {
 
 	curl_setopt_array ( $curl, $options );
 	return curl_exec ( $curl );
+}
+function createimg(){
+	global $result;
+	$dataimage = imagecreatefromstring($result);
+	if ($img !== false) {
+		header('Content-Type: image/jpg');
+		imagejpg($img);
+		imagedestroy($img);
+	}
 }
 
 
