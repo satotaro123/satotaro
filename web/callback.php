@@ -164,19 +164,18 @@ if ($type != "text") {
 	$result = curl_exec ( $ch );
 	curl_close($ch);
 
-	$imagedata = file_get_contents($result);
+
 
 
 	error_log ( 183 );
 	error_log ( $result);
 	error_log ( 185 );
-	error_log ($imagedata);
 
 	// そのまま画像をオウム返しで送信
 	$response_format_text = [
 			"type" => "image",
-			"originalContentUrl" => $imagedata,
-			"previewImageUrl" => $imagedata
+			"originalContentUrl" => $result,
+			"previewImageUrl" => $result
 	];
 
 	$post_data = [
