@@ -564,12 +564,12 @@ function callWatson() {
 }
 
 function callVisual_recognition() {
-	global $curl, $url, $options,$result;
+	global $curl, $url, $options,$filedata;
 
 	$curl = curl_init ( $url );
 	$options = array (
 			CURLOPT_POST => TRUE,
-			CURLOPT_POSTFIELDS => $image_resource,
+			CURLOPT_POSTFIELDS => $filedata,
 			CURLOPT_RETURNTRANSFER => TRUE
 	);
 
