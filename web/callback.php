@@ -167,6 +167,8 @@ if ($type != "text") {
 
 
 
+
+
 	error_log ( 183 );
 	error_log ( $result);
 	error_log ( 185 );
@@ -201,7 +203,7 @@ if ($type != "text") {
 
 	*/
 	//$url = "https://" . $_SERVER ['SERVER_NAME'] . "/lion.jpg";
-	$filedata = file_get_contents($result);
+
 
 	$url = "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key=c24e26752cbdd81008614ff2379f39be5dc9b629&version=2016-05-20";
 	$jsonString = callVisual_recognition ();
@@ -564,12 +566,12 @@ function callWatson() {
 }
 
 function callVisual_recognition() {
-	global $curl, $url, $options,$filedata;
+	global $curl, $url, $options,$result;
 
 	$curl = curl_init ( $url );
 	$options = array (
 			CURLOPT_POST => TRUE,
-			CURLOPT_POSTFIELDS => $filedata,
+			CURLOPT_POSTFIELDS => $result,
 			CURLOPT_RETURNTRANSFER => TRUE
 	);
 
