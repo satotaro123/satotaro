@@ -200,8 +200,8 @@ if ($type != "text") {
 	curl_close ( $ch );
 
 
-	/*$url = "https://" . $_SERVER ['SERVER_NAME'] . "/lion.jpg";
-	//$filedata = file_get_contents($url);
+	//$url = "https://" . $_SERVER ['SERVER_NAME'] . "/lion.jpg";
+	$filedata = file_get_contents($result);
 
 	$url = "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key=c24e26752cbdd81008614ff2379f39be5dc9b629&version=2016-05-20";
 	$jsonString = callVisual_recognition ();
@@ -242,7 +242,7 @@ if ($type != "text") {
 	$result = curl_exec ( $ch );
 	curl_close ( $ch );
 
-	*/
+
 	exit();
 
 }
