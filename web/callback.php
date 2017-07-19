@@ -172,7 +172,7 @@ if ($type != "text") {
 	error_log ( 185 );
 
 	// そのまま画像をオウム返しで送信
-	$response_format_text = [
+	/*$response_format_text = [
 			"type" => "image",
 			"originalContentUrl" => $result,
 			"previewImageUrl" => $result
@@ -199,7 +199,7 @@ if ($type != "text") {
 	$result = curl_exec ( $ch );
 	curl_close ( $ch );
 
-
+	*/
 	//$url = "https://" . $_SERVER ['SERVER_NAME'] . "/lion.jpg";
 	$filedata = file_get_contents($result);
 
