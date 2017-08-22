@@ -11,7 +11,7 @@ public class chatbot {
     public static void main(String[] args) {
         Connection conn = null;
         try {
-            // JDBCドライバの登録.
+            // JDBCドライバの登録
             Class.forName("org.postgresql.Driver");
 
             // データベースへ接続
