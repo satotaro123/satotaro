@@ -22,7 +22,7 @@ public class chatbot {
             String sql = "SELECT * FROM cvsdata";
             PreparedStatement pStmt = conn.prepareStatement(sql);
 
-            // SQL文を実行し、結果表を取得.
+            // SQL文を実行し、結果表を取得
             ResultSet rs = pStmt.executeQuery ();
 
             // 結果表に格納されたレコードの内容を表示
